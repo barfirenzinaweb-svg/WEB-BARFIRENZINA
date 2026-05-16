@@ -1969,6 +1969,7 @@
   .cta-banner p{
     max-width:520px;margin:0 auto 34px;color:rgba(246,246,233,.8);
     font-size:16px;position:relative;z-index:2;
+    white-space:pre-line;
   }
   .cta-banner .btn{position:relative;z-index:2}
   .cta-banner .btn-primary{background:var(--khaki);color:var(--dark)}
@@ -2450,7 +2451,8 @@
   .ig-intro{
     text-align:center;
     font-family:var(--display);
-    font-size:clamp(15px, 1.4vw, 22px);
+    font-size:clamp(16px, 1.6vw, 22px);
+    font-weight:500;
     font-style:normal;
     color:var(--cream);
     margin:0 0 18px;
@@ -2459,7 +2461,8 @@
   }
   .ig-eyebrow{
     display:inline-flex;align-items:center;gap:14px;
-    font-size:11px;letter-spacing:.45em;text-transform:uppercase;
+    font-family:var(--display);
+    font-size:clamp(11px, 1vw, 13px);letter-spacing:.35em;text-transform:uppercase;
     color:var(--gold);font-weight:700;margin-bottom:22px;
   }
   .ig-eyebrow::before,
@@ -2476,7 +2479,10 @@
     font-style:normal;color:var(--gold);display:inline-block;
   }
   .ig-head p{
-    margin-top:22px;font-size:17px;color:rgba(246,246,233,.75);
+    font-family:var(--display);
+    margin-top:22px;
+    font-size:clamp(14px, 1.2vw, 17px);
+    color:rgba(246,246,233,.75);
     max-width:540px;margin-left:auto;margin-right:auto;line-height:1.6;
   }
 
@@ -2627,6 +2633,20 @@
     .wa-float:hover{width:54px;border-radius:50%}
     .wa-float:hover .wa-float-tip{max-width:0;opacity:0;padding:0}
   }
+
+  /* ===== Orden de las secciones (reordenamiento sin tocar el HTML) ===== */
+  .page-sections{display:flex;flex-direction:column}
+  #explicaciones{order:1}   /* No todo lo que normalizamos es natural */
+  #historia{order:2}        /* Historia BARFirenzina */
+  #ingredientes{order:3}    /* Ingredientes */
+  #productos{order:4}       /* Nuestras Recetas */
+  #calculadora{order:5}     /* Calculadora */
+  #nuestro-barf{order:6}    /* Acompañamiento */
+  #instagram{order:7}       /* Comunidad */
+  #resenas{order:8}         /* Nuestros clientes felices */
+  #preguntas{order:9}       /* FAQ */
+  #beneficios{order:10}     /* Beneficios (no especificado: al final) */
+  #contacto{order:11}       /* CTA final */
 </style>
 </head>
 <body>
@@ -2802,6 +2822,9 @@
   </div>
 </div>
 
+
+<!-- ===== Contenedor de secciones reordenables (orden controlado por CSS) ===== -->
+<div class="page-sections">
 
 <!-- ============= NUESTRO BARF / INFO ============= -->
 <section class="info" id="nuestro-barf">
@@ -3419,13 +3442,16 @@
 <section class="cta-banner" id="contacto">
   <div class="container">
     <h2><span data-cms="cta_final.titulo_1">El instinto de tu gato</span><br><em data-cms="cta_final.titulo_em">merece lo mejor.</em></h2>
-    <p data-cms="cta_final.parrafo">BARFirenzina te llega congelado, en porciones listas para usar. Se conserva en el freezer hasta 4 meses; sacás solo la porción del día, la descongelás en la heladera, y servís. Nada de mezclas, ni cocción, ni preparación.</p>
+    <p data-cms="cta_final.parrafo">BARFirenzina te llega congelado, en porciones listas para usar.
+Se conserva en el freezer hasta 4 meses; sacás solo la porción del día, la descongelás en la heladera, y servís. Nada de mezclas, ni cocción, ni preparación.</p>
     <a href="#productos" class="btn btn-primary">
       <span data-cms="cta_final.boton">Hacer mi primer pedido</span>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
     </a>
   </div>
 </section>
+
+</div><!-- /.page-sections -->
 
 <!-- ============= FOOTER ============= -->
 <footer>
