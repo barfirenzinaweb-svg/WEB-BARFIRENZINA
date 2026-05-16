@@ -28,9 +28,9 @@
     --shadow-sm: 0 4px 14px -6px rgba(42,40,31,.18);
     --shadow-md: 0 18px 40px -20px rgba(42,40,31,.30);
     --shadow-lg: 0 30px 70px -30px rgba(42,40,31,.45);
-    /* Edge horizontal compartido por el padding del header y el right de la animación.
-       Valor proporcionado (no exagerado) para que el header quede alineado y no corrido. */
-    --hero-edge: clamp(20px, 6vw, 96px);
+    /* Edge horizontal del header = 13vw, mismo % al que arranca el texto "INSTINTO"
+       del hero y termina la animación del gato (right:13%). Header alineado al hero. */
+    --hero-edge: 13vw;
   }
 
   *{box-sizing:border-box;margin:0;padding:0}
@@ -612,12 +612,12 @@
       linear-gradient(135deg, transparent 50%, var(--gold) 50%) 0 0/9px 6px no-repeat,
       linear-gradient(225deg, transparent 50%, var(--gold) 50%) 9px 0/9px 6px no-repeat;
   }
-  .brand{display:flex;flex-direction:row;align-items:center;gap:clamp(10px, 1vw, 18px);text-decoration:none}
+  .brand{display:flex;flex-direction:row;align-items:center;gap:clamp(7px, .6vw, 11px);text-decoration:none}
   .logo{display:none}
   /* Logo circular con borde olive más claro (sage) — escala proporcional */
   .brand-logo{
-    width:clamp(40px, 3.6vw, 70px);
-    height:clamp(40px, 3.6vw, 70px);
+    width:clamp(32px, 2.4vw, 46px);
+    height:clamp(32px, 2.4vw, 46px);
     border-radius:50%;
     object-fit:cover;
     background:#f5efd6;
@@ -633,7 +633,7 @@
   .brand-text{display:flex;flex-direction:column;align-items:flex-start;gap:2px}
   .brand-name{
     font-family:var(--display);
-    font-size:clamp(15px, 1.8vw, 32px);
+    font-size:clamp(13px, 1.15vw, 21px);
     font-weight:800;
     color:var(--cream);
     letter-spacing:.03em;
@@ -644,14 +644,14 @@
   .brand-text::after{
     content:"Alimentación natural para gatos";
     font-family:var(--subtitle);
-    font-size:clamp(7px, .7vw, 12px);letter-spacing:.25em;text-transform:uppercase;
+    font-size:clamp(6px, .5vw, 9px);letter-spacing:.22em;text-transform:uppercase;
     color:var(--khaki);opacity:.85;font-weight:600;
   }
 
-  .nav ul{list-style:none;display:flex;gap:clamp(24px, 3.2vw, 60px);align-items:center}
+  .nav ul{list-style:none;display:flex;gap:clamp(12px, 1.5vw, 26px);align-items:center}
   .nav ul a{
     font-family:var(--subtitle);
-    font-size:clamp(9px, .82vw, 14px);letter-spacing:.32em;text-transform:uppercase;
+    font-size:clamp(8px, .62vw, 11px);letter-spacing:.2em;text-transform:uppercase;
     font-weight:700;padding:8px 0;position:relative;
     transition:color .25s;color:var(--cream);
   }
@@ -662,7 +662,7 @@
   }
   .nav ul li + li{position:relative}
   .nav ul li + li::before{
-    content:"";position:absolute;left:-29px;top:50%;
+    content:"";position:absolute;left:calc(clamp(12px, 1.5vw, 26px) / -2);top:50%;
     width:4px;height:4px;background:var(--gold);transform:translate(-50%,-50%) rotate(45deg);
     opacity:.7;
   }
@@ -672,14 +672,14 @@
   .nav-right{display:flex;align-items:center;gap:14px}
   .cart-btn{
     position:relative;
-    width:46px;height:46px;border-radius:50%;
+    width:38px;height:38px;border-radius:50%;
     background:rgba(246,246,233,.08);
     display:inline-flex;align-items:center;justify-content:center;
     transition:background .25s ease, transform .2s ease;
     cursor:pointer;
   }
   .cart-btn:hover{background:var(--khaki);transform:translateY(-1px)}
-  .cart-btn svg{width:20px;height:20px;color:var(--cream);transition:color .25s}
+  .cart-btn svg{width:17px;height:17px;color:var(--cream);transition:color .25s}
   .cart-btn:hover svg{color:var(--olive)}
   .cart-count{
     position:absolute;top:-4px;right:-4px;
@@ -851,8 +851,8 @@
   /* Burger en forma de HUELLA DE GATO — escala proporcional */
   .burger{
     display:block;
-    width:clamp(28px, 2.8vw, 52px);
-    height:clamp(28px, 2.8vw, 52px);
+    width:clamp(26px, 2.1vw, 38px);
+    height:clamp(26px, 2.1vw, 38px);
     background:transparent;border:none;cursor:pointer;
     color:var(--cream);padding:0;
     transition:transform .35s cubic-bezier(.2,.7,.1,1), color .25s ease;
