@@ -576,7 +576,7 @@
     max-width:none;margin:0;
     gap:clamp(20px, 3vw, 48px);
   }
-  .nav-right{display:flex;align-items:center;gap:clamp(8px, .9vw, 14px)}
+  .nav-right{margin-left:auto;display:flex;align-items:center;gap:clamp(8px, .9vw, 14px)}
 
   /* Botones sociales del header (alineados con el borde derecho de la animación) */
   .social-pill{
@@ -648,7 +648,7 @@
     color:var(--khaki);opacity:.85;font-weight:600;
   }
 
-  .nav ul{list-style:none;display:flex;gap:clamp(12px, 1.5vw, 26px);align-items:center;flex:1;justify-content:center}
+  .nav ul{list-style:none;display:flex;gap:clamp(12px, 1.5vw, 26px);align-items:center}
   .nav ul a{
     font-family:var(--subtitle);
     font-size:clamp(8px, .62vw, 11px);letter-spacing:.2em;text-transform:uppercase;
@@ -2025,7 +2025,6 @@
     .burger{display:block}
     .nav-cta{display:none}
     .nav{gap:14px}
-    .nav-right{margin-left:auto}
     .hero-grid{grid-template-columns:1fr;gap:60px}
     .hero-visual{order:-1;max-width:440px;margin:0 auto}
     .hero-image-wrap{aspect-ratio:4/4}
