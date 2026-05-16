@@ -1180,11 +1180,11 @@
   /* El botón mantiene SIEMPRE left:40%/bottom:26% (anclado a la imagen del hero).
      No se reposiciona en mobile → no salta de altura. Solo escala de tamaño vía los clamp() de arriba. */
 
-  /* Video hero, rectangular 4:5 (más cuadrado), lado derecho — bordes redondeados + marco verde finito */
+  /* Video hero, rectangular 4:5 (más cuadrado), lado derecho.
+     right:13% = misma distancia al margen que el texto "INSTINTO" (que está al ~13% en la imagen del hero) */
   .hero-cat{
     position:absolute;
-    /* right = misma --hero-edge que padding del nav → alineacion perfecta con final del header */
-    right:var(--hero-edge);top:50%;transform:translateY(-50%);
+    right:13%;top:50%;transform:translateY(-50%);
     height:74%;
     aspect-ratio:4/5;
     z-index:3;
