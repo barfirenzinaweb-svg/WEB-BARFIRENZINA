@@ -3,7 +3,7 @@
     "boton": "Ver Catálogo"
   },
   "acompanamiento": {
-    "eyebrow": "Acompañamiento",
+    "eyebrow": "Siempre acompañados",
     "titulo_1": "No estás solo en el ",
     "titulo_em": "cambio",
     "parrafo": "Cambiar la alimentación de un gato no es trivial: cada uno tiene su carácter, sus tiempos y sus mañas. Por eso te asesoramos de manera personalizada a través de nuestras redes, ajustamos las porciones a tu rutina y resolvemos las dudas que aparecen en el camino. Los gatos no transicionan solos, y sus tutores tampoco.",
@@ -15,12 +15,30 @@
     "titulo_em": "importa",
     "descripcion": "Trazabilidad real, ingredientes frescos elegidos con criterio. Nutrición formulada para respetar su naturaleza.",
     "items": [
-      { "nombre": "Pollo Pastoril", "meta": "Carne magra" },
-      { "nombre": "Órganos de Vaca Pastura", "meta": "Vísceras frescas" },
-      { "nombre": "Huevos libres de jaula", "meta": "Nutrición natural" },
-      { "nombre": "Calcio Natural", "meta": "Cáscara de huevo" },
-      { "nombre": "Caldo de Huesos", "meta": "Cocción lenta" },
-      { "nombre": "Suplementación Precisa", "meta": "Taurina + Omega 3 / Vitaminas E y complejo B" }
+      {
+        "nombre": "Pollo Pastoril",
+        "meta": "Carne magra"
+      },
+      {
+        "nombre": "Órganos de Vaca Pastura",
+        "meta": "Vísceras frescas"
+      },
+      {
+        "nombre": "Huevos libres de jaula",
+        "meta": "Nutrición natural"
+      },
+      {
+        "nombre": "Calcio Natural",
+        "meta": "Cáscara de huevo"
+      },
+      {
+        "nombre": "Caldo de Huesos",
+        "meta": "Cocción lenta"
+      },
+      {
+        "nombre": "Suplementación Precisa",
+        "meta": "Taurina + Omega 3 / Vitaminas E y complejo B"
+      }
     ]
   },
   "recetas": {
