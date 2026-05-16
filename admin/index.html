@@ -8,20 +8,7 @@
   <link rel="icon" href="data:," />
 </head>
 <body>
-  <!-- Widget de login con Netlify Identity -->
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-  <!-- Decap CMS -->
-  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-  <script>
-    if (window.netlifyIdentity) {
-      window.netlifyIdentity.on('init', function (user) {
-        if (!user) {
-          window.netlifyIdentity.on('login', function () {
-            document.location.href = '/admin/';
-          });
-        }
-      });
-    }
-  </script>
+  <!-- Decap CMS (incluye el manejo de Netlify Identity + git-gateway internamente) -->
+  <script src="https://unpkg.com/decap-cms@^3.6.0/dist/decap-cms.js"></script>
 </body>
 </html>
