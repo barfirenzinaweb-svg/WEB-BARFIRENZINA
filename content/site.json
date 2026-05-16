@@ -15,12 +15,30 @@
     "titulo_em": "importa",
     "descripcion": "Trazabilidad real, ingredientes frescos elegidos con criterio. Nutrición formulada para respetar su naturaleza.",
     "items": [
-      { "nombre": "Pollo Pastoril", "meta": "Carne magra" },
-      { "nombre": "Órganos de Vaca Pastura", "meta": "Vísceras frescas" },
-      { "nombre": "Huevos libres de jaula", "meta": "Nutrición natural" },
-      { "nombre": "Calcio Natural", "meta": "Cáscara de huevo" },
-      { "nombre": "Caldo de Huesos", "meta": "Cocción lenta" },
-      { "nombre": "Suplementación Precisa", "meta": "Taurina + Omega 3 / Vitaminas E y complejo B" }
+      {
+        "nombre": "Pollo Pastoril",
+        "meta": "Carne magra"
+      },
+      {
+        "nombre": "Órganos de Vaca Pastura",
+        "meta": "Vísceras frescas"
+      },
+      {
+        "nombre": "Huevos libres de jaula",
+        "meta": "Nutrición natural"
+      },
+      {
+        "nombre": "Calcio Natural",
+        "meta": "Cáscara de huevo"
+      },
+      {
+        "nombre": "Caldo de Huesos",
+        "meta": "Cocción lenta"
+      },
+      {
+        "nombre": "Suplementación Precisa",
+        "meta": "Taurina + Omega 3 / Vitaminas E y complejo B"
+      }
     ]
   },
   "recetas": {
@@ -90,6 +108,6 @@
   "contacto": {
     "whatsapp": "5491154846054",
     "instagram_url": "https://www.instagram.com/barf.irenzina/",
-    "email": "hola@barfirenzina.com"
+    "email": "barfirenzinaweb@gmail.com"
   }
 }
