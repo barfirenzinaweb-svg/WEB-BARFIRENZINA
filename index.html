@@ -3998,6 +3998,23 @@ if(heroImg){
 </a>
 
 <!-- ============================================================
+  NETLIFY IDENTITY — captura el token de los mails de invitación
+  y recuperación de contraseña, y redirige al panel /admin.
+============================================================ -->
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.on("init", function (user) {
+      if (!user) {
+        window.netlifyIdentity.on("login", function () {
+          document.location.href = "/admin/";
+        });
+      }
+    });
+  }
+</script>
+
+<!-- ============================================================
   CMS LOADER — aplica el contenido de content/site.json sobre la
   página. Si el JSON no carga o falta una clave, NO toca nada:
   queda el texto que está escrito en el HTML (fallback seguro).
