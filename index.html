@@ -2789,7 +2789,7 @@
         <line x1="3" y1="6" x2="21" y2="6"/>
         <path d="M16 10a4 4 0 0 1-8 0"/>
       </svg>
-      <span>Ver Catálogo</span>
+      <span data-cms="hero.boton">Ver Catálogo</span>
     </a>
   </div>
 </section>
@@ -2821,11 +2821,11 @@
       </div>
     </div>
     <div class="fade-in">
-      <span class="section-eyebrow">Acompañamiento</span>
-      <h2>No estás solo en el <em>cambio</em></h2>
-      <p class="body">Cambiar la alimentación de un gato no es trivial: cada uno tiene su carácter, sus tiempos y sus mañas. Por eso te asesoramos de manera personalizada a través de nuestras redes, ajustamos las porciones a tu rutina y resolvemos las dudas que aparecen en el camino. Los gatos no transicionan solos, y sus tutores tampoco.</p>
+      <span class="section-eyebrow" data-cms="acompanamiento.eyebrow">Acompañamiento</span>
+      <h2><span data-cms="acompanamiento.titulo_1">No estás solo en el </span><em data-cms="acompanamiento.titulo_em">cambio</em></h2>
+      <p class="body" data-cms="acompanamiento.parrafo">Cambiar la alimentación de un gato no es trivial: cada uno tiene su carácter, sus tiempos y sus mañas. Por eso te asesoramos de manera personalizada a través de nuestras redes, ajustamos las porciones a tu rutina y resolvemos las dudas que aparecen en el camino. Los gatos no transicionan solos, y sus tutores tampoco.</p>
       <a href="#productos" class="btn btn-primary">
-        Empezar ahora
+        <span data-cms="acompanamiento.boton">Empezar ahora</span>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </a>
     </div>
@@ -2836,9 +2836,9 @@
 <section class="ingredients" id="ingredientes">
   <div class="container ing-wrap">
     <aside class="ing-aside fade-in">
-      <span class="ing-eyebrow">— Ingredientes —</span>
-      <h2>Lo que usamos<br><em>importa</em></h2>
-      <p>Trazabilidad real, ingredientes frescos elegidos con criterio. Nutrición formulada para respetar su naturaleza.</p>
+      <span class="ing-eyebrow" data-cms="ingredientes.eyebrow">— Ingredientes —</span>
+      <h2><span data-cms="ingredientes.titulo_1">Lo que usamos</span><br><em data-cms="ingredientes.titulo_em">importa</em></h2>
+      <p data-cms="ingredientes.descripcion">Trazabilidad real, ingredientes frescos elegidos con criterio. Nutrición formulada para respetar su naturaleza.</p>
     </aside>
     <ol class="ing-list fade-in">
       <li class="ing-item">
@@ -2885,9 +2885,9 @@
   <div class="products-shine" aria-hidden="true"></div>
   <div class="container">
     <div class="section-head fade-in">
-      <span class="eye">Nuestras Recetas</span>
+      <span class="eye" data-cms="recetas.eyebrow">Nuestras Recetas</span>
       <h2>Crudo o <em>Cocido</em>.<br>Vos elegís.</h2>
-      <p>Dos formatos con la misma fórmula nutricional, adaptados a lo que tu gato prefiere y necesita.</p>
+      <p data-cms="recetas.subtitulo">Dos formatos con la misma fórmula nutricional, adaptados a lo que tu gato prefiere y necesita.</p>
     </div>
 
     <div class="product-grid two-cols stagger fade-in">
@@ -2919,13 +2919,13 @@
           <img src="assets/barf-crudo.jpg" alt="BARF Crudo para gatos"/>
         </div>
         <div class="card-body">
-          <div class="category">Receta Cruda</div>
-          <h3>BARF Crudo</h3>
-          <p class="desc">Carne y órganos frescos sin cocción. Nutrientes biológicamente intactos, listos para servir.</p>
+          <div class="category" data-cms="recetas.producto_crudo.categoria">Receta Cruda</div>
+          <h3 data-cms="recetas.producto_crudo.nombre">BARF Crudo</h3>
+          <p class="desc" data-cms="recetas.producto_crudo.descripcion">Carne y órganos frescos sin cocción. Nutrientes biológicamente intactos, listos para servir.</p>
           <ul class="product-highlights">
-            <li>Cadena de frío 100% controlada</li>
-            <li>Sin conservantes ni aditivos</li>
-            <li>Formulado por nutricionistas</li>
+            <li data-cms="recetas.producto_crudo.highlights[0]">Cadena de frío 100% controlada</li>
+            <li data-cms="recetas.producto_crudo.highlights[1]">Sin conservantes ni aditivos</li>
+            <li data-cms="recetas.producto_crudo.highlights[2]">Formulado por nutricionistas</li>
           </ul>
           <div class="stars">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8 5.8 21.3l2.4-7.4L2 9.4h7.6z"/></svg>
@@ -2976,13 +2976,13 @@
           <img src="assets/barf-cocido.jpg" alt="BARF Cocido para gatos"/>
         </div>
         <div class="card-body">
-          <div class="category">Receta Cocida</div>
-          <h3>BARF Cocido</h3>
-          <p class="desc">La misma fórmula, cocida a baja temperatura. Ideal para gatos sensibles o senior.</p>
+          <div class="category" data-cms="recetas.producto_cocido.categoria">Receta Cocida</div>
+          <h3 data-cms="recetas.producto_cocido.nombre">BARF Cocido</h3>
+          <p class="desc" data-cms="recetas.producto_cocido.descripcion">La misma fórmula, cocida a baja temperatura. Ideal para gatos sensibles o senior.</p>
           <ul class="product-highlights">
-            <li>Cocción lenta a baja temperatura</li>
-            <li>Más digerible para gatos delicados</li>
-            <li>Misma trazabilidad de ingredientes</li>
+            <li data-cms="recetas.producto_cocido.highlights[0]">Cocción lenta a baja temperatura</li>
+            <li data-cms="recetas.producto_cocido.highlights[1]">Más digerible para gatos delicados</li>
+            <li data-cms="recetas.producto_cocido.highlights[2]">Misma trazabilidad de ingredientes</li>
           </ul>
           <div class="stars">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8 5.8 21.3l2.4-7.4L2 9.4h7.6z"/></svg>
@@ -3198,10 +3198,10 @@
   <img class="ig-watermark" src="assets/logo-watermark.png" alt="" aria-hidden="true"/>
   <div class="container">
     <header class="ig-head fade-in">
-      <span class="ig-eyebrow">Comunidad</span>
-      <p class="ig-intro">No vendemos solo alimento. Construimos una comunidad.</p>
-      <h2>Seguinos en <em>@barf.irenzina</em></h2>
-      <p>Detrás de cada bolsa hay un gato con nombre, una historia y un proceso. Acá compartimos esos momentos: el primer plato, los avances, las dudas, las pequeñas victorias. Sumate, contanos cómo le va al tuyo, y escribinos por redes cuando necesites un consejo personalizado.</p>
+      <span class="ig-eyebrow" data-cms="comunidad.eyebrow">Comunidad</span>
+      <p class="ig-intro" data-cms="comunidad.intro">No vendemos solo alimento. Construimos una comunidad.</p>
+      <h2><span data-cms="comunidad.titulo_1">Seguinos en </span><em data-cms="comunidad.titulo_em">@barf.irenzina</em></h2>
+      <p data-cms="comunidad.parrafo">Detrás de cada bolsa hay un gato con nombre, una historia y un proceso. Acá compartimos esos momentos: el primer plato, los avances, las dudas, las pequeñas victorias. Sumate, contanos cómo le va al tuyo, y escribinos por redes cuando necesites un consejo personalizado.</p>
     </header>
 
     <div class="ig-grid fade-in">
@@ -3237,7 +3237,7 @@
     </div>
 
     <div class="social-cta fade-in">
-      <a class="social-btn ig-btn" href="https://www.instagram.com/barf.irenzina/" target="_blank" rel="noopener">
+      <a class="social-btn ig-btn" href="https://www.instagram.com/barf.irenzina/" data-cms-attr="href|contacto.instagram_url" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
           <rect x="3" y="3" width="18" height="18" rx="5"/>
           <circle cx="12" cy="12" r="4"/>
@@ -3305,9 +3305,9 @@
   </div>
   <div class="container">
     <div class="section-head fade-in">
-      <span class="eye">Testimonios</span>
-      <h2>Nuestros Clientes Felices</h2>
-      <p>Historias reales de familias que cambiaron la forma de alimentar a sus felinos.</p>
+      <span class="eye" data-cms="resenas.eyebrow">Testimonios</span>
+      <h2 data-cms="resenas.titulo">Nuestros Clientes Felices</h2>
+      <p data-cms="resenas.subtitulo">Historias reales de familias que cambiaron la forma de alimentar a sus felinos.</p>
     </div>
 
     <div class="review-grid stagger fade-in">
@@ -3418,10 +3418,10 @@
 <!-- ============= CTA BANNER ============= -->
 <section class="cta-banner" id="contacto">
   <div class="container">
-    <h2>El instinto de tu gato<br><em>merece lo mejor.</em></h2>
-    <p>BARFirenzina te llega <strong>congelado</strong>, en porciones listas para usar. Se conserva en el freezer hasta 4 meses; sacás solo la porción del día, la descongelás en la heladera, y servís. Nada de mezclas, ni cocción, ni preparación.</p>
+    <h2><span data-cms="cta_final.titulo_1">El instinto de tu gato</span><br><em data-cms="cta_final.titulo_em">merece lo mejor.</em></h2>
+    <p data-cms="cta_final.parrafo">BARFirenzina te llega congelado, en porciones listas para usar. Se conserva en el freezer hasta 4 meses; sacás solo la porción del día, la descongelás en la heladera, y servís. Nada de mezclas, ni cocción, ni preparación.</p>
     <a href="#productos" class="btn btn-primary">
-      Hacer mi primer pedido
+      <span data-cms="cta_final.boton">Hacer mi primer pedido</span>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
     </a>
   </div>
@@ -3435,7 +3435,7 @@
         <h4>BARFirenzina</h4>
         <p>Alimento BARF premium para gatos. Elaborado con ingredientes frescos, respeto animal y amor por la naturaleza.</p>
         <div class="socials">
-          <a href="https://www.instagram.com/barf.irenzina/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor"/></svg></a>
+          <a href="https://www.instagram.com/barf.irenzina/" data-cms-attr="href|contacto.instagram_url" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor"/></svg></a>
           <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 22v-8h3l.5-4H13V7.5c0-1.1.3-1.9 1.9-1.9H17V2.1C16.6 2 15.3 2 14 2c-3 0-5 1.8-5 5.2V10H6v4h3v8h4z"/></svg></a>
           <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7.5c-.2-1.8-.8-3-2.6-3.2C18.3 4 12 4 12 4s-6.3 0-8.4.3C1.8 4.5 1.2 5.7 1 7.5.8 9.3.8 12 .8 12s0 2.7.2 4.5c.2 1.8.8 3 2.6 3.2C5.7 20 12 20 12 20s6.3 0 8.4-.3c1.8-.2 2.4-1.4 2.6-3.2.2-1.8.2-4.5.2-4.5s0-2.7-.2-4.5zM10 15V9l5 3-5 3z"/></svg></a>
         </div>
@@ -3454,7 +3454,7 @@
       <div>
         <h5>Contacto</h5>
         <ul>
-          <li><a href="mailto:hola@barfirenzina.com">hola@barfirenzina.com</a></li>
+          <li><a href="mailto:hola@barfirenzina.com" data-cms="contacto.email">hola@barfirenzina.com</a></li>
           <li><a href="tel:+541100000000">+54 11 0000 0000</a></li>
           <li>Buenos Aires, Argentina</li>
         </ul>
@@ -3996,6 +3996,80 @@ if(heroImg){
   <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.198-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.611-.916-2.207-.242-.579-.487-.5-.67-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.064 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.262.489 1.694.626.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.247-.694.247-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12.04 21.785a9.85 9.85 0 0 1-5.014-1.371l-.36-.214-3.726.978.995-3.633-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.889-9.884a9.825 9.825 0 0 1 6.99 2.898 9.825 9.825 0 0 1 2.892 6.992c-.002 5.45-4.437 9.868-9.921 9.868zM20.52 3.449C18.24 1.245 15.24 0 12.045 0 5.463 0 .104 5.334.101 11.892c0 2.096.549 4.14 1.595 5.945L0 24l6.335-1.652a11.998 11.998 0 0 0 5.71 1.447h.005c6.582 0 11.94-5.335 11.943-11.893A11.821 11.821 0 0 0 20.52 3.449"/></svg>
   <span class="wa-float-tip">Escribinos</span>
 </a>
+
+<!-- ============================================================
+  CMS LOADER — aplica el contenido de content/site.json sobre la
+  página. Si el JSON no carga o falta una clave, NO toca nada:
+  queda el texto que está escrito en el HTML (fallback seguro).
+============================================================ -->
+<script>
+(function(){
+  function get(obj, path){
+    return path.split('.').reduce(function(o,k){
+      if(o == null) return undefined;
+      var m = k.match(/^(.+)\[(\d+)\]$/);
+      if(m) return o[m[1]] ? o[m[1]][+m[2]] : undefined;
+      return o[k];
+    }, obj);
+  }
+  fetch('content/site.json?v=' + Date.now())
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(data){
+      if(!data) return;
+      // 1) Texto plano: [data-cms="ruta"]
+      document.querySelectorAll('[data-cms]').forEach(function(el){
+        var v = get(data, el.getAttribute('data-cms'));
+        if(typeof v === 'string' && v.length) el.textContent = v;
+      });
+      // 2) Atributos: [data-cms-attr="atributo|ruta"] (ej: href|contacto.instagram_url)
+      document.querySelectorAll('[data-cms-attr]').forEach(function(el){
+        el.getAttribute('data-cms-attr').split(';').forEach(function(pair){
+          var parts = pair.split('|');
+          var v = get(data, parts[1]);
+          if(typeof v === 'string' && v.length) el.setAttribute(parts[0], v);
+        });
+      });
+      // 3) Listas regenerables: ingredientes y reseñas
+      var ing = get(data, 'ingredientes.items');
+      var ingItems = document.querySelectorAll('.ing-list .ing-item');
+      if(Array.isArray(ing) && ingItems.length === ing.length){
+        ingItems.forEach(function(li, i){
+          var n = li.querySelector('.ing-name'), m = li.querySelector('.ing-meta');
+          if(n && ing[i].nombre) n.textContent = ing[i].nombre;
+          if(m && ing[i].meta) m.innerHTML = String(ing[i].meta).replace(' / ', '<br>');
+        });
+      }
+      var rev = get(data, 'resenas.items');
+      var revCards = document.querySelectorAll('.review-grid .review-card');
+      if(Array.isArray(rev) && revCards.length === rev.length){
+        revCards.forEach(function(card, i){
+          var t = card.querySelector('.text'),
+              nm = card.querySelector('.name'),
+              rl = card.querySelector('.role'),
+              av = card.querySelector('.avatar');
+          if(t && rev[i].texto) t.textContent = rev[i].texto;
+          if(nm && rev[i].nombre){ nm.textContent = rev[i].nombre; if(av) av.textContent = rev[i].nombre.trim().charAt(0); }
+          if(rl && rev[i].rol) rl.textContent = rev[i].rol;
+        });
+      }
+      // 4) Precio del producto → sincroniza también el carrito (data-price)
+      [['producto_crudo','1'],['producto_cocido','2']].forEach(function(p){
+        var card = document.querySelector('.product-card[data-id="'+p[1]+'"]');
+        var d = get(data, 'recetas.' + p[0]);
+        if(!card || !d) return;
+        if(d.precio){
+          card.setAttribute('data-price', d.precio);
+          var priceEl = card.querySelector('.price');
+          if(priceEl) priceEl.innerHTML = '<span class="cur">$</span>' + d.precio + '<small style="font-size:16px">.00</small>';
+        }
+        var wasEl = card.querySelector('.was');
+        if(wasEl) wasEl.style.display = d.precio_anterior ? '' : 'none';
+        if(wasEl && d.precio_anterior) wasEl.textContent = '$' + d.precio_anterior;
+      });
+    })
+    .catch(function(){ /* silencioso: queda el HTML original */ });
+})();
+</script>
 
 </body>
 </html>

@@ -1,0 +1,120 @@
+backend:
+  name: git-gateway
+  branch: main
+
+# Las imágenes que suba la clienta van a la carpeta assets/
+media_folder: "assets"
+public_folder: "assets"
+
+locale: "es"
+
+collections:
+  - name: "contenido"
+    label: "Contenido de la web"
+    files:
+      - name: "site"
+        label: "Textos e imágenes del sitio"
+        file: "content/site.json"
+        editor:
+          preview: false
+        fields:
+          - label: "Hero (portada)"
+            name: "hero"
+            widget: "object"
+            fields:
+              - { label: "Texto del botón", name: "boton", widget: "string" }
+
+          - label: "Bloque Acompañamiento"
+            name: "acompanamiento"
+            widget: "object"
+            fields:
+              - { label: "Pre-título", name: "eyebrow", widget: "string" }
+              - { label: "Título (parte normal)", name: "titulo_1", widget: "string" }
+              - { label: "Título (palabra destacada en dorado)", name: "titulo_em", widget: "string" }
+              - { label: "Párrafo", name: "parrafo", widget: "text" }
+              - { label: "Texto del botón", name: "boton", widget: "string" }
+
+          - label: "Bloque Ingredientes"
+            name: "ingredientes"
+            widget: "object"
+            fields:
+              - { label: "Pre-título", name: "eyebrow", widget: "string" }
+              - { label: "Título (parte normal)", name: "titulo_1", widget: "string" }
+              - { label: "Título (palabra destacada)", name: "titulo_em", widget: "string" }
+              - { label: "Descripción", name: "descripcion", widget: "text" }
+              - label: "Lista de ingredientes"
+                name: "items"
+                widget: "list"
+                fields:
+                  - { label: "Nombre", name: "nombre", widget: "string" }
+                  - { label: "Detalle (texto pequeño al lado)", name: "meta", widget: "string" }
+
+          - label: "Sección Recetas / Productos"
+            name: "recetas"
+            widget: "object"
+            fields:
+              - { label: "Pre-título", name: "eyebrow", widget: "string" }
+              - { label: "Título", name: "titulo", widget: "string" }
+              - { label: "Subtítulo", name: "subtitulo", widget: "text" }
+              - label: "Producto: BARF Crudo"
+                name: "producto_crudo"
+                widget: "object"
+                fields:
+                  - { label: "Categoría", name: "categoria", widget: "string" }
+                  - { label: "Nombre", name: "nombre", widget: "string" }
+                  - { label: "Descripción", name: "descripcion", widget: "text" }
+                  - { label: "Precio (solo número)", name: "precio", widget: "string" }
+                  - { label: "Precio anterior (vacío = sin descuento)", name: "precio_anterior", widget: "string", required: false }
+                  - { label: "Beneficios (3 ítems)", name: "highlights", widget: "list", field: { label: "Beneficio", name: "item", widget: "string" } }
+              - label: "Producto: BARF Cocido"
+                name: "producto_cocido"
+                widget: "object"
+                fields:
+                  - { label: "Categoría", name: "categoria", widget: "string" }
+                  - { label: "Nombre", name: "nombre", widget: "string" }
+                  - { label: "Descripción", name: "descripcion", widget: "text" }
+                  - { label: "Precio (solo número)", name: "precio", widget: "string" }
+                  - { label: "Precio anterior (vacío = sin descuento)", name: "precio_anterior", widget: "string", required: false }
+                  - { label: "Beneficios (3 ítems)", name: "highlights", widget: "list", field: { label: "Beneficio", name: "item", widget: "string" } }
+
+          - label: "Bloque Comunidad"
+            name: "comunidad"
+            widget: "object"
+            fields:
+              - { label: "Pre-título", name: "eyebrow", widget: "string" }
+              - { label: "Intro", name: "intro", widget: "string" }
+              - { label: "Título (parte normal)", name: "titulo_1", widget: "string" }
+              - { label: "Título (parte destacada)", name: "titulo_em", widget: "string" }
+              - { label: "Párrafo", name: "parrafo", widget: "text" }
+
+          - label: "Reseñas / Testimonios"
+            name: "resenas"
+            widget: "object"
+            fields:
+              - { label: "Pre-título", name: "eyebrow", widget: "string" }
+              - { label: "Título", name: "titulo", widget: "string" }
+              - { label: "Subtítulo", name: "subtitulo", widget: "text" }
+              - label: "Reseñas"
+                name: "items"
+                widget: "list"
+                fields:
+                  - { label: "Texto de la reseña", name: "texto", widget: "text" }
+                  - { label: "Nombre del cliente", name: "nombre", widget: "string" }
+                  - { label: "Rol / ubicación", name: "rol", widget: "string" }
+
+          - label: "CTA Final"
+            name: "cta_final"
+            widget: "object"
+            fields:
+              - { label: "Título (parte normal)", name: "titulo_1", widget: "string" }
+              - { label: "Título (parte destacada)", name: "titulo_em", widget: "string" }
+              - { label: "Párrafo", name: "parrafo", widget: "text" }
+              - { label: "Texto del botón", name: "boton", widget: "string" }
+
+          - label: "Contacto"
+            name: "contacto"
+            widget: "object"
+            fields:
+              - { label: "WhatsApp (solo números, con código país)", name: "whatsapp", widget: "string" }
+              - { label: "URL de Instagram", name: "instagram_url", widget: "string" }
+              - { label: "Email", name: "email", widget: "string" }

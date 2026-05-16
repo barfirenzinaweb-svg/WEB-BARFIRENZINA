@@ -1,0 +1,95 @@
+{
+  "hero": {
+    "boton": "Ver Catálogo"
+  },
+  "acompanamiento": {
+    "eyebrow": "Acompañamiento",
+    "titulo_1": "No estás solo en el ",
+    "titulo_em": "cambio",
+    "parrafo": "Cambiar la alimentación de un gato no es trivial: cada uno tiene su carácter, sus tiempos y sus mañas. Por eso te asesoramos de manera personalizada a través de nuestras redes, ajustamos las porciones a tu rutina y resolvemos las dudas que aparecen en el camino. Los gatos no transicionan solos, y sus tutores tampoco.",
+    "boton": "Empezar ahora"
+  },
+  "ingredientes": {
+    "eyebrow": "— Ingredientes —",
+    "titulo_1": "Lo que usamos",
+    "titulo_em": "importa",
+    "descripcion": "Trazabilidad real, ingredientes frescos elegidos con criterio. Nutrición formulada para respetar su naturaleza.",
+    "items": [
+      { "nombre": "Pollo Pastoril", "meta": "Carne magra" },
+      { "nombre": "Órganos de Vaca Pastura", "meta": "Vísceras frescas" },
+      { "nombre": "Huevos libres de jaula", "meta": "Nutrición natural" },
+      { "nombre": "Calcio Natural", "meta": "Cáscara de huevo" },
+      { "nombre": "Caldo de Huesos", "meta": "Cocción lenta" },
+      { "nombre": "Suplementación Precisa", "meta": "Taurina + Omega 3 / Vitaminas E y complejo B" }
+    ]
+  },
+  "recetas": {
+    "eyebrow": "Nuestras Recetas",
+    "titulo": "Crudo o Cocido. Vos elegís.",
+    "subtitulo": "Dos formatos con la misma fórmula nutricional, adaptados a lo que tu gato prefiere y necesita.",
+    "producto_crudo": {
+      "categoria": "Receta Cruda",
+      "nombre": "BARF Crudo",
+      "descripcion": "Carne y órganos frescos sin cocción. Nutrientes biológicamente intactos, listos para servir.",
+      "precio": "13",
+      "precio_anterior": "16.00",
+      "highlights": [
+        "Cadena de frío 100% controlada",
+        "Sin conservantes ni aditivos",
+        "Formulado por nutricionistas"
+      ]
+    },
+    "producto_cocido": {
+      "categoria": "Receta Cocida",
+      "nombre": "BARF Cocido",
+      "descripcion": "La misma fórmula, cocida a baja temperatura. Ideal para gatos sensibles o senior.",
+      "precio": "13",
+      "precio_anterior": "",
+      "highlights": [
+        "Cocción lenta a baja temperatura",
+        "Más digerible para gatos delicados",
+        "Misma trazabilidad de ingredientes"
+      ]
+    }
+  },
+  "comunidad": {
+    "eyebrow": "Comunidad",
+    "intro": "No vendemos solo alimento. Construimos una comunidad.",
+    "titulo_1": "Seguinos en ",
+    "titulo_em": "@barf.irenzina",
+    "parrafo": "Detrás de cada bolsa hay un gato con nombre, una historia y un proceso. Acá compartimos esos momentos: el primer plato, los avances, las dudas, las pequeñas victorias. Sumate, contanos cómo le va al tuyo, y escribinos por redes cuando necesites un consejo personalizado."
+  },
+  "resenas": {
+    "eyebrow": "Testimonios",
+    "titulo": "Nuestros Clientes Felices",
+    "subtitulo": "Historias reales de familias que cambiaron la forma de alimentar a sus felinos.",
+    "items": [
+      {
+        "texto": "En dos meses Luna dejó de tener problemas digestivos y su pelaje brilla como nunca. Volver atrás sería impensable.",
+        "nombre": "Camila Herrera",
+        "rol": "Mamá gatuna · Palermo"
+      },
+      {
+        "texto": "Mateo era de los gatos que jugaban con la comida sin comerla. Probamos BARFirenzina y a la semana ya esperaba el plato. Encima volvió a tener energía para correr por toda la casa.",
+        "nombre": "Mariana López",
+        "rol": "Cliente desde 2023 · Villa Crespo"
+      },
+      {
+        "texto": "Tengo tres gatos y los tres se pelean por el plato. Encima la entrega llega siempre impecable y fría. 10/10.",
+        "nombre": "Sofía Álvarez",
+        "rol": "Cliente desde 2024 · CABA"
+      }
+    ]
+  },
+  "cta_final": {
+    "titulo_1": "El instinto de tu gato",
+    "titulo_em": "merece lo mejor.",
+    "parrafo": "BARFirenzina te llega congelado, en porciones listas para usar. Se conserva en el freezer hasta 4 meses; sacás solo la porción del día, la descongelás en la heladera, y servís. Nada de mezclas, ni cocción, ni preparación.",
+    "boton": "Hacer mi primer pedido"
+  },
+  "contacto": {
+    "whatsapp": "5491154846054",
+    "instagram_url": "https://www.instagram.com/barf.irenzina/",
+    "email": "hola@barfirenzina.com"
+  }
+}
