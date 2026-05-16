@@ -2635,6 +2635,91 @@
     .wa-float:hover .wa-float-tip{max-width:0;opacity:0;padding:0}
   }
 
+  /* ===== Sistema de reseñas (Firebase + Cloudinary) ===== */
+  .review-add-btn{
+    margin-top:22px;display:inline-flex;align-items:center;gap:9px;
+    padding:13px 26px;border-radius:999px;
+    background:var(--gold);color:var(--cream);
+    font-family:var(--subtitle);font-size:12px;letter-spacing:.18em;
+    text-transform:uppercase;font-weight:700;cursor:pointer;
+    border:1.5px solid var(--gold);
+    transition:background .25s ease,color .25s ease,transform .2s ease;
+  }
+  .review-add-btn:hover{background:transparent;color:var(--gold);transform:translateY(-2px)}
+  .review-card .r-photo{
+    width:100%;height:160px;object-fit:cover;border-radius:12px;
+    margin:0 0 16px;display:block;
+  }
+  .reviews-pager{
+    display:flex;justify-content:center;align-items:center;gap:8px;
+    margin-top:44px;flex-wrap:wrap;
+  }
+  .reviews-pager button{
+    min-width:38px;height:38px;padding:0 12px;border-radius:10px;
+    background:transparent;border:1.5px solid rgba(50,57,21,.25);
+    color:var(--olive);font-family:var(--subtitle);font-weight:700;
+    font-size:13px;cursor:pointer;transition:all .2s ease;
+  }
+  .reviews-pager button:hover{border-color:var(--gold);color:var(--gold)}
+  .reviews-pager button.active{background:var(--gold);border-color:var(--gold);color:var(--cream)}
+  .reviews-pager button:disabled{opacity:.35;cursor:default}
+  /* Modal */
+  .rv-modal{
+    position:fixed;inset:0;z-index:10000;display:none;
+    align-items:center;justify-content:center;padding:20px;
+    background:rgba(42,40,31,.7);backdrop-filter:blur(4px);
+  }
+  .rv-modal.open{display:flex}
+  .rv-box{
+    background:var(--cream);color:var(--dark);
+    width:100%;max-width:480px;border-radius:18px;
+    padding:clamp(24px,4vw,40px);position:relative;
+    max-height:90vh;overflow-y:auto;
+    border:1.5px solid var(--gold);
+    box-shadow:0 40px 90px -30px rgba(0,0,0,.6);
+  }
+  .rv-box h3{
+    font-family:var(--display);font-size:24px;font-weight:800;
+    color:var(--olive);margin:0 0 6px;
+  }
+  .rv-box .rv-sub{font-size:13px;color:#6a6650;margin:0 0 22px}
+  .rv-close{
+    position:absolute;top:14px;right:16px;width:30px;height:30px;
+    border:none;background:transparent;cursor:pointer;color:var(--olive);
+    font-size:22px;line-height:1;
+  }
+  .rv-stars{display:flex;gap:6px;margin:0 0 18px}
+  .rv-stars svg{width:30px;height:30px;cursor:pointer;color:rgba(50,57,21,.2);transition:color .15s}
+  .rv-stars svg.on{color:var(--gold)}
+  .rv-field{margin-bottom:16px}
+  .rv-field label{display:block;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--olive);margin-bottom:7px}
+  .rv-field textarea,.rv-field input[type=file]{
+    width:100%;font-family:var(--sans);font-size:14px;
+    border:1.5px solid rgba(50,57,21,.25);border-radius:10px;
+    padding:12px;background:#fffaeb;color:var(--dark);box-sizing:border-box;
+  }
+  .rv-field textarea{min-height:90px;resize:vertical}
+  .rv-submit{
+    width:100%;padding:14px;border:none;border-radius:10px;
+    background:var(--olive);color:var(--cream);font-family:var(--subtitle);
+    font-weight:700;letter-spacing:.16em;text-transform:uppercase;font-size:13px;
+    cursor:pointer;transition:background .25s ease;
+  }
+  .rv-submit:hover{background:var(--gold)}
+  .rv-submit:disabled{opacity:.6;cursor:default}
+  .rv-google{
+    width:100%;padding:13px;border:1.5px solid rgba(50,57,21,.25);
+    border-radius:10px;background:#fff;color:var(--dark);
+    font-family:var(--sans);font-weight:600;font-size:14px;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;gap:10px;
+  }
+  .rv-google:hover{border-color:var(--gold)}
+  .rv-msg{font-size:13px;margin-top:12px;text-align:center}
+  .rv-msg.ok{color:var(--sage)}
+  .rv-msg.err{color:#b5562b}
+  .rv-user{font-size:13px;color:#6a6650;margin-bottom:16px}
+  .rv-user b{color:var(--olive)}
+
   /* ===== Orden de las secciones (reordenamiento sin tocar el HTML) ===== */
   .page-sections{display:flex;flex-direction:column}
   #explicaciones{order:1}   /* No todo lo que normalizamos es natural */
@@ -3332,9 +3417,13 @@
       <span class="eye" data-cms="resenas.eyebrow">Testimonios</span>
       <h2 data-cms="resenas.titulo">Nuestros Clientes Felices</h2>
       <p data-cms="resenas.subtitulo">Historias reales de familias que cambiaron la forma de alimentar a sus felinos.</p>
+      <button type="button" class="review-add-btn" id="reviewAddBtn">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+        Dejá tu reseña
+      </button>
     </div>
 
-    <div class="review-grid stagger fade-in">
+    <div class="review-grid stagger fade-in" id="reviewGrid">
       <div class="review-card">
         <div class="quote">“</div>
         <div class="stars">
@@ -3392,6 +3481,7 @@
         </div>
       </div>
     </div>
+    <div class="reviews-pager" id="reviewsPager" aria-label="Paginación de reseñas"></div>
   </div>
 </section>
 
@@ -4113,6 +4203,196 @@ if(heroImg){
     })
     .catch(function(){ /* silencioso: queda el HTML original */ });
 })();
+</script>
+
+<!-- ===== Modal de reseña ===== -->
+<div class="rv-modal" id="rvModal" aria-hidden="true">
+  <div class="rv-box" role="dialog" aria-modal="true" aria-label="Dejá tu reseña">
+    <button class="rv-close" id="rvClose" aria-label="Cerrar">×</button>
+    <h3>Dejá tu reseña</h3>
+    <p class="rv-sub">Contanos tu experiencia con BARFirenzina 🐾</p>
+
+    <div id="rvAuth">
+      <p class="rv-sub">Para dejar una reseña, ingresá con tu cuenta de Google.</p>
+      <button class="rv-google" id="rvGoogleBtn" type="button">
+        <svg viewBox="0 0 24 24" width="18" height="18"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.27-4.74 3.27-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84A11 11 0 0 0 12 23z"/><path fill="#FBBC05" d="M5.84 14.1a6.6 6.6 0 0 1 0-4.2V7.06H2.18a11 11 0 0 0 0 9.88l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15A11 11 0 0 0 12 1 11 11 0 0 0 2.18 7.06l3.66 2.84C6.71 7.31 9.14 5.38 12 5.38z"/></svg>
+        Continuar con Google
+      </button>
+    </div>
+
+    <form id="rvForm" style="display:none">
+      <div class="rv-user">Publicás como <b id="rvUserName"></b></div>
+      <div class="rv-field">
+        <label>Tu puntuación</label>
+        <div class="rv-stars" id="rvStars">
+          <svg data-v="1" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8 5.8 21.3l2.4-7.4L2 9.4h7.6z"/></svg>
+          <svg data-v="2" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8 5.8 21.3l2.4-7.4L2 9.4h7.6z"/></svg>
+          <svg data-v="3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8 5.8 21.3l2.4-7.4L2 9.4h7.6z"/></svg>
+          <svg data-v="4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8 5.8 21.3l2.4-7.4L2 9.4h7.6z"/></svg>
+          <svg data-v="5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8 5.8 21.3l2.4-7.4L2 9.4h7.6z"/></svg>
+        </div>
+      </div>
+      <div class="rv-field">
+        <label for="rvText">Tu reseña</label>
+        <textarea id="rvText" maxlength="500" placeholder="¿Cómo le fue a tu gato con BARFirenzina?" required></textarea>
+      </div>
+      <div class="rv-field">
+        <label for="rvPhoto">Foto de tu gato (opcional)</label>
+        <input type="file" id="rvPhoto" accept="image/*">
+      </div>
+      <button class="rv-submit" type="submit" id="rvSubmit">Enviar reseña</button>
+      <div class="rv-msg" id="rvMsg"></div>
+    </form>
+  </div>
+</div>
+
+<!-- ===== Motor de reseñas: Firebase Auth + Firestore + Cloudinary ===== -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+  import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged }
+    from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+  import { getFirestore, collection, addDoc, getDocs, query, where, orderBy, serverTimestamp }
+    from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCUsfhG9prlxCuPBFJQT2fInEqVpO1mfVw",
+    authDomain: "barfirenzina-web.firebaseapp.com",
+    projectId: "barfirenzina-web",
+    storageBucket: "barfirenzina-web.firebasestorage.app",
+    messagingSenderId: "899586921324",
+    appId: "1:899586921324:web:241a7f747e5f2cbbb5d949"
+  };
+
+  /* ⚠️ COMPLETAR con tus datos de Cloudinary (Cloud name + Upload preset unsigned).
+     Si quedan vacíos, las reseñas funcionan SIN foto. */
+  const CLOUDINARY_CLOUD  = "__CLOUDINARY_CLOUD__";
+  const CLOUDINARY_PRESET = "__CLOUDINARY_PRESET__";
+
+  const app  = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db   = getFirestore(app);
+  const provider = new GoogleAuthProvider();
+
+  const $ = (id) => document.getElementById(id);
+  const modal = $('rvModal');
+  let currentUser = null, rating = 5;
+
+  // ---- Abrir / cerrar modal ----
+  function openModal(){ modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); }
+  function closeModal(){ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); }
+  $('reviewAddBtn')?.addEventListener('click', openModal);
+  $('rvClose')?.addEventListener('click', closeModal);
+  modal?.addEventListener('click', e => { if(e.target === modal) closeModal(); });
+
+  // ---- Login Google ----
+  $('rvGoogleBtn')?.addEventListener('click', async () => {
+    try { await signInWithPopup(auth, provider); }
+    catch(e){ $('rvMsg').textContent = 'No se pudo iniciar sesión. Probá de nuevo.'; $('rvMsg').className='rv-msg err'; }
+  });
+  onAuthStateChanged(auth, (user) => {
+    currentUser = user;
+    if(user){
+      $('rvAuth').style.display = 'none';
+      $('rvForm').style.display = 'block';
+      $('rvUserName').textContent = user.displayName || user.email;
+    } else {
+      $('rvAuth').style.display = 'block';
+      $('rvForm').style.display = 'none';
+    }
+  });
+
+  // ---- Estrellas ----
+  const starsEl = $('rvStars');
+  function paintStars(){ [...starsEl.children].forEach(s => s.classList.toggle('on', +s.dataset.v <= rating)); }
+  [...starsEl.children].forEach(s => s.addEventListener('click', () => { rating = +s.dataset.v; paintStars(); }));
+  paintStars();
+
+  // ---- Subir foto a Cloudinary (opcional) ----
+  async function uploadPhoto(file){
+    if(!file || CLOUDINARY_CLOUD.startsWith('__')) return '';
+    const fd = new FormData();
+    fd.append('file', file);
+    fd.append('upload_preset', CLOUDINARY_PRESET);
+    const r = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD}/image/upload`, { method:'POST', body:fd });
+    if(!r.ok) throw new Error('cloudinary');
+    const j = await r.json();
+    return j.secure_url || '';
+  }
+
+  // ---- Enviar reseña (queda pendiente de moderación) ----
+  $('rvForm')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = $('rvSubmit'), msg = $('rvMsg');
+    const texto = $('rvText').value.trim();
+    if(!texto){ return; }
+    btn.disabled = true; btn.textContent = 'Enviando…'; msg.textContent='';
+    try {
+      let fotoURL = '';
+      const f = $('rvPhoto').files[0];
+      if(f){ try { fotoURL = await uploadPhoto(f); } catch(_){ /* sigue sin foto */ } }
+      await addDoc(collection(db, 'resenas'), {
+        nombre: currentUser.displayName || 'Cliente',
+        email: currentUser.email,
+        uid: currentUser.uid,
+        texto, estrellas: rating, fotoURL,
+        status: 'pending',
+        fecha: serverTimestamp()
+      });
+      msg.textContent = '¡Gracias! Tu reseña fue enviada y será publicada tras una breve revisión.';
+      msg.className = 'rv-msg ok';
+      $('rvText').value = ''; $('rvPhoto').value = ''; rating = 5; paintStars();
+      setTimeout(closeModal, 2600);
+    } catch(err){
+      msg.textContent = 'No se pudo enviar la reseña. Intentá más tarde.';
+      msg.className = 'rv-msg err';
+    } finally {
+      btn.disabled = false; btn.textContent = 'Enviar reseña';
+    }
+  });
+
+  // ---- Mostrar reseñas aprobadas, paginadas de a 6 ----
+  const PER_PAGE = 6;
+  function starsSVG(n){
+    let s=''; for(let i=0;i<5;i++){ s+=`<svg viewBox="0 0 24 24" fill="currentColor" style="opacity:${i<n?1:.25}"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8 5.8 21.3l2.4-7.4L2 9.4h7.6z"/></svg>`; }
+    return s;
+  }
+  function cardHTML(r){
+    const photo = r.fotoURL ? `<img class="r-photo" src="${r.fotoURL}" alt="Foto de ${r.nombre}" loading="lazy">` : '';
+    const inicial = (r.nombre||'C').trim().charAt(0).toUpperCase();
+    return `<div class="review-card">
+      <div class="quote">“</div>
+      <div class="stars">${starsSVG(r.estrellas||5)}</div>
+      ${photo}
+      <p class="text">${(r.texto||'').replace(/</g,'&lt;')}</p>
+      <div class="person"><div class="avatar">${inicial}</div>
+      <div><div class="name">${(r.nombre||'Cliente').replace(/</g,'&lt;')}</div>
+      <div class="role">Cliente verificado</div></div></div>
+    </div>`;
+  }
+  (async function renderReviews(){
+    try {
+      const q = query(collection(db,'resenas'), where('status','==','approved'), orderBy('fecha','desc'));
+      const snap = await getDocs(q);
+      const all = []; snap.forEach(d => all.push(d.data()));
+      if(!all.length) return; // sin aprobadas → quedan las 3 de ejemplo
+      const grid = $('reviewGrid'), pager = $('reviewsPager');
+      const pages = Math.ceil(all.length / PER_PAGE);
+      let page = 1;
+      function draw(){
+        const start = (page-1)*PER_PAGE;
+        grid.innerHTML = all.slice(start, start+PER_PAGE).map(cardHTML).join('');
+        if(pages <= 1){ pager.innerHTML=''; return; }
+        let h = `<button ${page===1?'disabled':''} data-go="${page-1}">‹</button>`;
+        for(let i=1;i<=pages;i++) h += `<button class="${i===page?'active':''}" data-go="${i}">${i}</button>`;
+        h += `<button ${page===pages?'disabled':''} data-go="${page+1}">›</button>`;
+        pager.innerHTML = h;
+        pager.querySelectorAll('button[data-go]').forEach(b=>b.addEventListener('click',()=>{
+          const g=+b.dataset.go; if(g>=1&&g<=pages){ page=g; draw(); document.getElementById('resenas').scrollIntoView({behavior:'smooth'}); }
+        }));
+      }
+      draw();
+    } catch(e){ /* error → quedan las reseñas de ejemplo */ }
+  })();
 </script>
 
 </body>

@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="robots" content="noindex"/>
+<title>Moderar reseñas · BARFirenzina</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:#F6F6E9;color:#2A281F;padding:32px 18px;line-height:1.5}
+  .wrap{max-width:780px;margin:0 auto}
+  h1{font-family:Georgia,serif;color:#323915;font-size:26px;margin-bottom:6px}
+  .sub{color:#6a6650;font-size:14px;margin-bottom:26px}
+  button{font-family:inherit;cursor:pointer;border:none;border-radius:9px;font-weight:700}
+  .gbtn{background:#fff;border:1.5px solid rgba(50,57,21,.25);padding:13px 22px;font-size:14px}
+  .gbtn:hover{border-color:#A38E48}
+  .card{background:#fff;border:1px solid rgba(50,57,21,.14);border-radius:14px;padding:20px;margin-bottom:16px}
+  .card .top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap}
+  .card .who{font-weight:700;color:#323915}
+  .card .mail{font-size:12px;color:#8a8570}
+  .card .stars{color:#A38E48;letter-spacing:2px}
+  .card .txt{margin:10px 0;font-size:15px}
+  .card img{max-width:220px;border-radius:10px;display:block;margin:10px 0}
+  .acts{display:flex;gap:10px;margin-top:12px}
+  .ok{background:#7C8456;color:#fff;padding:10px 20px}
+  .no{background:#b5562b;color:#fff;padding:10px 20px}
+  .empty{color:#6a6650;padding:30px 0;text-align:center}
+  .msg{margin:14px 0;font-size:14px;color:#7C8456}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Moderar reseñas</h1>
+  <p class="sub">Aprobá o rechazá las reseñas que dejaron los clientes. Solo el administrador puede entrar.</p>
+  <div id="auth"><button class="gbtn" id="loginBtn">Ingresar con Google</button></div>
+  <div id="panel" style="display:none">
+    <p class="msg" id="msg"></p>
+    <div id="list"></div>
+  </div>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+  import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut }
+    from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+  import { getFirestore, collection, getDocs, query, where, orderBy, doc, updateDoc, deleteDoc }
+    from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCUsfhG9prlxCuPBFJQT2fInEqVpO1mfVw",
+    authDomain: "barfirenzina-web.firebaseapp.com",
+    projectId: "barfirenzina-web",
+    storageBucket: "barfirenzina-web.firebasestorage.app",
+    messagingSenderId: "899586921324",
+    appId: "1:899586921324:web:241a7f747e5f2cbbb5d949"
+  };
+  const ADMIN_EMAIL = "barfirenzinaweb@gmail.com";
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  const $ = id => document.getElementById(id);
+
+  $('loginBtn').onclick = () => signInWithPopup(auth, new GoogleAuthProvider()).catch(()=>{});
+
+  onAuthStateChanged(auth, user => {
+    if(user && user.email === ADMIN_EMAIL){
+      $('auth').style.display='none'; $('panel').style.display='block'; load();
+    } else if(user){
+      $('auth').innerHTML = '<p class="sub">La cuenta <b>'+user.email+'</b> no tiene permiso de moderación.</p><button class="gbtn" id="lo">Salir</button>';
+      $('lo').onclick=()=>signOut(auth);
+    } else {
+      $('auth').innerHTML = '<button class="gbtn" id="loginBtn">Ingresar con Google</button>';
+      $('loginBtn').onclick = () => signInWithPopup(auth, new GoogleAuthProvider()).catch(()=>{});
+    }
+  });
+
+  function stars(n){ return '★'.repeat(n||5) + '☆'.repeat(5-(n||5)); }
+
+  async function load(){
+    $('list').innerHTML = 'Cargando…';
+    const q = query(collection(db,'resenas'), where('status','==','pending'), orderBy('fecha','desc'));
+    const snap = await getDocs(q);
+    if(snap.empty){ $('list').innerHTML='<p class="empty">No hay reseñas pendientes 🎉</p>'; return; }
+    $('list').innerHTML='';
+    snap.forEach(d=>{
+      const r=d.data();
+      const el=document.createElement('div'); el.className='card';
+      el.innerHTML = `<div class="top"><div><div class="who">${(r.nombre||'').replace(/</g,'&lt;')}</div>
+        <div class="mail">${r.email||''}</div></div><div class="stars">${stars(r.estrellas)}</div></div>
+        <div class="txt">${(r.texto||'').replace(/</g,'&lt;')}</div>
+        ${r.fotoURL?`<img src="${r.fotoURL}" alt="">`:''}
+        <div class="acts"><button class="ok">Aprobar</button><button class="no">Rechazar</button></div>`;
+      el.querySelector('.ok').onclick = async ()=>{ await updateDoc(doc(db,'resenas',d.id),{status:'approved'}); el.remove(); checkEmpty(); };
+      el.querySelector('.no').onclick = async ()=>{ if(confirm('¿Rechazar y borrar esta reseña?')){ await deleteDoc(doc(db,'resenas',d.id)); el.remove(); checkEmpty(); } };
+      $('list').appendChild(el);
+    });
+  }
+  function checkEmpty(){ if(!$('list').children.length) $('list').innerHTML='<p class="empty">No hay reseñas pendientes 🎉</p>'; }
+</script>
+</body>
+</html>

@@ -10,3 +10,8 @@
   for = "/content/*"
   [headers.values]
     Cache-Control = "no-cache, no-store, must-revalidate"
+
+[[headers]]
+  for = "/moderar/*"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
