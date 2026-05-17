@@ -1,6 +1,9 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: barfirenzinaweb-svg/WEB-BARFIRENZINA
   branch: main
+  base_url: https://web-barfirenzina.vercel.app
+  auth_endpoint: api/auth
 
 # Las imágenes que suba la clienta van a la carpeta assets/
 media_folder: "assets"
