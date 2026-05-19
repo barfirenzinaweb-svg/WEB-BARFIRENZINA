@@ -1611,9 +1611,9 @@
   }
   .product-grid.two-cols{
     grid-template-columns:repeat(2,1fr);
-    max-width:1100px;margin:0 auto;
-    gap:clamp(28px, 4vw, 70px);
-    padding-top:clamp(60px, 7vw, 100px);
+    max-width:880px;margin:0 auto;
+    gap:clamp(22px, 3vw, 48px);
+    padding-top:clamp(50px, 6vw, 80px);
   }
   /* wrapper allows kitten-decor to peek above the card without breaking ribbon clip */
   .product-card-wrap{position:relative}
@@ -1642,9 +1642,9 @@
   }
   /* Numero de receta (#01, #02) en esquina superior derecha */
   .product-card .recipe-num{
-    position:absolute;top:14px;right:18px;z-index:4;
+    position:absolute;top:12px;right:14px;z-index:4;
     font-family:var(--serif);font-weight:500;
-    font-size:clamp(28px, 2.6vw, 38px);
+    font-size:clamp(22px, 2vw, 30px);
     color:var(--gold);opacity:.55;
     line-height:1;letter-spacing:-.02em;pointer-events:none;
     transition:opacity .4s ease, transform .4s ease;
@@ -1756,44 +1756,44 @@
   .quick-view:hover svg{color:var(--cream)}
 
   .card-body{
-    padding:clamp(26px,2.6vw,38px) clamp(24px,2.5vw,36px) clamp(26px,2.6vw,36px);
+    padding:clamp(20px,2vw,28px) clamp(18px,2vw,26px) clamp(20px,2vw,26px);
     position:relative;
     background:var(--cream-2);
   }
   .card-body .category{
-    font-size:11px;letter-spacing:.32em;text-transform:uppercase;
-    font-weight:700;color:var(--gold);margin-bottom:10px;
-    display:inline-flex;align-items:center;gap:8px;
+    font-size:10px;letter-spacing:.28em;text-transform:uppercase;
+    font-weight:700;color:var(--gold);margin-bottom:8px;
+    display:inline-flex;align-items:center;gap:7px;
   }
   .card-body .category::before{
-    content:"";width:22px;height:1px;background:var(--gold);
+    content:"";width:18px;height:1px;background:var(--gold);
   }
   .product-card h3{
     font-family:var(--display);
-    font-size:clamp(26px, 2.4vw, 36px);
+    font-size:clamp(20px, 1.8vw, 26px);
     font-weight:800;
     color:var(--olive);
-    margin-bottom:10px;
+    margin-bottom:8px;
     line-height:1.05;
     letter-spacing:-.005em;
     text-transform:uppercase;
   }
   .product-card .desc{
-    font-size:clamp(13px, 1.05vw, 15px);
-    line-height:1.55;
+    font-size:clamp(12px, .95vw, 13.5px);
+    line-height:1.5;
     color:#6a6650;
-    margin-bottom:18px;
+    margin-bottom:14px;
     font-style:normal;
     max-width:38ch;
   }
   /* Highlights pequeños (3 features con check gold) */
   .product-highlights{
-    list-style:none;padding:0;margin:0 0 18px;
-    display:flex;flex-direction:column;gap:8px;
+    list-style:none;padding:0;margin:0 0 14px;
+    display:flex;flex-direction:column;gap:6px;
   }
   .product-highlights li{
-    display:flex;align-items:center;gap:10px;
-    font-size:13px;color:var(--dark);font-weight:500;
+    display:flex;align-items:center;gap:9px;
+    font-size:12px;color:var(--dark);font-weight:500;
   }
   .product-highlights li::before{
     content:"";flex-shrink:0;
@@ -1827,7 +1827,7 @@
   }
   .price{
     font-family:var(--serif);
-    font-size:clamp(32px, 3vw, 44px);
+    font-size:clamp(24px, 2.2vw, 32px);
     font-weight:600;
     color:var(--olive);
     letter-spacing:-.02em;
@@ -1835,15 +1835,15 @@
   }
   .price .cur{
     font-family:var(--mono);
-    font-size:16px;vertical-align:super;margin-right:3px;font-weight:600;
+    font-size:13px;vertical-align:super;margin-right:2px;font-weight:600;
     color:var(--gold);
   }
   .price small{font-family:var(--serif);font-weight:500;color:var(--gold);font-size:.5em !important}
 
   .add-btn{
     background:var(--olive);color:var(--cream);
-    padding:15px 26px;border-radius:999px;
-    font-size:11px;letter-spacing:.26em;text-transform:uppercase;font-weight:700;
+    padding:11px 20px;border-radius:999px;
+    font-size:10px;letter-spacing:.22em;text-transform:uppercase;font-weight:700;
     display:inline-flex;align-items:center;gap:10px;
     transition:background .3s ease, transform .25s ease, gap .3s ease, box-shadow .3s ease;
     position:relative;overflow:hidden;
