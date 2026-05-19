@@ -43,7 +43,7 @@
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
   import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut }
     from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
-  import { getFirestore, collection, getDocs, query, where, orderBy, doc, updateDoc, deleteDoc }
+  import { getFirestore, collection, getDocs, query, where, doc, updateDoc, deleteDoc }
     from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
   const firebaseConfig = {
@@ -79,12 +79,28 @@
 
   async function load(){
     $('list').innerHTML = 'Cargando…';
-    const q = query(collection(db,'resenas'), where('status','==','pending'), orderBy('fecha','desc'));
-    const snap = await getDocs(q);
+    let snap;
+    try {
+      // Query simple (sin orderBy) → no requiere índice compuesto. Ordenamos en JS abajo.
+      const q = query(collection(db,'resenas'), where('status','==','pending'));
+      snap = await getDocs(q);
+    } catch(err){
+      $('list').innerHTML = '<p class="empty">Error al cargar reseñas:<br>'+(err.message||err)+'</p>';
+      console.error(err);
+      return;
+    }
     if(snap.empty){ $('list').innerHTML='<p class="empty">No hay reseñas pendientes 🎉</p>'; return; }
+    // Ordenamos por fecha desc en cliente (más recientes primero)
+    const docs = [];
+    snap.forEach(d=> docs.push({id:d.id, data:d.data()}));
+    docs.sort((a,b)=>{
+      const ta = a.data.fecha?.seconds || 0;
+      const tb = b.data.fecha?.seconds || 0;
+      return tb - ta;
+    });
     $('list').innerHTML='';
-    snap.forEach(d=>{
-      const r=d.data();
+    docs.forEach(({id, data:r})=>{
+      const d = { id };
       const el=document.createElement('div'); el.className='card';
       el.innerHTML = `<div class="top"><div><div class="who">${(r.nombre||'').replace(/</g,'&lt;')}</div>
         <div class="mail">${r.email||''}</div></div><div class="stars">${stars(r.estrellas)}</div></div>

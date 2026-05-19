@@ -4291,7 +4291,7 @@ if(heroImg){
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
   import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged }
     from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
-  import { getFirestore, collection, addDoc, getDocs, query, where, orderBy, serverTimestamp }
+  import { getFirestore, collection, addDoc, getDocs, query, where, serverTimestamp }
     from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
   const firebaseConfig = {
@@ -4411,10 +4411,16 @@ if(heroImg){
   }
   (async function renderReviews(){
     try {
-      const q = query(collection(db,'resenas'), where('status','==','approved'), orderBy('fecha','desc'));
+      // Query simple (sin orderBy) → no requiere índice compuesto. Ordenamos en JS abajo.
+      const q = query(collection(db,'resenas'), where('status','==','approved'));
       const snap = await getDocs(q);
       const all = []; snap.forEach(d => all.push(d.data()));
       if(!all.length) return; // sin aprobadas → quedan las 3 de ejemplo
+      all.sort((a,b)=>{
+        const ta = a.fecha?.seconds || 0;
+        const tb = b.fecha?.seconds || 0;
+        return tb - ta;
+      });
       const grid = $('reviewGrid'), pager = $('reviewsPager');
       const pages = Math.ceil(all.length / PER_PAGE);
       let page = 1;
