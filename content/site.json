@@ -45,30 +45,46 @@
     "eyebrow": "Nuestras Recetas",
     "titulo": "Crudo o Cocido. Vos elegís.",
     "subtitulo": "Dos formatos con la misma fórmula nutricional, adaptados a lo que tu gato prefiere y necesita.",
-    "producto_crudo": {
-      "categoria": "Receta Cruda",
-      "nombre": "BARF Crudo",
-      "descripcion": "Carne y órganos frescos sin cocción. Nutrientes biológicamente intactos, listos para servir.",
-      "precio": "13",
-      "precio_anterior": "16.00",
-      "highlights": [
-        "Cadena de frío 100% controlada",
-        "Sin conservantes ni aditivos",
-        "Formulado por nutricionistas"
-      ]
-    },
-    "producto_cocido": {
-      "categoria": "Receta Cocida",
-      "nombre": "BARF Cocido",
-      "descripcion": "La misma fórmula, cocida a baja temperatura. Ideal para gatos sensibles o senior.",
-      "precio": "13",
-      "precio_anterior": "",
-      "highlights": [
-        "Cocción lenta a baja temperatura",
-        "Más digerible para gatos delicados",
-        "Misma trazabilidad de ingredientes"
-      ]
-    }
+    "productos": [
+      {
+        "id": "crudo",
+        "nombre": "BARF Crudo",
+        "categoria": "Receta Cruda",
+        "imagen": "/assets/barf-crudo.jpg",
+        "descripcion": "Carne y órganos frescos sin cocción. Nutrientes biológicamente intactos, listos para servir.",
+        "precio": "13",
+        "precio_anterior": "16.00",
+        "peso": "500 g",
+        "tag": "Más Vendido",
+        "tag_gold": true,
+        "ribbon": "Bestseller",
+        "reviews_count": "348",
+        "highlights": [
+          "Cadena de frío 100% controlada",
+          "Sin conservantes ni aditivos",
+          "Formulado por nutricionistas"
+        ]
+      },
+      {
+        "id": "cocido",
+        "nombre": "BARF Cocido",
+        "categoria": "Receta Cocida",
+        "imagen": "/assets/barf-cocido.jpg",
+        "descripcion": "La misma fórmula, cocida a baja temperatura. Ideal para gatos sensibles o senior.",
+        "precio": "13",
+        "precio_anterior": "",
+        "peso": "500 g",
+        "tag": "Suave",
+        "tag_gold": false,
+        "ribbon": "",
+        "reviews_count": "217",
+        "highlights": [
+          "Cocción lenta a baja temperatura",
+          "Más digerible para gatos delicados",
+          "Misma trazabilidad de ingredientes"
+        ]
+      }
+    ]
   },
   "comunidad": {
     "eyebrow": "Comunidad",

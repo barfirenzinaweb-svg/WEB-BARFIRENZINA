@@ -4023,24 +4023,23 @@ document.querySelectorAll('.faq-item').forEach(item=>{
     toastTimer = setTimeout(()=>toast.classList.remove('show'), 2400);
   }
 
-  // Hook up add-to-cart buttons
-  document.querySelectorAll('.product-card .add-btn').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      const card = btn.closest('.product-card');
-      if(!card) return;
-      const id = card.dataset.id;
-      const name = card.dataset.name;
-      const price = parseFloat(card.dataset.price);
-      const img = card.dataset.img;
-      const existing = cart.find(c=>c.id===id);
-      if(existing) existing.qty += 1;
-      else cart.push({id, name, price, img, qty:1});
-      save(); render();
-      // little bump on badge
-      countEl.classList.add('pop');
-      setTimeout(()=>countEl.classList.remove('pop'), 450);
-      showToast(`${name} agregado al carrito`);
-    });
+  // Event delegation: funciona también con productos generados dinámicamente desde el CMS
+  document.addEventListener('click', (e)=>{
+    const btn = e.target.closest('.product-card .add-btn');
+    if(!btn) return;
+    const card = btn.closest('.product-card');
+    if(!card) return;
+    const id = card.dataset.id;
+    const name = card.dataset.name;
+    const price = parseFloat(card.dataset.price);
+    const img = card.dataset.img;
+    const existing = cart.find(c=>c.id===id);
+    if(existing) existing.qty += 1;
+    else cart.push({id, name, price, img, qty:1});
+    save(); render();
+    countEl.classList.add('pop');
+    setTimeout(()=>countEl.classList.remove('pop'), 450);
+    showToast(`${name} agregado al carrito`);
   });
 
   render();
@@ -4186,20 +4185,61 @@ if(heroImg){
           if(rl && rev[i].rol) rl.textContent = rev[i].rol;
         });
       }
-      // 4) Precio del producto → sincroniza también el carrito (data-price)
-      [['producto_crudo','1'],['producto_cocido','2']].forEach(function(p){
-        var card = document.querySelector('.product-card[data-id="'+p[1]+'"]');
-        var d = get(data, 'recetas.' + p[0]);
-        if(!card || !d) return;
-        if(d.precio){
-          card.setAttribute('data-price', d.precio);
-          var priceEl = card.querySelector('.price');
-          if(priceEl) priceEl.innerHTML = '<span class="cur">$</span>' + d.precio + '<small style="font-size:16px">.00</small>';
+      // 4) Productos dinámicos: si hay un array recetas.productos, regenera todas las tarjetas
+      var productos = get(data, 'recetas.productos');
+      if(Array.isArray(productos) && productos.length){
+        var grid = document.querySelector('.product-grid');
+        if(grid){
+          grid.classList.remove('two-cols'); // permite 3+ columnas si hay más productos
+          grid.innerHTML = productos.map(function(p, i){
+            var num = String(i+1).padStart(2,'0');
+            var img = p.imagen || 'assets/barf-crudo.jpg';
+            var ribbon  = p.ribbon ? '<div class="ribbon">'+esc(p.ribbon)+'</div>' : '';
+            var tag     = p.tag ? '<div class="tag'+(p.tag_gold?' gold':'')+'">'+esc(p.tag)+'</div>' : '';
+            var was     = p.precio_anterior ? '<span class="was">$'+esc(p.precio_anterior)+'</span>' : '';
+            var hl = Array.isArray(p.highlights)
+              ? '<ul class="product-highlights">'+p.highlights.map(function(h){return '<li>'+esc(h)+'</li>';}).join('')+'</ul>'
+              : '';
+            var stars = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8 5.8 21.3l2.4-7.4L2 9.4h7.6z"/></svg>';
+            var starsAll = stars+stars+stars+stars+stars;
+            var revCount = p.reviews_count ? '<span class="rev-count">('+esc(p.reviews_count)+')</span>' : '';
+            var precio = esc(p.precio || '0');
+            var nombre = esc(p.nombre || 'Producto');
+            return '<div class="product-card-wrap">'+
+              '<svg class="kitten-decor" viewBox="0 0 100 100" fill="none" aria-hidden="true"><g class="kitten-body">'+
+              '<path d="M43 56 C40 64, 41 78, 44 88 L56 88 C59 78, 60 64, 57 56 Z" fill="currentColor"/>'+
+              '<circle cx="50" cy="44" r="14" fill="currentColor"/>'+
+              '<path d="M39 38 L35 24 L44 34 Z" fill="currentColor"/><path d="M61 38 L65 24 L56 34 Z" fill="currentColor"/>'+
+              '<circle cx="45" cy="44" r="4" fill="#F6F6E9"/><circle cx="55" cy="44" r="4" fill="#F6F6E9"/>'+
+              '<circle cx="45" cy="45" r="1.8" fill="currentColor"/><circle cx="55" cy="45" r="1.8" fill="currentColor"/>'+
+              '<path d="M58 76 Q68 72 66 62" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"/>'+
+              '</g></svg>'+
+              '<article class="product-card" data-id="'+esc(p.id||('p'+i))+'" data-name="'+nombre+'" data-price="'+precio+'" data-img="'+esc(img)+'">'+
+              '<span class="recipe-num">'+num+'</span>'+
+              ribbon+
+              '<div class="product-photo product-photo-real">'+
+              tag+
+              '<button class="quick-view" aria-label="Vista rápida"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg></button>'+
+              (p.peso?'<div class="weight-badge">'+esc(p.peso)+'</div>':'')+
+              '<img src="'+esc(img)+'" alt="'+nombre+'"/></div>'+
+              '<div class="card-body">'+
+                '<div class="category">'+esc(p.categoria||'')+'</div>'+
+                '<h3>'+nombre+'</h3>'+
+                '<p class="desc">'+esc(p.descripcion||'')+'</p>'+
+                hl+
+                '<div class="stars">'+starsAll+revCount+'</div>'+
+                '<div class="divider"></div>'+
+                '<div class="product-row">'+
+                  '<div class="price-wrap">'+was+
+                  '<span class="price"><span class="cur">$</span>'+precio+'<small style="font-size:16px">.00</small></span>'+
+                  '</div>'+
+                  '<button class="add-btn"><span>Añadir</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>'+
+                '</div>'+
+              '</div></article></div>';
+          }).join('');
         }
-        var wasEl = card.querySelector('.was');
-        if(wasEl) wasEl.style.display = d.precio_anterior ? '' : 'none';
-        if(wasEl && d.precio_anterior) wasEl.textContent = '$' + d.precio_anterior;
-      });
+      }
+      function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');}
     })
     .catch(function(){ /* silencioso: queda el HTML original */ });
 })();

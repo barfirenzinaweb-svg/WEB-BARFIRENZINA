@@ -59,26 +59,24 @@ collections:
               - { label: "Pre-título", name: "eyebrow", widget: "string" }
               - { label: "Título", name: "titulo", widget: "string" }
               - { label: "Subtítulo", name: "subtitulo", widget: "text" }
-              - label: "Producto: BARF Crudo"
-                name: "producto_crudo"
-                widget: "object"
+              - label: "Productos (podés agregar, editar y borrar tarjetas)"
+                name: "productos"
+                widget: "list"
+                summary: "{{fields.nombre}} — ${{fields.precio}}"
                 fields:
-                  - { label: "Categoría", name: "categoria", widget: "string" }
-                  - { label: "Nombre", name: "nombre", widget: "string" }
+                  - { label: "ID único (sin espacios, ej: crudo, cocido, kitten)", name: "id", widget: "string", hint: "Identificador para el carrito. NO repetir entre productos." }
+                  - { label: "Nombre del producto", name: "nombre", widget: "string" }
+                  - { label: "Categoría (ej: Receta Cruda)", name: "categoria", widget: "string" }
+                  - { label: "Imagen del producto", name: "imagen", widget: "image", required: false, hint: "Subí la foto del producto. Si la dejás vacía, se usa la imagen por defecto." }
                   - { label: "Descripción", name: "descripcion", widget: "text" }
-                  - { label: "Precio (solo número)", name: "precio", widget: "string" }
+                  - { label: "Precio (solo número, sin $)", name: "precio", widget: "string" }
                   - { label: "Precio anterior (vacío = sin descuento)", name: "precio_anterior", widget: "string", required: false }
-                  - { label: "Beneficios (3 ítems)", name: "highlights", widget: "list", field: { label: "Beneficio", name: "item", widget: "string" } }
-              - label: "Producto: BARF Cocido"
-                name: "producto_cocido"
-                widget: "object"
-                fields:
-                  - { label: "Categoría", name: "categoria", widget: "string" }
-                  - { label: "Nombre", name: "nombre", widget: "string" }
-                  - { label: "Descripción", name: "descripcion", widget: "text" }
-                  - { label: "Precio (solo número)", name: "precio", widget: "string" }
-                  - { label: "Precio anterior (vacío = sin descuento)", name: "precio_anterior", widget: "string", required: false }
-                  - { label: "Beneficios (3 ítems)", name: "highlights", widget: "list", field: { label: "Beneficio", name: "item", widget: "string" } }
+                  - { label: "Peso (ej: 500 g)", name: "peso", widget: "string", default: "500 g", required: false }
+                  - { label: "Etiqueta destacada (ej: Más Vendido / Suave / Nuevo)", name: "tag", widget: "string", required: false }
+                  - { label: "¿Etiqueta en color dorado?", name: "tag_gold", widget: "boolean", default: false, required: false }
+                  - { label: "Cinta superior (ej: Bestseller). Vacío = sin cinta", name: "ribbon", widget: "string", required: false }
+                  - { label: "Cantidad de reseñas (ej: 348)", name: "reviews_count", widget: "string", default: "0", required: false }
+                  - { label: "Beneficios (lista, ej: Sin conservantes)", name: "highlights", widget: "list", field: { label: "Beneficio", name: "item", widget: "string" } }
 
           - label: "Bloque Comunidad"
             name: "comunidad"
