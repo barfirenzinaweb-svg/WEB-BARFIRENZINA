@@ -1175,24 +1175,25 @@
     background:var(--olive);color:var(--gold);transform:translateY(-2px);
   }
   /* En desktop/tablet el botón sigue anclado a la imagen del hero (left:40%/bottom:26%).
-     En mobile se centra horizontalmente y agranda los mínimos para que se vea bien. */
+     En mobile agrandamos el hero (aspect 1.7/1) y centramos el botón abajo, más chico. */
   @media (max-width:620px){
+    .hero{aspect-ratio:1.7/1}
     .hero-cta-btn{
       left:50%;
-      bottom:8%;
+      bottom:5%;
       transform:translateX(-50%);
-      font-size:11px;
-      letter-spacing:.14em;
-      padding:9px 18px;
-      gap:7px;
-      border-radius:8px;
+      font-size:9.5px;
+      letter-spacing:.12em;
+      padding:7px 14px;
+      gap:6px;
+      border-radius:7px;
       box-shadow:inset 0 0 0 2px var(--gold), inset 0 0 0 3px rgba(246,237,209,.6), inset 0 0 0 4px var(--gold);
       white-space:nowrap;
     }
     .hero-cta-btn:hover{
       transform:translateX(-50%) translateY(-2px);
     }
-    .hero-cta-btn svg{width:1em;height:1em}
+    .hero-cta-btn svg{width:.95em;height:.95em}
   }
 
   /* Video hero, rectangular 4:5 (más cuadrado), lado derecho.
