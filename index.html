@@ -1174,8 +1174,26 @@
   .hero-cta-btn:hover{
     background:var(--olive);color:var(--gold);transform:translateY(-2px);
   }
-  /* El botón mantiene SIEMPRE left:40%/bottom:26% (anclado a la imagen del hero).
-     No se reposiciona en mobile → no salta de altura. Solo escala de tamaño vía los clamp() de arriba. */
+  /* En desktop/tablet el botón sigue anclado a la imagen del hero (left:40%/bottom:26%).
+     En mobile se centra horizontalmente y agranda los mínimos para que se vea bien. */
+  @media (max-width:620px){
+    .hero-cta-btn{
+      left:50%;
+      bottom:8%;
+      transform:translateX(-50%);
+      font-size:11px;
+      letter-spacing:.14em;
+      padding:9px 18px;
+      gap:7px;
+      border-radius:8px;
+      box-shadow:inset 0 0 0 2px var(--gold), inset 0 0 0 3px rgba(246,237,209,.6), inset 0 0 0 4px var(--gold);
+      white-space:nowrap;
+    }
+    .hero-cta-btn:hover{
+      transform:translateX(-50%) translateY(-2px);
+    }
+    .hero-cta-btn svg{width:1em;height:1em}
+  }
 
   /* Video hero, rectangular 4:5 (más cuadrado), lado derecho.
      right:13% = misma distancia al margen que el texto "INSTINTO" (que está al ~13% en la imagen del hero) */
