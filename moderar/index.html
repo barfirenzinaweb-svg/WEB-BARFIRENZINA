@@ -14,6 +14,12 @@
   button{font-family:inherit;cursor:pointer;border:none;border-radius:9px;font-weight:700}
   .gbtn{background:#fff;border:1.5px solid rgba(50,57,21,.25);padding:13px 22px;font-size:14px}
   .gbtn:hover{border-color:#A38E48}
+  .tabs{display:flex;gap:6px;margin-bottom:18px;border-bottom:1px solid rgba(50,57,21,.18)}
+  .tab{background:transparent;border:none;border-bottom:2px solid transparent;
+       padding:10px 16px;font-weight:700;color:#6a6650;font-size:14px;border-radius:0}
+  .tab.active{color:#323915;border-bottom-color:#A38E48}
+  .tab:hover{color:#323915}
+  .tab .count{margin-left:6px;font-size:12px;color:#8a8570;font-weight:600}
   .card{background:#fff;border:1px solid rgba(50,57,21,.14);border-radius:14px;padding:20px;margin-bottom:16px}
   .card .top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap}
   .card .who{font-weight:700;color:#323915}
@@ -21,9 +27,12 @@
   .card .stars{color:#A38E48;letter-spacing:2px}
   .card .txt{margin:10px 0;font-size:15px}
   .card img{max-width:220px;border-radius:10px;display:block;margin:10px 0}
-  .acts{display:flex;gap:10px;margin-top:12px}
+  .acts{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
   .ok{background:#7C8456;color:#fff;padding:10px 20px}
   .no{background:#b5562b;color:#fff;padding:10px 20px}
+  .del{background:#b5562b;color:#fff;padding:10px 20px}
+  .badge{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;letter-spacing:.06em;text-transform:uppercase;font-weight:700}
+  .badge.pub{background:#e0e6cf;color:#323915}
   .empty{color:#6a6650;padding:30px 0;text-align:center}
   .msg{margin:14px 0;font-size:14px;color:#7C8456}
 </style>
@@ -31,9 +40,13 @@
 <body>
 <div class="wrap">
   <h1>Moderar reseñas</h1>
-  <p class="sub">Aprobá o rechazá las reseñas que dejaron los clientes. Solo el administrador puede entrar.</p>
+  <p class="sub">Aprobá o rechazá las pendientes, o eliminá las que ya están publicadas en el sitio. Solo el administrador puede entrar.</p>
   <div id="auth"><button class="gbtn" id="loginBtn">Ingresar con Google</button></div>
   <div id="panel" style="display:none">
+    <div class="tabs">
+      <button class="tab active" data-tab="pending">Pendientes <span class="count" id="cntP">·</span></button>
+      <button class="tab" data-tab="approved">Publicadas <span class="count" id="cntA">·</span></button>
+    </div>
     <p class="msg" id="msg"></p>
     <div id="list"></div>
   </div>
@@ -60,12 +73,16 @@
   const auth = getAuth(app);
   const db = getFirestore(app);
   const $ = id => document.getElementById(id);
+  let currentTab = 'pending';
 
   $('loginBtn').onclick = () => signInWithPopup(auth, new GoogleAuthProvider()).catch(()=>{});
 
   onAuthStateChanged(auth, user => {
     if(user && user.email === ADMIN_EMAIL){
-      $('auth').style.display='none'; $('panel').style.display='block'; load();
+      $('auth').style.display='none'; $('panel').style.display='block';
+      bindTabs();
+      load(currentTab);
+      refreshCounts();
     } else if(user){
       $('auth').innerHTML = '<p class="sub">La cuenta <b>'+user.email+'</b> no tiene permiso de moderación.</p><button class="gbtn" id="lo">Salir</button>';
       $('lo').onclick=()=>signOut(auth);
@@ -75,44 +92,105 @@
     }
   });
 
-  function stars(n){ return '★'.repeat(n||5) + '☆'.repeat(5-(n||5)); }
+  function bindTabs(){
+    document.querySelectorAll('.tab').forEach(t => {
+      t.onclick = () => {
+        document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+        t.classList.add('active');
+        currentTab = t.dataset.tab;
+        load(currentTab);
+      };
+    });
+  }
 
-  async function load(){
-    $('list').innerHTML = 'Cargando…';
-    let snap;
+  function stars(n){ return '★'.repeat(n||5) + '☆'.repeat(5-(n||5)); }
+  function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+
+  async function fetchByStatus(status){
+    const q = query(collection(db,'resenas'), where('status','==',status));
+    const snap = await getDocs(q);
+    const docs = [];
+    snap.forEach(d => docs.push({id:d.id, data:d.data()}));
+    docs.sort((a,b) => (b.data.fecha?.seconds||0) - (a.data.fecha?.seconds||0));
+    return docs;
+  }
+
+  async function refreshCounts(){
     try {
-      // Query simple (sin orderBy) → no requiere índice compuesto. Ordenamos en JS abajo.
-      const q = query(collection(db,'resenas'), where('status','==','pending'));
-      snap = await getDocs(q);
+      const [p, a] = await Promise.all([fetchByStatus('pending'), fetchByStatus('approved')]);
+      $('cntP').textContent = '· ' + p.length;
+      $('cntA').textContent = '· ' + a.length;
+    } catch(_){}
+  }
+
+  async function load(tab){
+    $('list').innerHTML = 'Cargando…';
+    let docs;
+    try {
+      docs = await fetchByStatus(tab);
     } catch(err){
       $('list').innerHTML = '<p class="empty">Error al cargar reseñas:<br>'+(err.message||err)+'</p>';
       console.error(err);
       return;
     }
-    if(snap.empty){ $('list').innerHTML='<p class="empty">No hay reseñas pendientes 🎉</p>'; return; }
-    // Ordenamos por fecha desc en cliente (más recientes primero)
-    const docs = [];
-    snap.forEach(d=> docs.push({id:d.id, data:d.data()}));
-    docs.sort((a,b)=>{
-      const ta = a.data.fecha?.seconds || 0;
-      const tb = b.data.fecha?.seconds || 0;
-      return tb - ta;
-    });
-    $('list').innerHTML='';
-    docs.forEach(({id, data:r})=>{
-      const d = { id };
-      const el=document.createElement('div'); el.className='card';
-      el.innerHTML = `<div class="top"><div><div class="who">${(r.nombre||'').replace(/</g,'&lt;')}</div>
-        <div class="mail">${r.email||''}</div></div><div class="stars">${stars(r.estrellas)}</div></div>
-        <div class="txt">${(r.texto||'').replace(/</g,'&lt;')}</div>
-        ${r.fotoURL?`<img src="${r.fotoURL}" alt="">`:''}
-        <div class="acts"><button class="ok">Aprobar</button><button class="no">Rechazar</button></div>`;
-      el.querySelector('.ok').onclick = async ()=>{ await updateDoc(doc(db,'resenas',d.id),{status:'approved'}); el.remove(); checkEmpty(); };
-      el.querySelector('.no').onclick = async ()=>{ if(confirm('¿Rechazar y borrar esta reseña?')){ await deleteDoc(doc(db,'resenas',d.id)); el.remove(); checkEmpty(); } };
-      $('list').appendChild(el);
-    });
+    if(!docs.length){
+      $('list').innerHTML = '<p class="empty">'+
+        (tab==='pending' ? 'No hay reseñas pendientes 🎉' : 'Todavía no hay reseñas publicadas.') +
+        '</p>';
+      return;
+    }
+    $('list').innerHTML = '';
+    docs.forEach(({id, data:r}) => $('list').appendChild(buildCard(id, r, tab)));
   }
-  function checkEmpty(){ if(!$('list').children.length) $('list').innerHTML='<p class="empty">No hay reseñas pendientes 🎉</p>'; }
+
+  function buildCard(id, r, tab){
+    const el = document.createElement('div');
+    el.className = 'card';
+    const badge = tab==='approved' ? '<span class="badge pub">Publicada</span>' : '';
+    const actions = tab==='pending'
+      ? '<div class="acts"><button class="ok">Aprobar</button><button class="no">Rechazar</button></div>'
+      : '<div class="acts"><button class="del">Eliminar del sitio</button></div>';
+    el.innerHTML = `
+      <div class="top">
+        <div>
+          <div class="who">${esc(r.nombre)} ${badge}</div>
+          <div class="mail">${esc(r.email)}</div>
+        </div>
+        <div class="stars">${stars(r.estrellas)}</div>
+      </div>
+      <div class="txt">${esc(r.texto)}</div>
+      ${r.fotoURL ? `<img src="${esc(r.fotoURL)}" alt="">` : ''}
+      ${actions}`;
+
+    if(tab==='pending'){
+      el.querySelector('.ok').onclick = async () => {
+        await updateDoc(doc(db,'resenas',id), {status:'approved'});
+        el.remove(); checkEmpty(); refreshCounts();
+      };
+      el.querySelector('.no').onclick = async () => {
+        if(confirm('¿Rechazar y borrar esta reseña?')){
+          await deleteDoc(doc(db,'resenas',id));
+          el.remove(); checkEmpty(); refreshCounts();
+        }
+      };
+    } else {
+      el.querySelector('.del').onclick = async () => {
+        if(confirm('¿Eliminar esta reseña del sitio? Esta acción no se puede deshacer.')){
+          await deleteDoc(doc(db,'resenas',id));
+          el.remove(); checkEmpty(); refreshCounts();
+        }
+      };
+    }
+    return el;
+  }
+
+  function checkEmpty(){
+    if(!$('list').children.length){
+      $('list').innerHTML = '<p class="empty">'+
+        (currentTab==='pending' ? 'No hay reseñas pendientes 🎉' : 'Todavía no hay reseñas publicadas.') +
+        '</p>';
+    }
+  }
 </script>
 </body>
 </html>
