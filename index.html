@@ -1177,24 +1177,29 @@
   /* En desktop/tablet el botón sigue anclado a la imagen del hero (left:40%/bottom:26%).
      En mobile agrandamos el hero (aspect 1.7/1) y centramos el botón abajo, más chico. */
   @media (max-width:620px){
-    .hero{aspect-ratio:1.7/1}
+    /* Aspect cercano al original 2.4/1 → no recorta el texto "INSTINTO" */
+    .hero{aspect-ratio:2.2/1}
+    .hero-banner{object-position:center}
     .hero-cta-btn{
-      /* Pegado al texto del PNG: a la altura de "naturaleza" y a su derecha */
+      /* Pegado al texto del PNG, al lado de "naturaleza" */
       left:36%;
-      bottom:20%;
+      bottom:18%;
       transform:none;
-      font-size:9.5px;
-      letter-spacing:.12em;
-      padding:7px 14px;
-      gap:6px;
-      border-radius:7px;
-      box-shadow:inset 0 0 0 2px var(--gold), inset 0 0 0 3px rgba(246,237,209,.6), inset 0 0 0 4px var(--gold);
+      font-size:7px;
+      letter-spacing:.1em;
+      padding:4px 9px;
+      gap:4px;
+      border-radius:5px;
+      box-shadow:inset 0 0 0 1.5px var(--gold), inset 0 0 0 2.5px rgba(246,237,209,.6), inset 0 0 0 3.5px var(--gold);
       white-space:nowrap;
+      border-width:1px;
     }
     .hero-cta-btn:hover{
       transform:translateY(-2px);
     }
-    .hero-cta-btn svg{width:.95em;height:.95em}
+    .hero-cta-btn svg{width:.9em;height:.9em}
+    /* Ocultar barra verde "100% Natural / Formulado por..." en mobile */
+    .marquee{display:none}
   }
 
   /* Video hero, rectangular 4:5 (más cuadrado), lado derecho.
@@ -2057,7 +2062,6 @@
   /* Tablet / mobile grande — entre 768px y 1000px */
   @media (max-width:768px){
     .hero-cat{right:4%;height:78%}
-    .brand-text{display:none}
     .calc-actions{flex-direction:column;width:100%}
     .calc-actions .calc-cta{width:100%}
     .product-grid{grid-template-columns:1fr;gap:20px}
