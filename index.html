@@ -1179,9 +1179,10 @@
   @media (max-width:620px){
     .hero{aspect-ratio:1.7/1}
     .hero-cta-btn{
-      left:50%;
-      bottom:5%;
-      transform:translateX(-50%);
+      /* Pegado al texto del PNG: a la altura de "naturaleza" y a su derecha */
+      left:36%;
+      bottom:20%;
+      transform:none;
       font-size:9.5px;
       letter-spacing:.12em;
       padding:7px 14px;
@@ -1191,7 +1192,7 @@
       white-space:nowrap;
     }
     .hero-cta-btn:hover{
-      transform:translateX(-50%) translateY(-2px);
+      transform:translateY(-2px);
     }
     .hero-cta-btn svg{width:.95em;height:.95em}
   }
