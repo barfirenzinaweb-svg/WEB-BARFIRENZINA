@@ -1180,6 +1180,8 @@
     /* Aspect cercano al original 2.4/1 → no recorta el texto "INSTINTO" */
     .hero{aspect-ratio:2.2/1}
     .hero-banner{object-position:center}
+    /* Oculto el bloque de videos del problema/solución (se ven como una "barra verde" inclinada en mobile) */
+    .poster-story{display:none}
     .hero-cta-btn{
       /* Pegado al texto del PNG, al lado de "naturaleza" */
       left:40%;
@@ -1198,8 +1200,6 @@
       transform:translateY(-2px);
     }
     .hero-cta-btn svg{width:.9em;height:.9em}
-    /* Ocultar barra verde "100% Natural / Formulado por..." en mobile */
-    .marquee{display:none !important}
   }
 
   /* Video hero, rectangular 4:5 (más cuadrado), lado derecho.
