@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /moderar/
+Disallow: /api/
+Disallow: /content/
+
+Sitemap: https://www.barfirenzina.com.ar/sitemap.xml
