@@ -1181,8 +1181,9 @@
     isolation:isolate;
     font-family:var(--display);
     display:flex;flex-direction:column;
-    padding:clamp(22px, 2.6vw, 36px) 0 clamp(28px, 2.6vw, 46px);
-    min-height:clamp(640px, 92vh, 900px);
+    padding:clamp(40px, 5vw, 80px) 0 clamp(48px, 5vw, 90px);
+    min-height:clamp(580px, 88vh, 820px);
+    text-align:left;
   }
   /* Patrón sutil de puntos detrás (solo zona derecha) */
   .hero::before{
@@ -1222,18 +1223,18 @@
     color:rgba(50,57,21,.5);text-transform:uppercase;
   }
 
-  /* Grid principal */
+  /* Grid principal — padding lateral = var(--hero-edge) para alinear con header */
   .hero-main{
     position:relative;z-index:2;
     display:grid;grid-template-columns:1.12fr 1fr;
     align-items:center;
     gap:clamp(36px, 4.5vw, 90px);
-    padding:0 clamp(50px, 5.5vw, 110px);
+    padding:0 var(--hero-edge);
     flex:1;
   }
 
-  /* Contenido izquierda */
-  .hero-content{max-width:640px;position:relative;z-index:2}
+  /* Contenido izquierda — todo alineado a izquierda */
+  .hero-content{max-width:640px;position:relative;z-index:2;text-align:left}
 
   .hero-eyebrow{
     display:inline-flex;align-items:center;gap:12px;
@@ -1266,7 +1267,7 @@
   }
   .hero-title-em{
     color:var(--gold);font-style:italic;
-    padding-left:clamp(28px, 4vw, 76px);
+    padding-left:0;
     position:relative;
   }
   .hero-title-asterisk{
@@ -1352,13 +1353,13 @@
     box-shadow:0 40px 80px -36px rgba(50,57,21,.5), 0 0 0 8px rgba(241,236,213,.9);
   }
   .hero-frame video{width:100%;height:100%;object-fit:cover;display:block}
-  /* Outline decorativo desplazado */
+  /* Outline decorativo desplazado a la IZQUIERDA para no salir del padding derecho */
   .hero-frame::before{
     content:"";position:absolute;inset:-22px -22px -22px -22px;
     border:1.5px solid rgba(163,142,72,.5);
     border-radius:inherit;
     z-index:-1;
-    transform:translate(14px, 14px);
+    transform:translate(-14px, 14px);
   }
 
   /* Sticker circular giratorio */
@@ -1425,7 +1426,7 @@
     .hero-side-label{display:none}
     .hero-main{
       grid-template-columns:1fr;gap:30px;
-      padding:0 clamp(20px, 5vw, 32px);
+      padding:0 var(--hero-edge);
     }
     .hero-content{max-width:none;order:2}
     .hero-visual{align-items:center;order:1}
@@ -3346,21 +3347,8 @@
   <span id="cartToastMsg">Producto agregado al carrito</span>
 </div>
 
-<!-- ============= HERO EDITORIAL ============= -->
+<!-- ============= HERO ============= -->
 <section class="hero" id="inicio">
-
-  <!-- Metadata superior estilo editorial -->
-  <div class="hero-meta-top" aria-hidden="true">
-    <span>Nº 01 — Edición 2024</span>
-    <span class="hero-meta-divider"></span>
-    <span>Alimentación BARF Premium</span>
-    <span class="hero-meta-divider"></span>
-    <span>Buenos Aires · Argentina</span>
-  </div>
-
-  <!-- Label vertical lateral -->
-  <span class="hero-side-label" aria-hidden="true">BARF · IRENZINA · MMXXIV</span>
-
   <div class="hero-main">
     <div class="hero-content fade-in">
       <span class="hero-eyebrow">
@@ -3372,7 +3360,7 @@
         <span class="hero-title-line hero-title-em">felino<span class="hero-title-asterisk">✻</span></span>
         <span class="hero-title-soft">cuidado consciente, plato a plato.</span>
       </h1>
-      <p class="hero-sub">Carne fresca apta para consumo humano, formulada por nutricionistas y elaborada como cuidaríamos a nuestros propios gatos. <em>Sin atajos.</em></p>
+      <p class="hero-sub">Recetas en versión <em>cruda</em> y <em>cocida</em>. Carne fresca apta para consumo humano, formulada por nutricionistas y elaborada como cuidaríamos a nuestros propios gatos.</p>
       <div class="hero-actions">
         <a href="#productos" class="hero-cta-btn" aria-label="Ver catálogo de productos">
           <span data-cms="hero.boton">Ver Catálogo</span>
@@ -3382,20 +3370,6 @@
           </svg>
         </a>
         <a href="#historia" class="hero-cta-link">Conocer la historia</a>
-      </div>
-      <div class="hero-stats" aria-hidden="true">
-        <div class="hero-stat">
-          <span class="hero-stat-num">+500</span>
-          <span class="hero-stat-lbl">gatos felices</span>
-        </div>
-        <div class="hero-stat">
-          <span class="hero-stat-num">100%</span>
-          <span class="hero-stat-lbl">trazable</span>
-        </div>
-        <div class="hero-stat">
-          <span class="hero-stat-num">24h</span>
-          <span class="hero-stat-lbl">cadena de frío</span>
-        </div>
       </div>
     </div>
 
@@ -3425,16 +3399,8 @@
           </div>
         </div>
       </div>
-      <span class="hero-frame-cap">Receta cruda · Lote actual</span>
     </div>
   </div>
-
-  <div class="hero-footer" aria-hidden="true">
-    <span class="hero-footer-label">Scroll</span>
-    <div class="hero-footer-line"></div>
-    <span>100% Natural · Hecho en Argentina</span>
-  </div>
-
 </section>
 
 <!-- ============= MARQUEE ============= -->
