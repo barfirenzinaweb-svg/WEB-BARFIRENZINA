@@ -73,14 +73,19 @@
       {
         "tag_gold": false,
         "precio": "13",
+        "posicion_foto": "bottom",
         "nombre": "BARF Cocido",
         "reviews_count": "217",
         "descripcion": "La misma fórmula, cocida a baja temperatura. Ideal para gatos sensibles o senior.",
         "peso": "500 g",
         "precio_anterior": "",
         "categoria": "Receta Cocida",
-        "imagen": "/assets/barf-cocido.jpg",
+        "imagen": "assets/08052026-dsc01027-1-.jpg",
         "ribbon": "",
+        "galeria": [
+          "assets/08052026-dsc01022-1-.jpg",
+          "assets/08052026-dsc01035-1-.jpg"
+        ],
         "tag": "Suave",
         "id": "cocido",
         "highlights": [
