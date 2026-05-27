@@ -355,15 +355,15 @@
   }
   .hist-btn svg{width:16px;height:16px}
 
-  /* Poster framed dentro de la hist-card (mismo estilo que .poster-frame) */
+  /* Poster framed dentro de la hist-card (mismo tamaño exacto que .poster-frame) */
   .hist-poster{
     position:relative;
-    border-radius:14px;
+    border-radius:16px;
     overflow:hidden;
     background:var(--olive);
     padding:8px;
     border:2px solid var(--gold);
-    max-width:300px;
+    max-width:340px;
     width:100%;
     margin:0 auto;
     box-shadow:inset 0 0 0 1px rgba(246,237,209,.15);
@@ -375,13 +375,13 @@
     width:100%;height:auto;display:block;
     aspect-ratio:2/3;object-fit:cover;
     object-position:center;
-    border-radius:8px;
+    border-radius:10px;
     background:var(--olive);
   }
   /* Mobile: 1 columna, poster centrado abajo */
   @media (max-width:720px){
     .hist-card{grid-template-columns:1fr;gap:32px}
-    .hist-poster{max-width:260px}
+    .hist-poster{max-width:300px}
   }
   .hist-poster .hp-tag{
     position:absolute;bottom:24px;left:24px;z-index:2;
