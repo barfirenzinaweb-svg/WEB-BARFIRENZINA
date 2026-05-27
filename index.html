@@ -294,19 +294,19 @@
   }
   .hist-inner{
     position:relative;z-index:3;
-    display:grid;grid-template-columns:1.3fr 1fr;
-    gap:clamp(28px, 4vw, 56px);align-items:center;
-    max-width:880px;margin:0 auto;
+    max-width:1040px;margin:0 auto;
   }
 
-  /* Left — text card (cream panel) */
+  /* Card cream que contiene el texto + el poster en 2 columnas */
   .hist-card{
     background:var(--cream);
     color:var(--dark);
-    padding:clamp(28px, 3.6vw, 46px) clamp(24px, 3vw, 40px);
-    border-radius:14px;
+    padding:clamp(28px, 3.6vw, 50px);
+    border-radius:18px;
     border:1px solid rgba(163,142,72,.28);
     box-shadow:0 30px 60px -25px rgba(0,0,0,.5), 0 0 0 1px rgba(246,246,233,.04);
+    display:grid;grid-template-columns:1.3fr 1fr;
+    gap:clamp(28px, 4vw, 56px);align-items:center;
     position:relative;
   }
   .hist-card::before{
@@ -355,28 +355,33 @@
   }
   .hist-btn svg{width:16px;height:16px}
 
-  /* Right — framed poster (mismo tamaño y estilo que .poster-frame del bloque explicaciones) */
+  /* Poster framed dentro de la hist-card (mismo estilo que .poster-frame) */
   .hist-poster{
     position:relative;
-    border-radius:16px;
+    border-radius:14px;
     overflow:hidden;
     background:var(--olive);
     padding:8px;
     border:2px solid var(--gold);
-    max-width:340px;
+    max-width:300px;
+    width:100%;
     margin:0 auto;
-    box-shadow:0 30px 60px -30px rgba(0,0,0,.55), inset 0 0 0 1px rgba(246,237,209,.15);
-    transform:rotate(1.2deg);
+    box-shadow:inset 0 0 0 1px rgba(246,237,209,.15);
     transition:transform .6s cubic-bezier(.2,.8,.2,1);
   }
-  .hist-poster:hover{transform:rotate(0) scale(1.02)}
+  .hist-poster:hover{transform:scale(1.02)}
   .hist-poster img,
   .hist-poster video{
     width:100%;height:auto;display:block;
     aspect-ratio:2/3;object-fit:cover;
     object-position:center;
-    border-radius:10px;
+    border-radius:8px;
     background:var(--olive);
+  }
+  /* Mobile: 1 columna, poster centrado abajo */
+  @media (max-width:720px){
+    .hist-card{grid-template-columns:1fr;gap:32px}
+    .hist-poster{max-width:260px}
   }
   .hist-poster .hp-tag{
     position:absolute;bottom:24px;left:24px;z-index:2;
@@ -3741,20 +3746,22 @@
   <div class="container">
     <div class="hist-inner">
       <div class="hist-card fade-in">
-        <span class="hist-eyebrow">Historia BARFirenzina</span>
-        <h2>El instinto felino<em>no se discute</em></h2>
-        <div class="hist-divider"><span></span></div>
-        <p>BARFirenzina nació de la convicción de que el instinto felino no se discute. Cada receta se elabora en lotes pequeños, con materia prima apta para consumo humano y una trazabilidad que no se negocia. Porque alimentar bien a un gato no es una moda: es respetar lo que ya sabe pedir.</p>
-        <a href="#productos" class="hist-btn">Ver recetas
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </a>
-      </div>
+        <div class="hist-text">
+          <span class="hist-eyebrow">Historia BARFirenzina</span>
+          <h2>El instinto felino<em>no se discute</em></h2>
+          <div class="hist-divider"><span></span></div>
+          <p>BARFirenzina nació de la convicción de que el instinto felino no se discute. Cada receta se elabora en lotes pequeños, con materia prima apta para consumo humano y una trazabilidad que no se negocia. Porque alimentar bien a un gato no es una moda: es respetar lo que ya sabe pedir.</p>
+          <a href="#productos" class="hist-btn">Ver recetas
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
 
-      <div class="hist-poster fade-in">
-        <video autoplay muted loop playsinline preload="metadata">
-          <source src="assets/hist-hands.mp4" type="video/mp4" />
-        </video>
-        <span class="hp-tag">Alimentado con intención</span>
+        <div class="hist-poster">
+          <video autoplay muted loop playsinline preload="metadata">
+            <source src="assets/hist-hands.mp4" type="video/mp4" />
+          </video>
+          <span class="hp-tag">Alimentado con intención</span>
+        </div>
       </div>
     </div>
 
