@@ -354,28 +354,28 @@
   }
   .hist-btn svg{width:16px;height:16px}
 
-  /* Right — framed poster (más chico, alineado con otros marcos del sitio) */
+  /* Right — framed poster (alineado con poster-frame de explicaciones) */
   .hist-poster{
     position:relative;
-    border-radius:14px;
+    border-radius:10px;
     overflow:hidden;
-    background:var(--olive);
-    padding:8px;
-    border:2px solid var(--gold);
-    max-width:clamp(280px, 30vw, 380px);
+    background:#F6F1DA;
+    padding:4px;
+    border:5px solid var(--olive);
+    max-width:clamp(280px, 32vw, 400px);
     margin:0 auto;
-    box-shadow:0 30px 60px -30px rgba(0,0,0,.6);
+    box-shadow:0 30px 60px -30px rgba(0,0,0,.55);
     transform:rotate(0);
     transition:transform .6s cubic-bezier(.2,.8,.2,1);
   }
   .hist-poster:hover{transform:scale(1.02)}
   .hist-poster img,
   .hist-poster video{
-    width:100%;height:auto;display:block;
-    aspect-ratio:3/4;object-fit:contain;
+    width:100%;display:block;
+    aspect-ratio:3/4;object-fit:cover;
     object-position:center;
-    border-radius:8px;
-    background:var(--olive);
+    border-radius:6px;
+    background:#F6F1DA;
   }
   .hist-poster .hp-tag{
     position:absolute;bottom:24px;left:24px;z-index:2;
@@ -2439,15 +2439,15 @@
     background:#F6F1DA;
     padding:4px;
     border-radius:10px;
-    border:2.5px solid var(--olive);
+    border:5px solid var(--olive);
     max-width:clamp(280px, 32vw, 400px);
     margin:0 auto;
-    box-shadow:0 30px 60px -30px rgba(42,40,31,.5);
+    box-shadow:0 30px 60px -30px rgba(42,40,31,.55);
     transition:transform .5s cubic-bezier(.2,.8,.2,1);
   }
   .poster-frame img,
   .poster-frame video{
-    width:100%;height:auto;display:block;
+    width:100%;display:block;
     aspect-ratio:3/4;object-fit:cover;
     object-position:center center;
     border-radius:6px;
