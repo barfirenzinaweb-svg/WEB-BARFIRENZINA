@@ -2492,7 +2492,7 @@
   .explain-symptoms{
     text-align:center;
     font-family:var(--subtitle);
-    font-size:clamp(14px, 1.35vw, 20px);
+    font-size:clamp(16px, 1.55vw, 23px);
     color:var(--olive);
     margin:0;
     display:flex;justify-content:center;align-items:center;flex-wrap:nowrap;
@@ -2501,7 +2501,7 @@
     white-space:nowrap;
   }
   @media (max-width:620px){
-    .explain-symptoms{flex-wrap:wrap;white-space:normal;font-size:15px}
+    .explain-symptoms{flex-wrap:wrap;white-space:normal;font-size:16px}
   }
   .explain-tagline{
     margin-top:0 !important;
@@ -2518,7 +2518,7 @@
     font-weight:700;
     color:var(--olive);
     letter-spacing:.04em;
-    margin:clamp(-18px, -1.6vw, -8px) 0 clamp(18px, 2vw, 28px);
+    margin:clamp(-44px, -3.8vw, -22px) 0 clamp(14px, 1.6vw, 24px);
   }
   .explain-signoff{
     text-align:center;margin:90px auto 0;
@@ -3178,6 +3178,8 @@
   /* Eyebrow sin líneas decorativas (clase .eye-plain) */
   .section-head .eye.eye-plain::before,
   .section-head .eye.eye-plain::after{display:none !important}
+  /* Override específico: explain-head con margin-bottom chico para que tagline y animaciones queden cerca de los síntomas */
+  .explain-head{margin-bottom:clamp(14px, 1.6vw, 28px) !important}
   .recetas-sub{
     font-family:var(--display);
     font-size:clamp(15px, 1.2vw, 18px);
