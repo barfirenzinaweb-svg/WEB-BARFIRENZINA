@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="robots" content="noindex"/>
+<title>¡Gracias por tu compra! · BARFirenzina</title>
+<link rel="icon" type="image/png" href="/assets/logo.jpg">
+<style>
+  :root{
+    --olive:#323915; --cream:#F6F6E9; --gold:#A38E48; --sage:#7C8456;
+    --display:"Playfair Display", Georgia, serif;
+    --subtitle:"Playfair Display", "Inter", system-ui, sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:var(--display);
+    background:#f1ecd5;color:var(--olive);
+    min-height:100vh;
+    display:flex;align-items:center;justify-content:center;
+    padding:40px 20px;line-height:1.5;
+  }
+  .wrap{
+    max-width:560px;text-align:center;
+  }
+  .check{
+    width:88px;height:88px;border-radius:50%;
+    background:var(--sage);
+    display:inline-flex;align-items:center;justify-content:center;
+    color:var(--cream);margin-bottom:28px;
+    animation:pop .55s cubic-bezier(.2,1.5,.5,1.2);
+  }
+  @keyframes pop{from{transform:scale(0)}to{transform:scale(1)}}
+  .check svg{width:48px;height:48px}
+  .eyebrow{
+    font-size:12px;letter-spacing:.32em;text-transform:uppercase;
+    color:var(--gold);font-weight:700;margin-bottom:14px;
+  }
+  h1{
+    font-family:var(--display);
+    font-size:clamp(34px, 5vw, 56px);
+    font-weight:800;text-transform:uppercase;line-height:1;
+    margin-bottom:18px;color:var(--olive);
+  }
+  h1 em{color:var(--gold);font-style:italic}
+  p{
+    font-size:17px;color:rgba(50,57,21,.75);
+    max-width:440px;margin:0 auto 30px;line-height:1.6;
+  }
+  .actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:14px 28px;border-radius:999px;
+    font-size:12px;letter-spacing:.22em;text-transform:uppercase;
+    font-weight:700;text-decoration:none;
+    border:1.5px solid var(--olive);
+    transition:all .25s ease;
+  }
+  .btn-primary{background:var(--olive);color:var(--cream)}
+  .btn-primary:hover{background:var(--gold);border-color:var(--gold)}
+  .btn-secondary{background:transparent;color:var(--olive)}
+  .btn-secondary:hover{background:var(--olive);color:var(--cream)}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="check">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="20 6 9 17 4 12"/>
+      </svg>
+    </div>
+    <p class="eyebrow">Pago aprobado</p>
+    <h1>¡Gracias por tu <em>compra!</em></h1>
+    <p>Recibimos tu pedido. En las próximas horas te vamos a escribir por WhatsApp para coordinar la entrega refrigerada. Cualquier duda, estamos disponibles.</p>
+    <div class="actions">
+      <a href="/" class="btn btn-primary">Volver al sitio</a>
+      <a href="https://wa.me/5491154846054" target="_blank" rel="noopener" class="btn btn-secondary">Escribir por WhatsApp</a>
+    </div>
+  </div>
+  <script>
+    // Vaciar el carrito al confirmar el pago
+    try { localStorage.removeItem('barfCart'); } catch(_){}
+  </script>
+</body>
+</html>

@@ -822,7 +822,8 @@
     white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
   }
   .cart-item .ci-price{
-    font-size:13px;color:var(--gold);font-weight:600;
+    font-family:"Times New Roman", Times, serif;
+    font-size:14px;color:var(--gold);font-weight:600;
   }
   .qty-row{
     display:inline-flex;align-items:center;gap:10px;
@@ -841,7 +842,7 @@
   .qty-val{font-size:13px;font-weight:600;min-width:18px;text-align:center}
   .ci-side{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
   .ci-subtotal{
-    font-family:var(--serif);font-size:18px;font-weight:700;color:var(--olive);
+    font-family:"Times New Roman", Times, serif;font-size:19px;font-weight:700;color:var(--olive);
   }
   .ci-remove{
     background:transparent;color:#9a9685;
@@ -860,13 +861,15 @@
     display:flex;justify-content:space-between;
     font-size:13px;color:#6a6650;
   }
+  .cart-line span:last-child,
+  .cart-line strong{font-family:"Times New Roman", Times, serif}
   .cart-line.total{
     padding-top:12px;margin-top:4px;
     border-top:1px dashed rgba(50,57,21,.2);
     font-size:18px;color:var(--dark);font-weight:700;
-    font-family:var(--serif);
+    font-family:"Times New Roman", Times, serif;
   }
-  .cart-line.total strong{color:var(--gold);font-size:24px}
+  .cart-line.total strong{color:var(--gold);font-size:26px;font-family:"Times New Roman", Times, serif}
   .cart-checkout{
     width:100%;background:var(--olive);color:var(--cream);
     padding:16px;border-radius:14px;
@@ -1263,7 +1266,10 @@
     margin:0 0 clamp(22px, 2.2vw, 32px);
   }
   .hero-title-line{
-    display:block;font-size:clamp(54px, 8vw, 128px);
+    display:block;font-size:clamp(44px, 6.2vw, 96px);
+  }
+  .hero-title-main{
+    color:var(--olive);
   }
   .hero-title-em{
     color:var(--gold);font-style:italic;
@@ -1277,13 +1283,6 @@
     animation:heroAsterisk 14s linear infinite;
   }
   @keyframes heroAsterisk{from{transform:rotate(0)}to{transform:rotate(360deg)}}
-  .hero-title-soft{
-    display:block;font-weight:400;font-style:italic;
-    font-size:clamp(22px, 2.5vw, 38px);
-    letter-spacing:.005em;text-transform:none;
-    color:rgba(50,57,21,.78);
-    padding-top:clamp(10px, 1vw, 18px);line-height:1.15;
-  }
 
   .hero-sub{
     font-size:clamp(15px, 1.2vw, 19px);
@@ -1362,11 +1361,11 @@
     transform:translate(-14px, 14px);
   }
 
-  /* Sticker circular giratorio */
+  /* Sticker circular giratorio — abajo derecha */
   .hero-sticker{
     position:absolute;
     bottom:clamp(-28px, -2.4vw, -18px);
-    left:clamp(-32px, -2.6vw, -22px);
+    right:clamp(-32px, -2.6vw, -22px);
     width:clamp(98px, 9.5vw, 132px);height:clamp(98px, 9.5vw, 132px);
     z-index:3;
   }
@@ -1437,7 +1436,7 @@
     .hero-frame::before{inset:-14px;transform:translate(8px,8px)}
     .hero-sticker{
       width:78px;height:78px;
-      bottom:-14px;left:-14px;
+      bottom:-14px;right:-14px;left:auto;
     }
     .hero-title-line{font-size:clamp(42px, 13vw, 64px)}
     .hero-title-em{padding-left:22px}
@@ -2076,24 +2075,24 @@
   }
   .price-wrap{display:flex;flex-direction:column;line-height:1.05}
   .price-wrap .was{
-    font-family:var(--mono);font-weight:500;
+    font-family:"Times New Roman", Times, serif;font-weight:500;
     font-size:12px;color:#a09a82;text-decoration:line-through;letter-spacing:.01em;
     margin-bottom:2px;
   }
   .price{
-    font-family:var(--display);
-    font-size:clamp(24px, 2.2vw, 32px);
+    font-family:"Times New Roman", Times, serif;
+    font-size:clamp(26px, 2.4vw, 36px);
     font-weight:700;
     color:var(--olive);
     letter-spacing:-.01em;
     line-height:1;
   }
   .price .cur{
-    font-family:var(--display);
-    font-size:13px;vertical-align:super;margin-right:2px;font-weight:600;
+    font-family:"Times New Roman", Times, serif;
+    font-size:14px;vertical-align:super;margin-right:2px;font-weight:600;
     color:var(--gold);
   }
-  .price small{font-family:var(--display);font-weight:600;color:var(--gold);font-size:.5em !important}
+  .price small{font-family:"Times New Roman", Times, serif;font-weight:600;color:var(--gold);font-size:.5em !important}
 
   .add-btn{
     background:var(--olive);color:var(--cream);
@@ -2380,8 +2379,17 @@
     color:var(--gold);font-style:normal;display:inline-block;
   }
   .explain-head h2 .ocre{
-    color:#C17F2B;
+    color:var(--gold);
     font-style:normal;
+  }
+  .explain-head h2 .nt-mid{
+    text-transform:none;
+    font-weight:500;
+    font-style:italic;
+    color:rgba(50,57,21,.85);
+    letter-spacing:.005em;
+    display:inline-block;
+    padding:clamp(4px, .6vw, 10px) 0;
   }
 
   /* STAT TICKER — fully transparent, just the numbers (no box, no borders) */
@@ -3378,9 +3386,8 @@
         Alimentación natural premium
       </span>
       <h1 class="hero-title">
-        <span class="hero-title-line">Instinto</span>
-        <span class="hero-title-line hero-title-em">felino<span class="hero-title-asterisk">✻</span></span>
-        <span class="hero-title-soft">cuidado consciente, plato a plato.</span>
+        <span class="hero-title-line hero-title-main">Instinto felino<span class="hero-title-asterisk">✻</span></span>
+        <span class="hero-title-line hero-title-em">cuidado consciente.</span>
       </h1>
       <p class="hero-sub">Recetas en versión <em>cruda</em> y <em>cocida</em>. Carne fresca apta para consumo humano, formulada por nutricionistas y elaborada como cuidaríamos a nuestros propios gatos.</p>
       <div class="hero-actions">
@@ -3748,7 +3755,11 @@
 <section class="explain" id="explicaciones">
   <div class="container">
     <header class="explain-head fade-in">
-      <h2><span class="ocre">NO TODO</span> LO QUE NORMALIZAMOS<br><span class="ocre">ES NATURAL</span></h2>
+      <h2>
+        <span class="ocre">NO TODO</span><br>
+        <span class="nt-mid">lo que normalizamos</span><br>
+        <span class="ocre">es natural</span>
+      </h2>
       <div class="explain-divider"></div>
       <p class="explain-sub">Nos acostumbramos a cosas que no deberían pasar</p>
       <p class="explain-symptoms">
@@ -4481,11 +4492,37 @@ document.querySelectorAll('.faq-item').forEach(item=>{
   document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') close(); });
   goShop.addEventListener('click', (e)=>{ e.preventDefault(); close(); const p = document.getElementById('productos'); if(p) p.scrollIntoView({behavior:'smooth'}); });
 
-  checkoutBtn.addEventListener('click', ()=>{
+  checkoutBtn.addEventListener('click', async ()=>{
     if(cart.length===0) return;
-    showToast('¡Gracias! Te contactaremos para finalizar el pedido.');
-    cart = []; save(); render();
-    setTimeout(close, 1200);
+    const original = checkoutBtn.innerHTML;
+    checkoutBtn.disabled = true;
+    checkoutBtn.innerHTML = 'Redirigiendo a Mercado Pago…';
+    try {
+      const res = await fetch('/api/mp-preference', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          items: cart.map(i => ({
+            id: i.id,
+            title: i.name,
+            quantity: i.qty,
+            unit_price: Number(i.price),
+            picture_url: i.img,
+            currency_id: 'ARS'
+          }))
+        })
+      });
+      if(!res.ok) throw new Error('No se pudo crear la preferencia');
+      const data = await res.json();
+      if(!data.init_point) throw new Error('Respuesta inválida de Mercado Pago');
+      // Guardo el cart antes de redirigir por si el usuario vuelve
+      window.location.href = data.init_point;
+    } catch(err){
+      console.error(err);
+      checkoutBtn.disabled = false;
+      checkoutBtn.innerHTML = original;
+      showToast('Error al iniciar pago. Probá de nuevo o escribinos por WhatsApp.');
+    }
   });
 
   let toastTimer;

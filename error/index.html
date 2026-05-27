@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="robots" content="noindex"/>
+<title>Pago rechazado · BARFirenzina</title>
+<link rel="icon" type="image/png" href="/assets/logo.jpg">
+<style>
+  :root{
+    --olive:#323915; --cream:#F6F6E9; --gold:#A38E48; --sage:#7C8456;
+    --display:"Playfair Display", Georgia, serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:var(--display);
+    background:#f1ecd5;color:var(--olive);
+    min-height:100vh;
+    display:flex;align-items:center;justify-content:center;
+    padding:40px 20px;line-height:1.5;
+  }
+  .wrap{max-width:560px;text-align:center}
+  .icon{
+    width:88px;height:88px;border-radius:50%;
+    background:#b5562b;display:inline-flex;align-items:center;justify-content:center;
+    color:var(--cream);margin-bottom:28px;
+  }
+  .icon svg{width:48px;height:48px}
+  .eyebrow{
+    font-size:12px;letter-spacing:.32em;text-transform:uppercase;
+    color:#b5562b;font-weight:700;margin-bottom:14px;
+  }
+  h1{font-family:var(--display);font-size:clamp(34px, 5vw, 56px);font-weight:800;text-transform:uppercase;line-height:1;margin-bottom:18px}
+  p{font-size:17px;color:rgba(50,57,21,.75);max-width:440px;margin:0 auto 30px;line-height:1.6}
+  .actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:10px;padding:14px 28px;border-radius:999px;font-size:12px;letter-spacing:.22em;text-transform:uppercase;font-weight:700;text-decoration:none;border:1.5px solid var(--olive);transition:all .25s ease}
+  .btn-primary{background:var(--olive);color:var(--cream)}
+  .btn-primary:hover{background:var(--gold);border-color:var(--gold)}
+  .btn-secondary{background:transparent;color:var(--olive)}
+  .btn-secondary:hover{background:var(--olive);color:var(--cream)}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </div>
+    <p class="eyebrow">Pago rechazado</p>
+    <h1>No se pudo procesar tu pago</h1>
+    <p>Tu compra no se completó. El cobro pudo haber sido rechazado o cancelado. Probá de nuevo o escribinos por WhatsApp y te ayudamos.</p>
+    <div class="actions">
+      <a href="/#productos" class="btn btn-primary">Volver al catálogo</a>
+      <a href="https://wa.me/5491154846054" target="_blank" rel="noopener" class="btn btn-secondary">Escribir por WhatsApp</a>
+    </div>
+  </div>
+</body>
+</html>
