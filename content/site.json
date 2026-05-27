@@ -49,6 +49,7 @@
       {
         "tag_gold": true,
         "precio": "13",
+        "posicion_foto": "top",
         "nombre": "BARF Crudo",
         "reviews_count": "348",
         "descripcion": "Carne y órganos frescos sin cocción. Nutrientes biológicamente intactos, listos para servir.",
