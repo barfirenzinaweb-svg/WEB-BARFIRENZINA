@@ -892,10 +892,141 @@
     padding:16px;border-radius:14px;
     font-size:12px;letter-spacing:.22em;text-transform:uppercase;font-weight:700;
     display:flex;align-items:center;justify-content:center;gap:10px;
-    transition:background .3s ease, transform .2s ease;
+    transition:background .3s ease, transform .2s ease, color .3s ease, border-color .3s ease;
+    border:1.5px solid var(--olive);
   }
-  .cart-checkout:hover{background:var(--gold);transform:translateY(-2px)}
+  .cart-checkout:hover{background:var(--gold);border-color:var(--gold);transform:translateY(-2px)}
   .cart-checkout svg{width:16px;height:16px}
+
+  /* Opciones de pago: tarjeta + transferencia */
+  .pay-options{display:flex;flex-direction:column;gap:10px}
+  .pay-label{
+    font-family:var(--subtitle);
+    font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+    color:#6a6650;font-weight:600;text-align:center;
+    margin:0 0 4px;
+  }
+  .pay-btn{font-size:12px;padding:14px 16px}
+  .pay-btn.pay-transfer{
+    background:transparent;color:var(--olive);
+    border:1.5px solid var(--olive);
+  }
+  .pay-btn.pay-transfer:hover{background:var(--olive);color:var(--cream);border-color:var(--olive)}
+
+  /* ===== MODAL TRANSFERENCIA ===== */
+  .transfer-modal{
+    position:fixed;inset:0;z-index:10001;
+    display:none;align-items:center;justify-content:center;
+    padding:20px;
+  }
+  .transfer-modal.open{display:flex}
+  .transfer-backdrop{
+    position:absolute;inset:0;
+    background:rgba(20,18,10,.65);
+    backdrop-filter:blur(4px);
+  }
+  .transfer-box{
+    position:relative;z-index:2;
+    background:var(--cream);color:var(--dark);
+    width:100%;max-width:480px;
+    border-radius:18px;
+    padding:clamp(24px,3.6vw,40px);
+    max-height:92vh;overflow-y:auto;
+    border:1.5px solid var(--gold);
+    box-shadow:0 40px 90px -30px rgba(0,0,0,.6);
+  }
+  .transfer-close{
+    position:absolute;top:14px;right:14px;
+    width:34px;height:34px;border-radius:50%;
+    background:transparent;color:var(--olive);
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;border:none;
+    transition:background .2s ease;
+  }
+  .transfer-close:hover{background:rgba(50,57,21,.08)}
+  .transfer-close svg{width:18px;height:18px}
+  .transfer-eyebrow{
+    font-size:10px;letter-spacing:.32em;text-transform:uppercase;
+    color:var(--gold);font-weight:700;
+    text-align:center;margin-bottom:10px;
+  }
+  .transfer-title{
+    font-family:var(--display);
+    font-size:clamp(22px,2.2vw,30px);
+    font-weight:800;color:var(--olive);
+    text-align:center;margin:0 0 10px;
+    text-transform:uppercase;letter-spacing:-.005em;
+  }
+  .transfer-sub{
+    font-size:14px;color:#6a6650;
+    text-align:center;line-height:1.55;
+    margin:0 0 22px;
+  }
+  .transfer-amount{
+    background:var(--cream-2);
+    border:1px solid rgba(163,142,72,.3);
+    border-radius:12px;padding:14px 18px;
+    display:flex;align-items:center;justify-content:space-between;
+    margin-bottom:22px;
+  }
+  .transfer-amount-label{
+    font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+    color:#6a6650;font-weight:700;
+  }
+  .transfer-amount-value{
+    font-family:"Times New Roman", Times, serif;
+    font-size:22px;color:var(--olive);font-weight:700;
+  }
+  .transfer-data{
+    list-style:none;padding:0;margin:0 0 22px;
+    display:flex;flex-direction:column;gap:10px;
+  }
+  .transfer-data li{
+    display:grid;
+    grid-template-columns:90px 1fr auto;
+    align-items:center;gap:10px;
+    padding:10px 14px;
+    background:#fff;
+    border:1px solid rgba(50,57,21,.1);
+    border-radius:10px;
+  }
+  .transfer-data .td-key{
+    font-size:10px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--gold);font-weight:700;
+  }
+  .transfer-data .td-val{
+    font-family:"Times New Roman", Times, serif;
+    font-size:15px;color:var(--olive);font-weight:600;
+    word-break:break-all;
+  }
+  .transfer-data .td-copy{
+    background:transparent;border:1px solid rgba(50,57,21,.25);
+    border-radius:8px;padding:6px 12px;
+    font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+    font-weight:700;color:var(--olive);
+    cursor:pointer;transition:all .2s ease;
+  }
+  .transfer-data .td-copy:hover{background:var(--olive);color:var(--cream);border-color:var(--olive)}
+  .transfer-data .td-copy.ok{background:var(--sage);color:var(--cream);border-color:var(--sage)}
+  .transfer-cta{
+    width:100%;
+    background:var(--olive);color:var(--cream);
+    padding:14px;border-radius:12px;
+    font-size:12px;letter-spacing:.2em;text-transform:uppercase;font-weight:700;
+    display:flex;align-items:center;justify-content:center;gap:10px;
+    text-decoration:none;
+    transition:background .25s ease, transform .25s ease;
+  }
+  .transfer-cta:hover{background:var(--gold);transform:translateY(-1px)}
+  .transfer-note{
+    font-size:12px;color:#6a6650;
+    text-align:center;line-height:1.5;
+    margin:16px 0 0;font-style:italic;
+  }
+  @media (max-width:520px){
+    .transfer-data li{grid-template-columns:80px 1fr;}
+    .transfer-data .td-copy{grid-column:1 / -1;justify-self:start;margin-top:4px}
+  }
 
   /* toast notification */
   .cart-toast{
@@ -3580,12 +3711,70 @@
       <div class="cart-line"><span>Envío refrigerado</span><span style="color:var(--sage);font-weight:600">Gratis</span></div>
       <div class="cart-line total"><span>Total</span><strong id="cartTotal">$0.00</strong></div>
     </div>
-    <button class="cart-checkout" id="cartCheckout">
-      Finalizar compra
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-    </button>
+    <div class="pay-options">
+      <p class="pay-label">¿Cómo querés pagar?</p>
+      <button class="cart-checkout pay-btn pay-mp" id="cartCheckout">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="13" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+        Pagar con tarjeta
+      </button>
+      <button class="cart-checkout pay-btn pay-transfer" id="cartTransfer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h18M3 16h18M7 4v16M17 4v16"/></svg>
+        Pagar por transferencia
+      </button>
+    </div>
   </div>
 </aside>
+
+<!-- ============= MODAL TRANSFERENCIA ============= -->
+<div class="transfer-modal" id="transferModal" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="transfer-backdrop" data-close></div>
+  <div class="transfer-box">
+    <button class="transfer-close" aria-label="Cerrar" data-close>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <div class="transfer-eyebrow">— Transferencia bancaria —</div>
+    <h3 class="transfer-title">Datos para transferir</h3>
+    <p class="transfer-sub">Hacé la transferencia por el monto total y enviá el comprobante por WhatsApp para confirmar tu pedido.</p>
+
+    <div class="transfer-amount">
+      <span class="transfer-amount-label">Total a transferir</span>
+      <strong class="transfer-amount-value" id="transferTotal">$0.00</strong>
+    </div>
+
+    <ul class="transfer-data">
+      <li>
+        <span class="td-key">Titular</span>
+        <span class="td-val" id="trf-titular">Nombre Apellido</span>
+        <button class="td-copy" data-copy="#trf-titular" aria-label="Copiar titular">Copiar</button>
+      </li>
+      <li>
+        <span class="td-key">CBU</span>
+        <span class="td-val" id="trf-cbu">0000000000000000000000</span>
+        <button class="td-copy" data-copy="#trf-cbu" aria-label="Copiar CBU">Copiar</button>
+      </li>
+      <li>
+        <span class="td-key">Alias</span>
+        <span class="td-val" id="trf-alias">barfirenzina.alias</span>
+        <button class="td-copy" data-copy="#trf-alias" aria-label="Copiar alias">Copiar</button>
+      </li>
+      <li>
+        <span class="td-key">Banco</span>
+        <span class="td-val" id="trf-banco">Banco (genérico — cargar real)</span>
+      </li>
+      <li>
+        <span class="td-key">CUIT / DNI</span>
+        <span class="td-val" id="trf-doc">00-00000000-0</span>
+        <button class="td-copy" data-copy="#trf-doc" aria-label="Copiar CUIT/DNI">Copiar</button>
+      </li>
+    </ul>
+
+    <a class="transfer-cta" id="transferWaBtn" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M17.5 14.4c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-1 1.2-.2.2-.4.2-.6.1-.3-.1-1.2-.4-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4 0 1.4 1 2.8 1.2 3 .1.2 2 3 4.8 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.5-.3zM12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.5 1.3 4.9L2 22l5.3-1.3c1.4.8 3 1.2 4.7 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>
+      Enviar comprobante por WhatsApp
+    </a>
+    <p class="transfer-note">Tu pedido se reserva por 24 hs. Te confirmamos por WhatsApp en cuanto recibimos la transferencia.</p>
+  </div>
+</div>
 
 <!-- toast -->
 <div class="cart-toast" id="cartToast">
@@ -4565,6 +4754,80 @@ const statIO = new IntersectionObserver((entries)=>{
 },{threshold:.45});
 document.querySelectorAll('.stat-ticker .stat').forEach(el=>statIO.observe(el));
 
+
+/* ===================== MODAL PAGO POR TRANSFERENCIA =====================
+   Botón "Pagar por transferencia" → abre modal con datos bancarios.
+   Botón "Copiar" en cada dato copia al portapapeles.
+   Botón final → abre WhatsApp con el detalle del pedido + pedido de comprobante. */
+(function(){
+  var WA_PHONE = '5491154846054';
+  var modal = document.getElementById('transferModal');
+  var openBtn = document.getElementById('cartTransfer');
+  var totalEl = document.getElementById('transferTotal');
+  var waBtn = document.getElementById('transferWaBtn');
+  if(!modal || !openBtn) return;
+
+  function readCart(){
+    try { return JSON.parse(localStorage.getItem('barfCart') || '[]'); }
+    catch(_){ return []; }
+  }
+  function subtotal(items){ return items.reduce(function(s,i){ return s + (i.qty||1)*(i.price||0); }, 0); }
+  function fmt(v){ return '$' + Number(v||0).toFixed(2); }
+
+  function open(){
+    var items = readCart();
+    if(!items.length) return;
+    var total = subtotal(items);
+    totalEl.textContent = fmt(total);
+
+    // Armar mensaje de WhatsApp con el pedido
+    var lines = [];
+    lines.push('¡Hola! Quiero hacer el pago por TRANSFERENCIA. Mi pedido:');
+    lines.push('');
+    items.forEach(function(i){
+      lines.push('• '+ i.name +' × '+ i.qty +' — '+ fmt(i.qty * i.price));
+    });
+    lines.push('');
+    lines.push('Total: '+ fmt(total));
+    lines.push('');
+    lines.push('Hago la transferencia y les paso el comprobante por acá. ¡Gracias!');
+    waBtn.href = 'https://wa.me/'+ WA_PHONE +'?text='+ encodeURIComponent(lines.join('\n'));
+
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+  function close(){
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  openBtn.addEventListener('click', open);
+  modal.querySelectorAll('[data-close]').forEach(function(el){
+    el.addEventListener('click', close);
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && modal.classList.contains('open')) close();
+  });
+
+  // Copiar al portapapeles
+  modal.querySelectorAll('.td-copy').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var target = document.querySelector(btn.dataset.copy);
+      if(!target) return;
+      var text = target.textContent.trim();
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(function(){
+          var orig = btn.textContent;
+          btn.textContent = '¡Copiado!';
+          btn.classList.add('ok');
+          setTimeout(function(){ btn.textContent = orig; btn.classList.remove('ok'); }, 1500);
+        });
+      }
+    });
+  });
+})();
 
 /* ===================== ACTIVE NAV LINK ===================== */
 const sections = document.querySelectorAll('section[id]');
