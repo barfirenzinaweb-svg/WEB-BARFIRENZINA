@@ -660,13 +660,13 @@
   .logo{display:none}
   /* Logo circular con borde olive más claro (sage) — escala proporcional */
   .brand-logo{
-    width:clamp(32px, 2.4vw, 46px);
-    height:clamp(32px, 2.4vw, 46px);
+    width:clamp(40px, 3vw, 58px);
+    height:clamp(40px, 3vw, 58px);
     border-radius:50%;
     object-fit:cover;
     background:#f5efd6;
-    border:clamp(1px, .12vw, 2px) solid var(--sage);
-    box-shadow:0 0 0 clamp(1px, .15vw, 3px) rgba(124,132,86,.18);
+    border:clamp(1px, .14vw, 2.5px) solid var(--sage);
+    box-shadow:0 0 0 clamp(1px, .18vw, 3px) rgba(124,132,86,.18);
     flex-shrink:0;
     transition:transform .35s ease, box-shadow .35s ease;
   }
@@ -677,7 +677,7 @@
   .brand-text{display:flex;flex-direction:column;align-items:flex-start;gap:2px}
   .brand-name{
     font-family:var(--display);
-    font-size:clamp(13px, 1.15vw, 21px);
+    font-size:clamp(16px, 1.4vw, 26px);
     font-weight:800;
     color:var(--cream);
     letter-spacing:.03em;
@@ -688,7 +688,7 @@
   .brand-text::after{
     content:"Alimentación natural para gatos";
     font-family:var(--subtitle);
-    font-size:clamp(6px, .5vw, 9px);letter-spacing:.22em;text-transform:uppercase;
+    font-size:clamp(7px, .58vw, 11px);letter-spacing:.22em;text-transform:uppercase;
     color:var(--khaki);opacity:.85;font-weight:600;
   }
 
@@ -707,8 +707,8 @@
   .nav ul li + li{position:relative}
   .nav ul li + li::before{
     content:"";position:absolute;left:calc(clamp(12px, 1.5vw, 26px) / -2);top:50%;
-    width:4px;height:4px;background:var(--gold);transform:translate(-50%,-50%) rotate(45deg);
-    opacity:.7;
+    width:6px;height:6px;background:var(--khaki);border-radius:50%;
+    transform:translate(-50%,-50%);opacity:1;
   }
 
 
@@ -2490,12 +2490,16 @@
   .explain-symptoms{
     text-align:center;
     font-family:var(--subtitle);
-    font-size:clamp(13px, 1.2vw, 19px);
+    font-size:clamp(11px, 1.05vw, 17px);
     color:var(--olive);
     margin:0;
-    display:flex;justify-content:center;align-items:center;flex-wrap:wrap;
+    display:flex;justify-content:center;align-items:center;flex-wrap:nowrap;
     gap:clamp(8px, .8vw, 14px);
     opacity:.85;
+    white-space:nowrap;
+  }
+  @media (max-width:620px){
+    .explain-symptoms{flex-wrap:wrap;white-space:normal;font-size:13px}
   }
   .explain-tagline{
     margin-top:0 !important;
@@ -2688,17 +2692,23 @@
   /* Watermark logo emergiendo de la esquina inferior izquierda */
   .ig-watermark{
     position:absolute;
-    bottom:-10%;left:-5%;
-    width:clamp(240px, 28vw, 460px);
+    bottom:-8%;left:-3%;
+    width:clamp(180px, 28vw, 460px);
     height:auto;
-    opacity:.12;
+    opacity:.14;
     pointer-events:none;
     z-index:1;
     filter:saturate(.9) brightness(1.05);
+    display:block !important;
   }
   .ig-section > .container{position:relative;z-index:2}
   @media (max-width:600px){
-    .ig-watermark{bottom:-6%;left:-10%;width:200px;opacity:.10}
+    .ig-watermark{
+      bottom:auto;top:2%;left:50%;
+      transform:translateX(-50%);
+      width:clamp(120px, 40vw, 200px);
+      opacity:.11;
+    }
   }
 
   .ig-intro{
@@ -3136,6 +3146,18 @@
   .products .section-head .eye{
     color:var(--gold);justify-content:center;
   }
+  /* Eyebrow sin líneas decorativas (clase .eye-plain) */
+  .section-head .eye.eye-plain::before,
+  .section-head .eye.eye-plain::after{display:none !important}
+  .recetas-sub{
+    font-family:var(--display);
+    font-size:clamp(15px, 1.2vw, 18px);
+    line-height:1.55;
+    color:rgba(50,57,21,.72);
+    text-align:center;
+    margin:0 auto;
+    max-width:560px;
+  }
 
   /* === OVERRIDES PARA SECCIONES CON FONDO OSCURO (olive) ===
      .ingredients y .cta-banner tienen background:var(--olive) — los textos
@@ -3469,7 +3491,7 @@
       <li class="ing-item">
         <span class="ing-num">06</span>
         <span class="ing-name">Suplementación Precisa</span>
-        <span class="ing-meta">Taurina + Omega 3<br>Vitaminas E y complejo B</span>
+        <span class="ing-meta">Taurina + Omega 3 · Vitaminas E y complejo B</span>
       </li>
     </ol>
 </section>
@@ -3484,9 +3506,9 @@
   <div class="products-shine" aria-hidden="true"></div>
   <div class="container">
     <div class="section-head fade-in">
-      <span class="eye" data-cms="recetas.eyebrow">Nuestras Recetas</span>
+      <span class="eye eye-plain" data-cms="recetas.eyebrow">Nuestras Recetas</span>
       <h2>Crudo o <em>Cocido</em>.<br>Vos elegís.</h2>
-      <p data-cms="recetas.subtitulo">Dos formatos con la misma fórmula nutricional, adaptados a lo que tu gato prefiere y necesita.</p>
+      <p class="recetas-sub">Dos formatos con la misma fórmula nutricional,<br>adaptados a lo que tu gato prefiere y necesita.</p>
     </div>
 
     <div class="product-grid two-cols stagger fade-in">
@@ -3726,7 +3748,7 @@
 <section class="explain" id="explicaciones">
   <div class="container">
     <header class="explain-head fade-in">
-      <h2><span class="ocre">NO TODO</span> LO QUE NORMALIZAMOS <span class="ocre">ES NATURAL</span></h2>
+      <h2><span class="ocre">NO TODO</span> LO QUE NORMALIZAMOS<br><span class="ocre">ES NATURAL</span></h2>
       <div class="explain-divider"></div>
       <p class="explain-sub">Nos acostumbramos a cosas que no deberían pasar</p>
       <p class="explain-symptoms">
@@ -3923,12 +3945,12 @@
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8 5.8 21.3l2.4-7.4L2 9.4h7.6z"/></svg>
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8 5.8 21.3l2.4-7.4L2 9.4h7.6z"/></svg>
         </div>
-        <p class="text">En dos meses Luna dejó de tener problemas digestivos y su pelaje brilla como nunca. Volver atrás sería impensable.</p>
+        <p class="text">pensé que nunca iba a dejar las croquetas y ahora me pide esto todo el tiempo jajaja</p>
         <div class="person">
           <div class="avatar">C</div>
           <div>
-            <div class="name">Camila Herrera</div>
-            <div class="role">Mamá gatuna · Palermo</div>
+            <div class="name">cami</div>
+            <div class="role">mamá de Luna · Palermo</div>
           </div>
         </div>
       </div>
@@ -3942,12 +3964,12 @@
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8 5.8 21.3l2.4-7.4L2 9.4h7.6z"/></svg>
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8 5.8 21.3l2.4-7.4L2 9.4h7.6z"/></svg>
         </div>
-        <p class="text">Mateo era de los gatos que jugaban con la comida sin comerla. Probamos BARFirenzina y a la semana ya esperaba el plato. Encima volvió a tener energía para correr por toda la casa.</p>
+        <p class="text">el cocido nos ayudó muchísimo con la transición 🥹 mateo era de los que jugaba con la comida y ahora espera el plato como loco</p>
         <div class="person">
           <div class="avatar">M</div>
           <div>
-            <div class="name">Mariana López</div>
-            <div class="role">Cliente desde 2023 · Villa Crespo</div>
+            <div class="name">Mariana L.</div>
+            <div class="role">Villa Crespo · desde 2023</div>
           </div>
         </div>
       </div>
@@ -3961,12 +3983,12 @@
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8 5.8 21.3l2.4-7.4L2 9.4h7.6z"/></svg>
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8 5.8 21.3l2.4-7.4L2 9.4h7.6z"/></svg>
         </div>
-        <p class="text">Tengo tres gatos y los tres se pelean por el plato. Encima la entrega llega siempre impecable y fría. 10/10.</p>
+        <p class="text">hace meses no vomita. yo ya estaba resignada honestamente. tengo tres gatos y los tres se pelean por el plato, llega siempre fría, todo bien</p>
         <div class="person">
           <div class="avatar">S</div>
           <div>
-            <div class="name">Sofía Álvarez</div>
-            <div class="role">Cliente desde 2024 · CABA</div>
+            <div class="name">sofi</div>
+            <div class="role">tres gatos en casa · CABA</div>
           </div>
         </div>
       </div>
