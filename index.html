@@ -1903,15 +1903,7 @@
       0 0 60px -10px rgba(163,142,72,.35);
   }
   /* Numero de receta (#01, #02) en esquina superior derecha */
-  .product-card .recipe-num{
-    position:absolute;top:12px;right:14px;z-index:4;
-    font-family:var(--serif);font-weight:500;
-    font-size:clamp(22px, 2vw, 30px);
-    color:var(--gold);opacity:.55;
-    line-height:1;letter-spacing:-.02em;pointer-events:none;
-    transition:opacity .4s ease, transform .4s ease;
-  }
-  .product-card:hover .recipe-num{opacity:.85;transform:translateY(-2px)}
+  .product-card .recipe-num{display:none !important}
   .product-card-wrap:hover .kitten-decor{transform:translateY(-14px) rotate(-4deg)}
 
   .kitten-decor{
