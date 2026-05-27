@@ -3200,16 +3200,21 @@
   }
 
   /* === OVERRIDES PARA SECCIONES CON FONDO OSCURO (olive) ===
-     .ingredients y .cta-banner tienen background:var(--olive) — los textos
+     .ingredients, .ig-section y .cta-banner tienen background:var(--olive) — los textos
      del header deben quedar cream, no olive. */
   .ingredients .ing-head h2,
+  .ig-section .ig-head h2,
   .cta-banner h2{color:var(--cream)}
   .ingredients .ing-head h2 em,
+  .ig-section .ig-head h2 em,
   .cta-banner h2 em{color:var(--gold)}
   .ingredients .ing-head p,
+  .ig-section .ig-head p,
+  .ig-section .ig-intro,
   .cta-banner p{color:rgba(246,246,233,.78)}
   .ingredients .ing-head .ing-eyebrow,
-  .ingredients .ing-head .section-eyebrow{color:var(--gold)}
+  .ingredients .ing-head .section-eyebrow,
+  .ig-section .ig-head .ig-eyebrow{color:var(--gold)}
   /* Items de la lista de ingredientes: nombres en cream (igual al título), meta en cream tenue */
   .ingredients .ing-name{color:var(--cream)}
   .ingredients .ing-meta{color:rgba(246,246,233,.55)}
