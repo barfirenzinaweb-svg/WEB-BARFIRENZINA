@@ -77,6 +77,14 @@
     /* Edge horizontal del header y hero — clamp fluido sin saltos entre breakpoints.
        Escala continuamente: ~22px en mobile (320px), ~60px en tablet, ~110px max en desktop. */
     --hero-edge: clamp(18px, 7.5vw, 110px);
+
+    /* ===== SISTEMA TIPOGRÁFICO UNIFICADO =====
+       Mismo tamaño para todos los títulos / subtítulos / textos / eyebrows del sitio. */
+    --ts-eyebrow: clamp(11px, .82vw, 13px);     /* "Beneficios", "Testimonios", "— Ingredientes —" */
+    --ts-h2:      clamp(32px, 4.2vw, 56px);      /* títulos de sección (h2) */
+    --ts-card-h:  clamp(18px, 1.45vw, 22px);     /* títulos de cards (h3/h4) */
+    --ts-sub:     clamp(15px, 1.2vw, 18px);      /* bajadas / subtítulos */
+    --ts-body:    clamp(14px, 1.05vw, 16px);     /* texto general de cards/items */
   }
 
   *{box-sizing:border-box;margin:0;padding:0}
@@ -1180,7 +1188,7 @@
   .hero{
     position:relative;
     width:100%;max-width:100vw;
-    background:#f1ecd5;
+    background:var(--cream-2);
     overflow:hidden;
     isolation:isolate;
     font-family:var(--display);
@@ -2417,30 +2425,34 @@
     color:var(--sage);font-weight:600;
   }
 
-  /* Poster story — problem → solution (OCULTO globalmente) */
+  /* Poster story — problem → solution */
   .poster-story{
-    display:none !important;
+    display:grid;grid-template-columns:1fr auto 1fr;
+    gap:clamp(18px, 2vw, 30px);align-items:center;margin-bottom:60px;
+    max-width:clamp(640px, 70vw, 820px);margin-left:auto;margin-right:auto;
   }
   .poster-frame{
     position:relative;
     background:var(--olive);
-    padding:10px;
-    border-radius:18px;
+    padding:8px;
+    border-radius:14px;
     border:2px solid var(--gold);
-    box-shadow:0 40px 70px -35px rgba(42,40,31,.6), inset 0 0 0 1px rgba(246,237,209,.15);
+    max-width:clamp(220px, 22vw, 290px);
+    margin:0 auto;
+    box-shadow:0 30px 60px -30px rgba(42,40,31,.5), inset 0 0 0 1px rgba(246,237,209,.15);
     transition:transform .5s cubic-bezier(.2,.8,.2,1);
   }
   .poster-frame img,
   .poster-frame video{
     width:100%;height:auto;display:block;
-    aspect-ratio:2/3;object-fit:cover;
+    aspect-ratio:3/4;object-fit:cover;
     object-position:center center;
-    border-radius:12px;
+    border-radius:8px;
     background:var(--olive);
   }
-  .poster-frame.problem{transform:rotate(-2deg)}
-  .poster-frame.solution{transform:rotate(2deg)}
-  .poster-frame:hover{transform:rotate(0) scale(1.03)}
+  .poster-frame.problem{transform:rotate(0)}
+  .poster-frame.solution{transform:rotate(0)}
+  .poster-frame:hover{transform:scale(1.02)}
   .poster-frame .p-label{
     position:absolute;bottom:-16px;left:50%;transform:translateX(-50%);
     background:var(--cream);color:var(--olive);
@@ -3058,7 +3070,7 @@
     gap:14px;
     color:var(--gold);
     font-family:var(--display);
-    font-size:clamp(11px, .82vw, 13px);
+    font-size:var(--ts-eyebrow);
     font-weight:700;
     letter-spacing:.32em;
     text-transform:uppercase;
@@ -3095,7 +3107,7 @@
   .info-head h2,
   .ing-head h2{
     font-family:var(--display);
-    font-size:clamp(34px, 4.4vw, 60px);
+    font-size:var(--ts-h2);
     font-weight:800;
     line-height:1.02;
     letter-spacing:-.005em;
@@ -3123,13 +3135,40 @@
   .info-head p.body,
   .ing-head p{
     font-family:var(--display);
-    font-size:clamp(15px, 1.2vw, 18px);
+    font-size:var(--ts-sub);
     line-height:1.6;
     color:rgba(50,57,21,.72);
     max-width:560px;
     margin:0 auto;
     text-align:center;
   }
+
+  /* === TIPOGRAFÍA UNIFICADA EN CARDS / ITEMS DE TODAS LAS SECCIONES === */
+  /* Títulos de cards (benefit, product, info, etc.) */
+  .benefit-card h4,
+  .product-card h3,
+  .review-card .name,
+  .faq-item summary,
+  .ing-name{
+    font-family:var(--display);
+    font-size:var(--ts-card-h);
+    font-weight:700;
+    color:var(--olive);
+    line-height:1.2;
+  }
+  /* Texto general dentro de cards e items */
+  .benefit-card p,
+  .product-card .desc,
+  .review-card .text,
+  .faq-item .faq-a,
+  .ing-meta,
+  .review-card .role,
+  .recetas-sub{
+    font-family:var(--display);
+    font-size:var(--ts-body);
+    line-height:1.6;
+  }
+  .recetas-sub{font-size:var(--ts-sub)}
 
   /* Override del header de productos que tenía tamaño y márgenes propios */
   .products .section-head{margin-left:auto;margin-right:auto}
@@ -3389,26 +3428,6 @@
         <video autoplay muted loop playsinline preload="auto" disablepictureinpicture>
           <source src="assets/hero.mp4" type="video/mp4" />
         </video>
-      </div>
-      <div class="hero-sticker">
-        <svg class="hero-sticker-disc" viewBox="0 0 132 132">
-          <defs>
-            <path id="heroStickerPath" d="M66,66 m-52,0 a52,52 0 1,1 104,0 a52,52 0 1,1 -104,0" />
-          </defs>
-          <circle cx="66" cy="66" r="65" fill="#A38E48"/>
-          <text fill="#F1ECD5" font-family="Inter, sans-serif" font-size="11.5" font-weight="700" letter-spacing="2.8">
-            <textPath href="#heroStickerPath" startOffset="0">100% NATURAL · CADENA DE FRÍO · SIN CONSERVANTES · </textPath>
-          </text>
-        </svg>
-        <div class="hero-sticker-core">
-          <svg viewBox="0 0 24 24" fill="#F1ECD5" aria-hidden="true">
-            <ellipse cx="6" cy="10" rx="1.8" ry="2.2"/>
-            <ellipse cx="10" cy="7.5" rx="1.8" ry="2.2"/>
-            <ellipse cx="14" cy="7.5" rx="1.8" ry="2.2"/>
-            <ellipse cx="18" cy="10" rx="1.8" ry="2.2"/>
-            <path d="M12 11.5c-3 0-5.5 2-5.5 4.5 0 1.8 1.2 3 3 3 1 0 1.8-.5 2.5-.5s1.5.5 2.5.5c1.8 0 3-1.2 3-3 0-2.5-2.5-4.5-5.5-4.5z"/>
-          </svg>
-        </div>
       </div>
     </div>
   </div>
@@ -3875,38 +3894,38 @@
   <div class="container">
     <div class="section-head fade-in">
       <span class="eye">Beneficios</span>
-      <h2>Lo que la dieta BARF<br>le da a tu felino</h2>
-      <p>Alimentación biológicamente apropiada significa resultados visibles — en poco tiempo y en cada detalle.</p>
+      <h2>Lo que muchos tutores<br>empiezan a notar</h2>
+      <p>Resultados que se ven, se huelen y se sienten en pocas semanas.</p>
     </div>
 
     <div class="benefit-grid stagger fade-in">
       <div class="benefit-card">
         <div class="icon-wrap">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.5-9.5-10A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 5C19 16.5 12 21 12 21z"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12a4 4 0 0 0 8 0M9 9h.01M15 9h.01"/></svg>
         </div>
-        <h4>Corazón fuerte</h4>
-        <p>Taurina natural en órganos frescos — clave para la salud cardiovascular felina.</p>
+        <h4>Menos vómitos</h4>
+        <p>Digestiones más naturales y livianas — menos heces, menos olor, más asimilación.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5c-3 4-6 7.5-6 11a6 6 0 0 0 12 0c0-3.5-3-7-6-11z"/></svg>
+        </div>
+        <h4>Más hidratación</h4>
+        <p>Alimento con humedad real, no ultraseco. Riñones e hígado más fuertes y saludables.</p>
       </div>
       <div class="benefit-card">
         <div class="icon-wrap">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12c6-6 12-6 18 0M6 16c4-4 8-4 12 0M9 20c2-2 4-2 6 0"/></svg>
         </div>
-        <h4>Pelaje brillante</h4>
-        <p>Ácidos grasos Omega 3 y 6 que dan brillo, suavidad y disminuyen la caída de pelo.</p>
-      </div>
-      <div class="benefit-card">
-        <div class="icon-wrap">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12a4 4 0 0 0 8 0M9 9h.01M15 9h.01"/></svg>
-        </div>
-        <h4>Mejor digestión</h4>
-        <p>Proteínas biodisponibles y cero cereales — menos heces, menos olor, más asimilación.</p>
+        <h4>Pelo más sano</h4>
+        <p>Nutrición rica en proteína animal y grasas adecuadas, que dan brillo, suavidad y disminuyen la caída del pelo.</p>
       </div>
       <div class="benefit-card">
         <div class="icon-wrap">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/></svg>
         </div>
-        <h4>Energía sostenida</h4>
-        <p>Músculo magro y grasas de calidad que sostienen la actividad natural del gato.</p>
+        <h4>Más interés por la comida y energía sostenida</h4>
+        <p>Mayor palatabilidad y estimulación natural.</p>
       </div>
     </div>
   </div>
