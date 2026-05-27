@@ -364,6 +364,7 @@
     border:5px solid var(--olive);
     max-width:clamp(280px, 32vw, 400px);
     margin:0 auto;
+    aspect-ratio:3/4;
     box-shadow:0 30px 60px -30px rgba(0,0,0,.55);
     transform:rotate(0);
     transition:transform .6s cubic-bezier(.2,.8,.2,1);
@@ -371,11 +372,17 @@
   .hist-poster:hover{transform:scale(1.02)}
   .hist-poster img,
   .hist-poster video{
-    width:100%;display:block;
-    aspect-ratio:3/4;object-fit:cover;
+    position:absolute;
+    inset:4px;
+    width:calc(100% - 8px);
+    height:calc(100% - 8px);
+    display:block;
+    object-fit:cover;
     object-position:center;
     border-radius:6px;
     background:#F6F1DA;
+    transform:scale(1.18);
+    transform-origin:center;
   }
   .hist-poster .hp-tag{
     position:absolute;bottom:24px;left:24px;z-index:2;
@@ -2442,16 +2449,24 @@
     border:5px solid var(--olive);
     max-width:clamp(280px, 32vw, 400px);
     margin:0 auto;
+    aspect-ratio:3/4;
+    overflow:hidden;
     box-shadow:0 30px 60px -30px rgba(42,40,31,.55);
     transition:transform .5s cubic-bezier(.2,.8,.2,1);
   }
   .poster-frame img,
   .poster-frame video{
-    width:100%;display:block;
-    aspect-ratio:3/4;object-fit:cover;
+    position:absolute;
+    inset:4px;
+    width:calc(100% - 8px);
+    height:calc(100% - 8px);
+    display:block;
+    object-fit:cover;
     object-position:center center;
     border-radius:6px;
     background:#F6F1DA;
+    transform:scale(1.18);
+    transform-origin:center;
   }
   .poster-frame.problem{transform:rotate(0)}
   .poster-frame.solution{transform:rotate(0)}
