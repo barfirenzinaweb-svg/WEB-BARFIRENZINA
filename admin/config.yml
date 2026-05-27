@@ -74,6 +74,22 @@ collections:
                     required: false
                     hint: "Subí varias fotos extra para mostrar como carrusel. La imagen principal de arriba es la primera del carrusel."
                     field: { label: "Foto", name: "foto", widget: "image" }
+                  - label: "Encuadre de las fotos (cómo se centran)"
+                    name: "posicion_foto"
+                    widget: "select"
+                    required: false
+                    default: "center"
+                    hint: "Si tu foto se ve cortada, elegí qué parte querés que quede visible. Aplica a TODAS las fotos de este producto."
+                    options:
+                      - { label: "Centro (default)", value: "center" }
+                      - { label: "Arriba", value: "top" }
+                      - { label: "Abajo", value: "bottom" }
+                      - { label: "Izquierda", value: "left" }
+                      - { label: "Derecha", value: "right" }
+                      - { label: "Arriba-Izquierda", value: "top left" }
+                      - { label: "Arriba-Derecha", value: "top right" }
+                      - { label: "Abajo-Izquierda", value: "bottom left" }
+                      - { label: "Abajo-Derecha", value: "bottom right" }
                   - { label: "Descripción", name: "descripcion", widget: "text" }
                   - { label: "Precio (solo número, sin $)", name: "precio", widget: "string" }
                   - { label: "Precio anterior (vacío = sin descuento)", name: "precio_anterior", widget: "string", required: false }

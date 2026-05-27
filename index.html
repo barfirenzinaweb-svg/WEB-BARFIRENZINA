@@ -1979,7 +1979,8 @@
   .ph-slide{
     position:absolute;inset:0;
     width:100%;height:100%;
-    object-fit:cover;object-position:center;
+    object-fit:cover;
+    object-position:var(--ph-pos, center);
     opacity:0;visibility:hidden;
     transition:opacity .5s ease, transform .9s cubic-bezier(.2,.7,.1,1);
   }
@@ -4891,6 +4892,8 @@ if(heroImg){
               ? '<button type="button" class="ph-nav ph-prev" aria-label="Anterior">‹</button><button type="button" class="ph-nav ph-next" aria-label="Siguiente">›</button>'
               : '';
             var carouselClass = gallery.length > 1 ? ' has-carousel' : '';
+            var pos = (p.posicion_foto || 'center').replace(/[^a-z\s-]/gi,'');
+            var photoStyle = ' style="--ph-pos:'+pos+'"';
             return '<div class="product-card-wrap">'+
               '<svg class="kitten-decor" viewBox="0 0 100 100" fill="none" aria-hidden="true"><g class="kitten-body">'+
               '<path d="M43 56 C40 64, 41 78, 44 88 L56 88 C59 78, 60 64, 57 56 Z" fill="currentColor"/>'+
@@ -4903,7 +4906,7 @@ if(heroImg){
               '<article class="product-card" data-id="'+esc(p.id||('p'+i))+'" data-name="'+nombre+'" data-price="'+precio+'" data-img="'+esc(img)+'">'+
               '<span class="recipe-num">'+num+'</span>'+
               ribbon+
-              '<div class="product-photo product-photo-real'+carouselClass+'">'+
+              '<div class="product-photo product-photo-real'+carouselClass+'"'+photoStyle+'>'+
               tag+
               '<button class="quick-view" aria-label="Vista rápida"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg></button>'+
               (p.peso?'<div class="weight-badge">'+esc(p.peso)+'</div>':'')+
