@@ -67,7 +67,13 @@ collections:
                   - { label: "ID único (sin espacios, ej: crudo, cocido, kitten)", name: "id", widget: "string", hint: "Identificador para el carrito. NO repetir entre productos." }
                   - { label: "Nombre del producto", name: "nombre", widget: "string" }
                   - { label: "Categoría (ej: Receta Cruda)", name: "categoria", widget: "string" }
-                  - { label: "Imagen del producto", name: "imagen", widget: "image", required: false, hint: "Subí la foto del producto. Si la dejás vacía, se usa la imagen por defecto." }
+                  - { label: "Imagen principal del producto", name: "imagen", widget: "image", required: false, hint: "Foto principal (la que se ve primero). Si subís más en 'Galería' abajo, se muestra carrusel." }
+                  - label: "Galería de fotos (carrusel) — opcional"
+                    name: "galeria"
+                    widget: "list"
+                    required: false
+                    hint: "Subí varias fotos extra para mostrar como carrusel. La imagen principal de arriba es la primera del carrusel."
+                    field: { label: "Foto", name: "foto", widget: "image" }
                   - { label: "Descripción", name: "descripcion", widget: "text" }
                   - { label: "Precio (solo número, sin $)", name: "precio", widget: "string" }
                   - { label: "Precio anterior (vacío = sin descuento)", name: "precio_anterior", widget: "string", required: false }

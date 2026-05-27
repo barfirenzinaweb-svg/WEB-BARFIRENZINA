@@ -1974,6 +1974,65 @@
   .product-card:hover .product-photo-real img{transform:scale(1.08)}
   .product-card:hover .product-photo-real.blend-white img{transform:scale(1.55) rotate(-2deg)}
 
+  /* ===== CARRUSEL DE FOTOS EN PRODUCT CARDS ===== */
+  .ph-slides{position:relative;width:100%;height:100%;z-index:0}
+  .ph-slide{
+    position:absolute;inset:0;
+    width:100%;height:100%;
+    object-fit:cover;object-position:center;
+    opacity:0;visibility:hidden;
+    transition:opacity .5s ease, transform .9s cubic-bezier(.2,.7,.1,1);
+  }
+  .ph-slide.active{opacity:1;visibility:visible}
+  .product-card:hover .ph-slides .ph-slide.active{transform:scale(1.08)}
+  .product-photo-real.blend-white .ph-slide{
+    object-fit:contain;transform:scale(1.4);mix-blend-mode:multiply;
+  }
+  .product-card:hover .product-photo-real.blend-white .ph-slide.active{transform:scale(1.55) rotate(-2deg)}
+
+  /* Dots indicadores */
+  .ph-dots{
+    position:absolute;bottom:12px;left:50%;
+    transform:translateX(-50%);z-index:4;
+    display:flex;gap:8px;
+    padding:6px 10px;border-radius:999px;
+    background:rgba(50,57,21,.35);backdrop-filter:blur(6px);
+  }
+  .ph-dot{
+    width:8px;height:8px;border-radius:50%;
+    background:rgba(246,246,233,.45);
+    border:none;cursor:pointer;padding:0;
+    transition:background .25s ease, transform .25s ease;
+  }
+  .ph-dot:hover{background:rgba(246,246,233,.8)}
+  .ph-dot.active{background:var(--cream);transform:scale(1.3)}
+
+  /* Flechas navegación */
+  .ph-nav{
+    position:absolute;top:50%;
+    transform:translateY(-50%);z-index:4;
+    width:34px;height:34px;border-radius:50%;
+    background:rgba(246,246,233,.85);color:var(--olive);
+    border:none;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    font-size:20px;font-weight:700;line-height:1;
+    opacity:0;
+    transition:opacity .3s ease, background .25s ease, transform .25s ease;
+    box-shadow:0 6px 18px -6px rgba(0,0,0,.3);
+  }
+  .product-photo-real:hover .ph-nav{opacity:1}
+  .ph-nav:hover{background:var(--cream);transform:translateY(-50%) scale(1.08)}
+  .ph-prev{left:10px}
+  .ph-next{right:10px}
+  /* Solo muestra controls si hay 2+ slides */
+  .product-photo-real:not(.has-carousel) .ph-dots,
+  .product-photo-real:not(.has-carousel) .ph-nav{display:none}
+  @media (max-width:720px){
+    .ph-nav{width:30px;height:30px;font-size:18px;opacity:.85}
+    .ph-dots{bottom:8px;padding:5px 8px;gap:6px}
+    .ph-dot{width:7px;height:7px}
+  }
+
   /* subtle bottom gradient on photo */
   .product-photo::after{
     content:"";position:absolute;inset:0;z-index:1;
@@ -3574,7 +3633,9 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
           </button>
           <div class="weight-badge">500 g</div>
-          <img src="assets/barf-crudo.jpg" alt="BARF Crudo para gatos" loading="lazy" decoding="async"/>
+          <div class="ph-slides">
+            <img class="ph-slide active" src="assets/barf-crudo.jpg" alt="BARF Crudo para gatos" loading="lazy" decoding="async"/>
+          </div>
         </div>
         <div class="card-body">
           <div class="category" data-cms="recetas.producto_crudo.categoria">Receta Cruda</div>
@@ -3631,7 +3692,9 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
           </button>
           <div class="weight-badge">500 g</div>
-          <img src="assets/barf-cocido.jpg" alt="BARF Cocido para gatos" loading="lazy" decoding="async"/>
+          <div class="ph-slides">
+            <img class="ph-slide active" src="assets/barf-cocido.jpg" alt="BARF Cocido para gatos" loading="lazy" decoding="async"/>
+          </div>
         </div>
         <div class="card-body">
           <div class="category" data-cms="recetas.producto_cocido.categoria">Receta Cocida</div>
@@ -4593,6 +4656,62 @@ document.querySelectorAll('.faq-item').forEach(item=>{
   render();
 })();
 
+/* ===================== CARRUSEL DE PRODUCT CARDS ===================== */
+(function initProductCarousels(){
+  function goTo(photo, idx){
+    var slides = photo.querySelectorAll('.ph-slide');
+    var dots = photo.querySelectorAll('.ph-dot');
+    if(!slides.length) return;
+    idx = ((idx % slides.length) + slides.length) % slides.length;
+    slides.forEach(function(s,i){ s.classList.toggle('active', i===idx); });
+    dots.forEach(function(d,i){ d.classList.toggle('active', i===idx); });
+    photo.dataset.idx = idx;
+  }
+  function currentIdx(photo){
+    return parseInt(photo.dataset.idx || '0', 10);
+  }
+  document.addEventListener('click', function(e){
+    var dot = e.target.closest('.ph-dot');
+    if(dot){
+      e.stopPropagation();
+      var photo = dot.closest('.product-photo-real');
+      if(photo) goTo(photo, parseInt(dot.dataset.i,10) || 0);
+      return;
+    }
+    var prev = e.target.closest('.ph-prev');
+    if(prev){
+      e.stopPropagation();
+      var photoP = prev.closest('.product-photo-real');
+      if(photoP) goTo(photoP, currentIdx(photoP) - 1);
+      return;
+    }
+    var next = e.target.closest('.ph-next');
+    if(next){
+      e.stopPropagation();
+      var photoN = next.closest('.product-photo-real');
+      if(photoN) goTo(photoN, currentIdx(photoN) + 1);
+      return;
+    }
+  });
+  // Swipe en mobile
+  var touchStartX = 0, touchPhoto = null;
+  document.addEventListener('touchstart', function(e){
+    var photo = e.target.closest('.product-photo-real.has-carousel');
+    if(!photo) return;
+    touchPhoto = photo;
+    touchStartX = e.touches[0].clientX;
+  }, {passive:true});
+  document.addEventListener('touchend', function(e){
+    if(!touchPhoto) return;
+    var dx = e.changedTouches[0].clientX - touchStartX;
+    if(Math.abs(dx) > 40){
+      if(dx < 0) goTo(touchPhoto, currentIdx(touchPhoto) + 1);
+      else       goTo(touchPhoto, currentIdx(touchPhoto) - 1);
+    }
+    touchPhoto = null;
+  }, {passive:true});
+})();
+
 /* ===================== BURGER (mobile paw menu toggle) ===================== */
 const burger = document.getElementById('burger');
 if(burger){
@@ -4742,6 +4861,14 @@ if(heroImg){
           grid.innerHTML = productos.map(function(p, i){
             var num = String(i+1).padStart(2,'0');
             var img = p.imagen || 'assets/barf-crudo.jpg';
+            // Galería: combina imagen principal + array de imágenes extras
+            var gallery = [img];
+            if(Array.isArray(p.galeria)){
+              p.galeria.forEach(function(g){
+                var src = typeof g === 'string' ? g : (g && g.foto);
+                if(src && src !== img) gallery.push(src);
+              });
+            }
             var ribbon  = p.ribbon ? '<div class="ribbon">'+esc(p.ribbon)+'</div>' : '';
             var tag     = p.tag ? '<div class="tag'+(p.tag_gold?' gold':'')+'">'+esc(p.tag)+'</div>' : '';
             var was     = p.precio_anterior ? '<span class="was">$'+esc(p.precio_anterior)+'</span>' : '';
@@ -4753,6 +4880,17 @@ if(heroImg){
             var revCount = p.reviews_count ? '<span class="rev-count">('+esc(p.reviews_count)+')</span>' : '';
             var precio = esc(p.precio || '0');
             var nombre = esc(p.nombre || 'Producto');
+            // HTML del carrusel: slides + dots + flechas
+            var slidesHtml = '<div class="ph-slides">' + gallery.map(function(src, idx){
+              return '<img class="ph-slide'+(idx===0?' active':'')+'" src="'+esc(src)+'" alt="'+nombre+(idx>0?' foto '+(idx+1):'')+'" loading="lazy" decoding="async"/>';
+            }).join('') + '</div>';
+            var dotsHtml = gallery.length > 1
+              ? '<div class="ph-dots">'+gallery.map(function(_,idx){return '<button type="button" class="ph-dot'+(idx===0?' active':'')+'" data-i="'+idx+'" aria-label="Foto '+(idx+1)+'"></button>';}).join('')+'</div>'
+              : '';
+            var navHtml = gallery.length > 1
+              ? '<button type="button" class="ph-nav ph-prev" aria-label="Anterior">‹</button><button type="button" class="ph-nav ph-next" aria-label="Siguiente">›</button>'
+              : '';
+            var carouselClass = gallery.length > 1 ? ' has-carousel' : '';
             return '<div class="product-card-wrap">'+
               '<svg class="kitten-decor" viewBox="0 0 100 100" fill="none" aria-hidden="true"><g class="kitten-body">'+
               '<path d="M43 56 C40 64, 41 78, 44 88 L56 88 C59 78, 60 64, 57 56 Z" fill="currentColor"/>'+
@@ -4765,11 +4903,12 @@ if(heroImg){
               '<article class="product-card" data-id="'+esc(p.id||('p'+i))+'" data-name="'+nombre+'" data-price="'+precio+'" data-img="'+esc(img)+'">'+
               '<span class="recipe-num">'+num+'</span>'+
               ribbon+
-              '<div class="product-photo product-photo-real">'+
+              '<div class="product-photo product-photo-real'+carouselClass+'">'+
               tag+
               '<button class="quick-view" aria-label="Vista rápida"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg></button>'+
               (p.peso?'<div class="weight-badge">'+esc(p.peso)+'</div>':'')+
-              '<img src="'+esc(img)+'" alt="'+nombre+'" loading="lazy" decoding="async"/></div>'+
+              slidesHtml+navHtml+dotsHtml+
+              '</div>'+
               '<div class="card-body">'+
                 '<div class="category">'+esc(p.categoria||'')+'</div>'+
                 '<h3>'+nombre+'</h3>'+
