@@ -3407,6 +3407,41 @@
     }
     .info-visual{max-width:min(320px, 78vw)}
   }
+
+  /* ===== SEPARADOR DORADO ENTRE BLOQUES ===== */
+  .section-divider{
+    display:flex;align-items:center;justify-content:center;
+    gap:clamp(14px, 1.5vw, 22px);
+    padding:clamp(28px, 4vw, 56px) var(--hero-edge);
+    margin:0;width:100%;
+    position:relative;z-index:2;
+  }
+  .section-divider::before,
+  .section-divider::after{
+    content:"";flex:1;height:1px;
+    background:linear-gradient(90deg, transparent 0%, rgba(163,142,72,.55) 40%, rgba(163,142,72,.55) 60%, transparent 100%);
+    max-width:clamp(120px, 18vw, 280px);
+  }
+  .section-divider .sd-icon{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:clamp(28px, 2.6vw, 40px);height:clamp(28px, 2.6vw, 40px);
+    border-radius:50%;
+    background:transparent;
+    border:1px solid rgba(163,142,72,.4);
+    color:var(--gold);
+    font-size:clamp(11px, 1vw, 14px);
+    line-height:1;font-style:normal;
+    transition:transform .6s ease;
+  }
+  .section-divider:hover .sd-icon{transform:rotate(180deg)}
+  /* Override de color cuando el divider está sobre fondo OSCURO (olive) */
+  .section-divider.on-dark::before,
+  .section-divider.on-dark::after{
+    background:linear-gradient(90deg, transparent 0%, rgba(191,187,133,.6) 40%, rgba(191,187,133,.6) 60%, transparent 100%);
+  }
+  .section-divider.on-dark .sd-icon{
+    border-color:rgba(191,187,133,.5);color:var(--khaki);
+  }
 </style>
 </head>
 <body>
@@ -3810,7 +3845,7 @@
     <header class="calc-head fade-in">
       <span class="calc-eyebrow">— Calculadora —</span>
       <h2>¿Cuánto BARF necesita tu gato?</h2>
-      <p>Calculá la porción diaria recomendada según el peso, edad y nivel de actividad de tu felino.</p>
+      <p>Calculá la porción diaria recomendada según peso, condición física y nivel de actividad.</p>
     </header>
 
     <div class="calc-card fade-in">
@@ -3829,20 +3864,20 @@
         </label>
 
         <label class="calc-field">
-          <span class="calc-label">Edad</span>
-          <select id="calcAge">
-            <option value="kitten">Cachorro (2 - 12 meses)</option>
-            <option value="adult" selected>Adulto (1 - 7 años)</option>
-            <option value="senior">Senior (8+ años)</option>
+          <span class="calc-label">Condición física</span>
+          <select id="calcCondition">
+            <option value="delgado">Delgado</option>
+            <option value="normal" selected>Normal / Ideal</option>
+            <option value="sobrepeso">Sobrepeso</option>
           </select>
         </label>
 
         <label class="calc-field">
           <span class="calc-label">Nivel de actividad</span>
           <select id="calcActivity">
-            <option value="low">Bajo (vida sedentaria, en interior)</option>
-            <option value="medium" selected>Medio (juega y se mueve)</option>
-            <option value="high">Alto (muy activo, sale a pasear)</option>
+            <option value="sedentario">Sedentario (vida en interior)</option>
+            <option value="semiactivo" selected>Semiactivo (juega y se mueve)</option>
+            <option value="activo">Activo (muy activo, sale a pasear)</option>
           </select>
         </label>
       </div>
@@ -3862,8 +3897,8 @@
           </div>
           <div class="calc-result-divider"></div>
           <div class="calc-result-item">
-            <div class="calc-result-num" id="calcBags">7-8</div>
-            <div class="calc-result-label">bolsas/mes (500g)</div>
+            <div class="calc-result-num" id="calcBags">4-5</div>
+            <div class="calc-result-label">bolsas/mes (1 kg)</div>
           </div>
         </div>
         <p class="calc-note">* Valores orientativos. Para planes personalizados consultanos por WhatsApp.</p>
@@ -4729,6 +4764,52 @@ document.querySelectorAll('.faq-item').forEach(item=>{
   render();
 })();
 
+/* ===================== SEPARADORES DORADOS ENTRE SECCIONES ===================== */
+document.addEventListener('DOMContentLoaded', function(){
+  var container = document.querySelector('.page-sections');
+  if(!container) return;
+  // Si ya se inyectaron dividers en una corrida previa, no duplicar
+  if(container.querySelector('.section-divider')) return;
+
+  var children = Array.from(container.children);
+  var sections = children.filter(function(el){
+    return el.tagName === 'SECTION' || el.classList.contains('marquee');
+  });
+
+  // Orden visual según computed order CSS
+  sections.sort(function(a, b){
+    return (parseInt(getComputedStyle(a).order, 10) || 0) - (parseInt(getComputedStyle(b).order, 10) || 0);
+  });
+
+  // Re-asignar orders inline x10 y meter dividers (x10 - 5) entre cada par
+  sections.forEach(function(section, idx){
+    section.style.order = String((idx + 1) * 10);
+    if(idx === 0) return; // sin divider antes de la primera sección
+    if(section.classList.contains('marquee')) return; // marquee es separador en sí
+    // Si la sección anterior era marquee, tampoco poner divider
+    var prev = sections[idx-1];
+    if(prev && prev.classList.contains('marquee')) return;
+
+    var divider = document.createElement('div');
+    divider.className = 'section-divider';
+    divider.style.order = String((idx + 1) * 10 - 5);
+    var icon = document.createElement('span');
+    icon.className = 'sd-icon';
+    icon.textContent = '✦';
+    divider.appendChild(icon);
+
+    // Detect dark bg: si la sección o la anterior tiene fondo oscuro, on-dark
+    function isDark(el){
+      var bg = getComputedStyle(el).backgroundColor;
+      var rgb = bg.match(/\d+/g);
+      return rgb && rgb.length >= 3 && (parseInt(rgb[0]) + parseInt(rgb[1]) + parseInt(rgb[2])) < 280;
+    }
+    if(isDark(section) || isDark(prev)) divider.classList.add('on-dark');
+
+    container.appendChild(divider);
+  });
+});
+
 /* ===================== CARRUSEL DE PRODUCT CARDS ===================== */
 (function initProductCarousels(){
   function goTo(photo, idx){
@@ -4815,34 +4896,71 @@ if(heroImg){
   }, {passive:true});
 }
 
-/* ===================== CALCULADORA DE PORCIONES ===================== */
+/* ===================== CALCULADORA DE PORCIONES =====================
+   Valores exactos de la tabla oficial de BARFirenzina (publicación IG).
+   Pesos clave: 3kg, 4kg, 5kg. Para otros pesos, interpolación/extrapolación lineal. */
 (function(){
   const w = document.getElementById('calcWeight');
-  const a = document.getElementById('calcAge');
+  const cond = document.getElementById('calcCondition');
   const act = document.getElementById('calcActivity');
   const dailyEl = document.getElementById('calcDaily');
   const monthlyEl = document.getElementById('calcMonthly');
   const bagsEl = document.getElementById('calcBags');
-  if(!w || !a || !act) return;
+  if(!w || !cond || !act) return;
 
-  // Multiplicadores aproximados de g/kg/día según etapa y actividad
-  // BARF típico = 3-5% del peso corporal/día
-  const ageFactor = { kitten: 0.055, adult: 0.035, senior: 0.030 };
-  const actFactor = { low: 0.85, medium: 1.0, high: 1.15 };
+  // Tabla oficial: gramos por día según peso (kg), condición física y actividad
+  const TABLE = {
+    3: {
+      delgado:    { sedentario: 110, semiactivo: 125, activo: 143 },
+      normal:     { sedentario:  95, semiactivo: 105, activo: 125 },
+      sobrepeso:  { sedentario:  75, semiactivo:  90, activo: 100 }
+    },
+    4: {
+      delgado:    { sedentario: 143, semiactivo: 170, activo: 190 },
+      normal:     { sedentario: 120, semiactivo: 143, activo: 165 },
+      sobrepeso:  { sedentario: 100, semiactivo: 115, activo: 130 }
+    },
+    5: {
+      delgado:    { sedentario: 180, semiactivo: 215, activo: 245 },
+      normal:     { sedentario: 150, semiactivo: 175, activo: 200 },
+      sobrepeso:  { sedentario: 120, semiactivo: 143, activo: 165 }
+    }
+  };
+
+  function lookup(kg, c, a){
+    // Interpolación/extrapolación lineal entre los 3 puntos conocidos
+    const w3 = TABLE[3][c][a];
+    const w4 = TABLE[4][c][a];
+    const w5 = TABLE[5][c][a];
+    if (kg <= 3) {
+      // Extrapolar lineal usando 3 y 4
+      const slope = w4 - w3;
+      return Math.max(30, w3 + slope * (kg - 3));
+    } else if (kg <= 4) {
+      return w3 + (w4 - w3) * (kg - 3);
+    } else if (kg <= 5) {
+      return w4 + (w5 - w4) * (kg - 4);
+    } else {
+      // Extrapolar lineal usando 4 y 5
+      const slope = w5 - w4;
+      return w5 + slope * (kg - 5);
+    }
+  }
 
   function calc(){
-    const weight = Math.max(0.5, Math.min(20, parseFloat(w.value) || 4));
-    const ageMult = ageFactor[a.value] || 0.035;
-    const actMult = actFactor[act.value] || 1.0;
-    const grams = Math.round(weight * 1000 * ageMult * actMult);
+    const weight = Math.max(0.5, Math.min(15, parseFloat(w.value) || 4));
+    const c = cond.value || 'normal';
+    const a = act.value || 'semiactivo';
+    const grams = Math.round(lookup(weight, c, a));
     const monthly = (grams * 30) / 1000;
-    const bagsMin = Math.floor(monthly * 1000 / 500);
-    const bagsMax = Math.ceil(monthly * 1000 / 500);
+    // Bolsas de 1kg (tu fórmula viene en 1kg = 7 porciones según la publicación)
+    const bagsMin = Math.floor(monthly);
+    const bagsMax = Math.ceil(monthly);
     dailyEl.textContent = grams;
     monthlyEl.textContent = monthly.toFixed(1).replace('.', ',');
     bagsEl.textContent = bagsMin === bagsMax ? bagsMin : `${bagsMin}-${bagsMax}`;
   }
-  [w, a, act].forEach(el => el.addEventListener('input', calc));
+  [w, cond, act].forEach(el => el.addEventListener('input', calc));
   calc();
 })();
 </script>
