@@ -74,9 +74,9 @@
     --shadow-sm: 0 4px 14px -6px rgba(42,40,31,.18);
     --shadow-md: 0 18px 40px -20px rgba(42,40,31,.30);
     --shadow-lg: 0 30px 70px -30px rgba(42,40,31,.45);
-    /* Edge horizontal del header = 13vw, mismo % al que arranca el texto "INSTINTO"
-       del hero y termina la animación del gato (right:13%). Header alineado al hero. */
-    --hero-edge: 13vw;
+    /* Edge horizontal del header y hero — clamp fluido sin saltos entre breakpoints.
+       Escala continuamente: ~22px en mobile (320px), ~60px en tablet, ~110px max en desktop. */
+    --hero-edge: clamp(18px, 7.5vw, 110px);
   }
 
   *{box-sizing:border-box;margin:0;padding:0}
@@ -1184,8 +1184,8 @@
     isolation:isolate;
     font-family:var(--display);
     display:flex;flex-direction:column;
-    padding:clamp(40px, 5vw, 80px) 0 clamp(48px, 5vw, 90px);
-    min-height:clamp(580px, 88vh, 820px);
+    padding:clamp(28px, 5vw, 80px) 0 clamp(36px, 5vw, 90px);
+    min-height:clamp(440px, 72vh, 780px);
     text-align:left;
   }
   /* Patrón sutil de puntos detrás (solo zona derecha) */
@@ -1266,13 +1266,13 @@
     margin:0 0 clamp(22px, 2.2vw, 32px);
   }
   .hero-title-line{
-    display:block;font-size:clamp(44px, 6.2vw, 96px);
+    display:block;font-size:clamp(34px, 7.2vw, 96px);
   }
   .hero-title-main{
     color:var(--olive);
   }
   .hero-title-em{
-    color:var(--gold);font-style:italic;
+    color:var(--gold);font-style:normal;
     padding-left:0;
     position:relative;
   }
@@ -1341,6 +1341,7 @@
     position:relative;
     display:flex;flex-direction:column;align-items:flex-end;
     gap:clamp(14px, 1.5vw, 24px);
+    padding-bottom:clamp(36px, 4vw, 60px);
   }
   .hero-frame{
     position:relative;
@@ -1361,11 +1362,11 @@
     transform:translate(-14px, 14px);
   }
 
-  /* Sticker circular giratorio — abajo derecha */
+  /* Sticker circular giratorio — FUERA del frame, esquina abajo derecha */
   .hero-sticker{
     position:absolute;
-    bottom:clamp(-28px, -2.4vw, -18px);
-    right:clamp(-32px, -2.6vw, -22px);
+    bottom:0;
+    right:clamp(-20px, -1.5vw, -8px);
     width:clamp(98px, 9.5vw, 132px);height:clamp(98px, 9.5vw, 132px);
     z-index:3;
   }
@@ -1410,48 +1411,32 @@
   }
   .hero-footer-line{flex:1;height:1px;background:rgba(50,57,21,.22)}
 
-  /* Mobile */
-  @media (max-width:780px){
+  /* Mobile — breakpoint en 720px (antes 780px) para mantener grid 2-cols más tiempo */
+  @media (max-width:720px){
     .hero{
-      padding:clamp(16px, 4vw, 26px) 0 clamp(28px, 5vw, 40px);
+      padding:clamp(20px, 5vw, 36px) 0 clamp(28px, 5vw, 44px);
       min-height:auto;
     }
     .hero::after{right:-30vw;top:0;width:90vw;height:90vw}
-    .hero-meta-top{
-      gap:6px 12px;margin-bottom:22px;
-      font-size:9px;padding:0 18px;letter-spacing:.24em;
-    }
-    .hero-meta-divider{width:8px}
-    .hero-side-label{display:none}
     .hero-main{
-      grid-template-columns:1fr;gap:30px;
+      grid-template-columns:1fr;gap:clamp(24px, 4vw, 36px);
       padding:0 var(--hero-edge);
     }
     .hero-content{max-width:none;order:2}
-    .hero-visual{align-items:center;order:1}
+    .hero-visual{
+      align-items:center;order:1;
+      padding-bottom:clamp(28px, 5vw, 40px);
+    }
     .hero-frame{
       max-width:min(280px, 72vw);aspect-ratio:1/1.05;
       border-radius:50% 50% 18px 18px;
     }
     .hero-frame::before{inset:-14px;transform:translate(8px,8px)}
     .hero-sticker{
-      width:78px;height:78px;
-      bottom:-14px;right:-14px;left:auto;
+      width:74px;height:74px;
+      bottom:0;right:0;left:auto;
     }
-    .hero-title-line{font-size:clamp(42px, 13vw, 64px)}
-    .hero-title-em{padding-left:22px}
-    .hero-title-soft{font-size:clamp(18px, 5vw, 24px)}
-    .hero-actions{margin-bottom:28px;gap:16px}
-    .hero-stats{
-      gap:14px;padding-top:20px;
-      justify-content:space-between;width:100%;
-    }
-    .hero-stat-num{font-size:22px}
-    .hero-stat-lbl{font-size:9px;letter-spacing:.16em}
-    .hero-footer{
-      padding:0 20px;margin-top:30px;
-      font-size:9px;gap:14px;letter-spacing:.22em;
-    }
+    .hero-actions{margin-bottom:0;gap:16px}
     .poster-story{display:none}
   }
 
@@ -2276,7 +2261,6 @@
 
   /* ========== RESPONSIVE ========== */
   @media (max-width:1000px){
-    :root{--hero-edge:clamp(16px, 4vw, 50px)}
     .nav ul{display:none}
     .burger{display:block}
     .nav-cta{display:none}
@@ -2307,7 +2291,6 @@
     .container{padding-left:20px;padding-right:20px}
   }
   @media (max-width:620px){
-    :root{--hero-edge:14px}
     .product-grid{grid-template-columns:1fr}
     .icon-row{grid-template-columns:1fr;gap:14px}
     .footer-grid{grid-template-columns:1fr}
@@ -3407,25 +3390,25 @@
         <video autoplay muted loop playsinline preload="auto" disablepictureinpicture>
           <source src="assets/hero.mp4" type="video/mp4" />
         </video>
-        <div class="hero-sticker">
-          <svg class="hero-sticker-disc" viewBox="0 0 132 132">
-            <defs>
-              <path id="heroStickerPath" d="M66,66 m-52,0 a52,52 0 1,1 104,0 a52,52 0 1,1 -104,0" />
-            </defs>
-            <circle cx="66" cy="66" r="65" fill="#A38E48"/>
-            <text fill="#F1ECD5" font-family="Inter, sans-serif" font-size="11.5" font-weight="700" letter-spacing="2.8">
-              <textPath href="#heroStickerPath" startOffset="0">100% NATURAL · CADENA DE FRÍO · SIN CONSERVANTES · </textPath>
-            </text>
+      </div>
+      <div class="hero-sticker">
+        <svg class="hero-sticker-disc" viewBox="0 0 132 132">
+          <defs>
+            <path id="heroStickerPath" d="M66,66 m-52,0 a52,52 0 1,1 104,0 a52,52 0 1,1 -104,0" />
+          </defs>
+          <circle cx="66" cy="66" r="65" fill="#A38E48"/>
+          <text fill="#F1ECD5" font-family="Inter, sans-serif" font-size="11.5" font-weight="700" letter-spacing="2.8">
+            <textPath href="#heroStickerPath" startOffset="0">100% NATURAL · CADENA DE FRÍO · SIN CONSERVANTES · </textPath>
+          </text>
+        </svg>
+        <div class="hero-sticker-core">
+          <svg viewBox="0 0 24 24" fill="#F1ECD5" aria-hidden="true">
+            <ellipse cx="6" cy="10" rx="1.8" ry="2.2"/>
+            <ellipse cx="10" cy="7.5" rx="1.8" ry="2.2"/>
+            <ellipse cx="14" cy="7.5" rx="1.8" ry="2.2"/>
+            <ellipse cx="18" cy="10" rx="1.8" ry="2.2"/>
+            <path d="M12 11.5c-3 0-5.5 2-5.5 4.5 0 1.8 1.2 3 3 3 1 0 1.8-.5 2.5-.5s1.5.5 2.5.5c1.8 0 3-1.2 3-3 0-2.5-2.5-4.5-5.5-4.5z"/>
           </svg>
-          <div class="hero-sticker-core">
-            <svg viewBox="0 0 24 24" fill="#F1ECD5" aria-hidden="true">
-              <ellipse cx="6" cy="10" rx="1.8" ry="2.2"/>
-              <ellipse cx="10" cy="7.5" rx="1.8" ry="2.2"/>
-              <ellipse cx="14" cy="7.5" rx="1.8" ry="2.2"/>
-              <ellipse cx="18" cy="10" rx="1.8" ry="2.2"/>
-              <path d="M12 11.5c-3 0-5.5 2-5.5 4.5 0 1.8 1.2 3 3 3 1 0 1.8-.5 2.5-.5s1.5.5 2.5.5c1.8 0 3-1.2 3-3 0-2.5-2.5-4.5-5.5-4.5z"/>
-            </svg>
-          </div>
         </div>
       </div>
     </div>
