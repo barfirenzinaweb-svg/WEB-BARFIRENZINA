@@ -3421,9 +3421,21 @@
   }
   .section-divider .sd-inner{
     position:absolute;
-    top:0;left:50%;
-    transform:translate(-50%, -50%);
+    top:0;left:0;right:0;
+    transform:translateY(-50%);
+    display:flex;align-items:center;justify-content:center;
+    gap:clamp(14px, 1.5vw, 24px);
     pointer-events:auto;
+  }
+  /* Línea delgada dorada que cubre todo el ancho a cada lado del rombo */
+  .section-divider .sd-line{
+    flex:1;
+    height:1.5px;
+    background:linear-gradient(90deg,
+      transparent 0%,
+      rgba(163,142,72,.55) 8%,
+      rgba(163,142,72,.55) 92%,
+      transparent 100%);
   }
   /* Rombo (cuadrado rotado 45deg) con borde dorado */
   .section-divider .sd-icon{
@@ -3433,6 +3445,7 @@
     border:1.5px solid var(--gold);
     color:var(--gold);
     transform:rotate(45deg);
+    flex-shrink:0;
   }
   /* La huellita adentro contra-rotada para verse derecha */
   .section-divider .sd-icon svg{
@@ -3445,6 +3458,13 @@
     background:var(--olive);
     border-color:var(--gold);
     color:var(--gold);
+  }
+  .section-divider.on-dark .sd-line{
+    background:linear-gradient(90deg,
+      transparent 0%,
+      rgba(191,187,133,.65) 8%,
+      rgba(191,187,133,.65) 92%,
+      transparent 100%);
   }
 </style>
 </head>
@@ -4814,7 +4834,9 @@ document.addEventListener('DOMContentLoaded', function(){
     divider.className = 'section-divider';
     divider.style.order = String((idx + 1) * 10 - 5);
     divider.innerHTML = '<div class="sd-inner">' +
+      '<span class="sd-line"></span>' +
       '<span class="sd-icon">' + pawSvg + '</span>' +
+      '<span class="sd-line"></span>' +
       '</div>';
 
     // Si AMBAS secciones (esta y la anterior) son oscuras, usar variante on-dark
