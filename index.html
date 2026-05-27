@@ -354,25 +354,28 @@
   }
   .hist-btn svg{width:16px;height:16px}
 
-  /* Right — framed poster */
+  /* Right — framed poster (más chico, alineado con otros marcos del sitio) */
   .hist-poster{
     position:relative;
     border-radius:14px;
     overflow:hidden;
     background:var(--olive);
-    padding:12px;
-    border:1px solid rgba(246,246,233,.18);
-    box-shadow:0 50px 90px -40px rgba(0,0,0,.8);
-    transform:rotate(1.2deg);
+    padding:8px;
+    border:2px solid var(--gold);
+    max-width:clamp(280px, 30vw, 380px);
+    margin:0 auto;
+    box-shadow:0 30px 60px -30px rgba(0,0,0,.6);
+    transform:rotate(0);
     transition:transform .6s cubic-bezier(.2,.8,.2,1);
   }
-  .hist-poster:hover{transform:rotate(0) scale(1.02)}
+  .hist-poster:hover{transform:scale(1.02)}
   .hist-poster img,
   .hist-poster video{
     width:100%;height:auto;display:block;
-    object-fit:contain;
+    aspect-ratio:3/4;object-fit:contain;
     object-position:center;
-    border-radius:10px;
+    border-radius:8px;
+    background:var(--olive);
   }
   .hist-poster .hp-tag{
     position:absolute;bottom:24px;left:24px;z-index:2;
@@ -2437,7 +2440,7 @@
     padding:8px;
     border-radius:14px;
     border:2px solid var(--gold);
-    max-width:clamp(220px, 22vw, 290px);
+    max-width:clamp(280px, 30vw, 380px);
     margin:0 auto;
     box-shadow:0 30px 60px -30px rgba(42,40,31,.5), inset 0 0 0 1px rgba(246,237,209,.15);
     transition:transform .5s cubic-bezier(.2,.8,.2,1);
@@ -2445,7 +2448,7 @@
   .poster-frame img,
   .poster-frame video{
     width:100%;height:auto;display:block;
-    aspect-ratio:3/4;object-fit:cover;
+    aspect-ratio:3/4;object-fit:contain;
     object-position:center center;
     border-radius:8px;
     background:var(--olive);
@@ -3199,6 +3202,9 @@
   .cta-banner p{color:rgba(246,246,233,.78)}
   .ingredients .ing-head .ing-eyebrow,
   .ingredients .ing-head .section-eyebrow{color:var(--gold)}
+  /* Items de la lista de ingredientes: nombres en cream (igual al título), meta en cream tenue */
+  .ingredients .ing-name{color:var(--cream)}
+  .ingredients .ing-meta{color:rgba(246,246,233,.55)}
 
   /* === SECCIÓN INFO — header centrado arriba + visual abajo === */
   .info-head{
@@ -3733,7 +3739,7 @@
     <div class="hist-inner">
       <div class="hist-card fade-in">
         <span class="hist-eyebrow">Historia BARFirenzina</span>
-        <h2>Cocinamos para los que <em>no piden permiso</em></h2>
+        <h2>El instinto felino<em>no se discute</em></h2>
         <div class="hist-divider"><span></span></div>
         <p>BARFirenzina nació de la convicción de que el instinto felino no se discute. Cada receta se elabora en lotes pequeños, con materia prima apta para consumo humano y una trazabilidad que no se negocia. Porque alimentar bien a un gato no es una moda: es respetar lo que ya sabe pedir.</p>
         <a href="#productos" class="hist-btn">Ver recetas
