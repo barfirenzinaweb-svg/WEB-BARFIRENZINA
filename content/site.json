@@ -47,17 +47,17 @@
     "subtitulo": "Dos formatos con la misma fórmula nutricional, adaptados a lo que tu gato prefiere y necesita.",
     "productos": [
       {
-        "tag_gold": true,
+        "tag_gold": false,
         "precio": "13",
         "posicion_foto": "bottom",
         "nombre": "BARF Crudo",
         "reviews_count": "348",
         "descripcion": "Carne y órganos frescos sin cocción. Nutrientes biológicamente intactos, listos para servir.",
         "peso": "500 g",
-        "precio_anterior": "16.00",
+        "precio_anterior": "",
         "categoria": "Receta Cruda",
         "imagen": "assets/08052026-dsc01054-1-.jpg",
-        "ribbon": "Bestseller",
+        "ribbon": "",
         "galeria": [
           "assets/08052026-dsc01066-1-.jpg",
           "assets/08052026-dsc01060-1-.jpg"
@@ -83,8 +83,8 @@
         "imagen": "assets/08052026-dsc01038-1-.jpg",
         "ribbon": "",
         "galeria": [
-          "assets/08052026-dsc01022-1-.jpg",
-          "assets/08052026-dsc01024.jpg"
+          "assets/08052026-dsc01027-1-.jpg",
+          "assets/08052026-dsc01035.jpg"
         ],
         "tag": "Suave",
         "id": "cocido",
