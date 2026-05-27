@@ -2073,19 +2073,7 @@
   }
 
   /* quick-view icon button */
-  .quick-view{
-    position:absolute;top:16px;right:16px;z-index:3;
-    width:40px;height:40px;border-radius:50%;
-    background:rgba(246,246,233,.92);backdrop-filter:blur(6px);
-    display:flex;align-items:center;justify-content:center;
-    opacity:0;transform:translateY(-6px);
-    transition:opacity .35s ease, transform .35s ease, background .3s ease;
-    cursor:pointer;
-  }
-  .product-card:hover .quick-view{opacity:1;transform:translateY(0)}
-  .quick-view:hover{background:var(--gold)}
-  .quick-view svg{width:18px;height:18px;color:var(--olive);transition:color .3s}
-  .quick-view:hover svg{color:var(--cream)}
+  .quick-view{display:none !important}
 
   .card-body{
     padding:clamp(16px,1.6vw,22px) clamp(14px,1.6vw,20px) clamp(16px,1.6vw,22px);
