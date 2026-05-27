@@ -883,17 +883,18 @@
   /* toast notification */
   .cart-toast{
     position:fixed;bottom:28px;left:50%;
-    transform:translate(-50%, 120%);
+    transform:translate(-50%, 0);
     background:var(--olive);color:var(--cream);
     padding:14px 22px;border-radius:999px;
     font-size:13px;letter-spacing:.08em;font-weight:500;
     z-index:700;
     box-shadow:0 10px 30px -8px rgba(20,18,10,.4);
     display:flex;align-items:center;gap:10px;
-    transition:transform .4s cubic-bezier(.2,.7,.1,1);
+    opacity:0;visibility:hidden;pointer-events:none;
+    transition:opacity .3s ease, visibility .3s ease, transform .4s cubic-bezier(.2,.7,.1,1);
   }
   .cart-toast svg{width:18px;height:18px;color:var(--khaki)}
-  .cart-toast.show{transform:translate(-50%, 0)}
+  .cart-toast.show{opacity:1;visibility:visible;pointer-events:auto}
 
   /* Burger en forma de HUELLA DE GATO — escala proporcional */
   .burger{
