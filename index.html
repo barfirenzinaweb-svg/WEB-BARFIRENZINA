@@ -3408,29 +3408,31 @@
     .info-visual{max-width:min(320px, 78vw)}
   }
 
-  /* ===== SEPARADOR DORADO — MONTADO SOBRE EL BORDE ENTRE SECCIONES =====
-     No agrega altura propia: position:absolute, atado al top de la sección,
-     con translateY(-50%) para que quede MITAD sobre la sección anterior. */
+  /* ===== SEPARADOR DORADO — HERMANO DE LAS SECCIONES, ALTURA 0 =====
+     El divider está en el flujo flex del .page-sections con altura 0
+     y su contenido (sd-inner) está absolute centrado en su posición → queda
+     justo sobre el borde entre dos secciones, sin ser recortado por el overflow. */
   .section-divider{
+    position:relative;
+    height:0;width:100%;
+    margin:0;padding:0;
+    z-index:10;
+    pointer-events:none;
+  }
+  .section-divider .sd-inner{
     position:absolute;
     top:0;left:50%;
     transform:translate(-50%, -50%);
-    z-index:6;
     display:flex;align-items:center;justify-content:center;
     gap:clamp(12px, 1.4vw, 20px);
     width:max-content;max-width:90vw;
-    pointer-events:none;
+    pointer-events:auto;
   }
-  .section-divider::before,
-  .section-divider::after{
-    content:"";display:block;
+  .section-divider .sd-line{
+    display:block;
     width:clamp(80px, 14vw, 220px);
     height:1px;
     background:linear-gradient(90deg, transparent 0%, rgba(163,142,72,.7) 50%, transparent 100%);
-  }
-  .section-divider::after{
-    background:linear-gradient(90deg, transparent 0%, rgba(163,142,72,.7) 50%, transparent 100%);
-    transform:scaleX(-1);
   }
   .section-divider .sd-icon{
     display:inline-flex;align-items:center;justify-content:center;
@@ -3439,7 +3441,6 @@
     background:#f1ecd5;
     border:1px solid rgba(163,142,72,.5);
     color:var(--gold);
-    pointer-events:auto;
     box-shadow:0 4px 12px -4px rgba(163,142,72,.3);
   }
   .section-divider .sd-icon svg{
@@ -3447,11 +3448,9 @@
     fill:currentColor;
   }
   /* Override cuando la transición es sobre fondo OSCURO (olive) */
-  .section-divider.on-dark::before,
-  .section-divider.on-dark::after{
+  .section-divider.on-dark .sd-line{
     background:linear-gradient(90deg, transparent 0%, rgba(191,187,133,.7) 50%, transparent 100%);
   }
-  .section-divider.on-dark::after{transform:scaleX(-1)}
   .section-divider.on-dark .sd-icon{
     background:var(--olive);
     border-color:rgba(191,187,133,.5);
@@ -4822,20 +4821,19 @@ document.addEventListener('DOMContentLoaded', function(){
     var prev = sections[idx-1];
     if(prev && prev.classList.contains('marquee')) return;
 
-    // Asegurar que la sección tenga position relative para anchor del absolute
-    if(getComputedStyle(section).position === 'static'){
-      section.style.position = 'relative';
-    }
-
     var divider = document.createElement('div');
     divider.className = 'section-divider';
-    divider.innerHTML = '<span class="sd-icon">' + pawSvg + '</span>';
+    divider.style.order = String((idx + 1) * 10 - 5);
+    divider.innerHTML = '<div class="sd-inner">' +
+      '<span class="sd-line"></span>' +
+      '<span class="sd-icon">' + pawSvg + '</span>' +
+      '<span class="sd-line"></span>' +
+      '</div>';
 
-    // El círculo central: si AMBAS secciones (esta y la anterior) son oscuras, usar on-dark
-    // Si son mixtas, dejar default (cream bg que se ve sobre cualquier fondo)
+    // Si AMBAS secciones (esta y la anterior) son oscuras, usar variante on-dark
     if(isDark(section) && isDark(prev)) divider.classList.add('on-dark');
 
-    section.insertBefore(divider, section.firstChild);
+    container.appendChild(divider);
   });
 });
 
