@@ -3423,7 +3423,7 @@
     <div class="hero-content fade-in">
       <span class="hero-eyebrow">
         <span class="hero-eyebrow-dot"></span>
-        Alimentación natural premium
+        Alimentación natural para gatos
       </span>
       <h1 class="hero-title">
         <span class="hero-title-line hero-title-main">Instinto felino<span class="hero-title-asterisk">✻</span></span>
@@ -3755,7 +3755,7 @@
           <span class="hist-eyebrow">Historia BARFirenzina</span>
           <h2>El instinto felino<em>no se discute</em></h2>
           <div class="hist-divider"><span></span></div>
-          <p>BARFirenzina nació de la convicción de que el instinto felino no se discute. Cada receta se elabora en lotes pequeños, con materia prima apta para consumo humano y una trazabilidad que no se negocia. Porque alimentar bien a un gato no es una moda: es respetar lo que ya sabe pedir.</p>
+          <p>BARFirenzina nació de la convicción de que una alimentación natural no debería ser excepcional. Creemos en una nutrición real y consciente, basada en su biología, no en la industria. Formulamos recetas felinas equilibradas, elaboradas artesanalmente con ingredientes reales y suplementación precisa. Porque alimentar bien a un gato no es una moda: es respetar lo que ya sabe pedir.</p>
           <a href="#productos" class="hist-btn">Ver recetas
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </a>
@@ -3765,7 +3765,6 @@
           <video autoplay muted loop playsinline preload="metadata">
             <source src="assets/hist-hands.mp4" type="video/mp4" />
           </video>
-          <span class="hp-tag">Alimentado con intención</span>
         </div>
       </div>
     </div>
@@ -4537,7 +4536,14 @@ document.querySelectorAll('.faq-item').forEach(item=>{
       if(!res.ok) throw new Error('No se pudo crear la preferencia');
       const data = await res.json();
       if(!data.init_point) throw new Error('Respuesta inválida de Mercado Pago');
-      // Guardo el cart antes de redirigir por si el usuario vuelve
+      // Guardo los datos del pedido para que /gracias arme el mensaje de WhatsApp
+      try {
+        localStorage.setItem('barfLastOrder', JSON.stringify({
+          items: cart.map(i => ({ name: i.name, qty: i.qty, price: i.price })),
+          total: subtotal(),
+          ts: Date.now()
+        }));
+      } catch(_){}
       window.location.href = data.init_point;
     } catch(err){
       console.error(err);
