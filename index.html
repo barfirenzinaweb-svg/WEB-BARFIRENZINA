@@ -354,35 +354,25 @@
   }
   .hist-btn svg{width:16px;height:16px}
 
-  /* Right — framed poster (alineado con poster-frame de explicaciones) */
+  /* Right — framed poster */
   .hist-poster{
     position:relative;
-    border-radius:10px;
+    border-radius:14px;
     overflow:hidden;
-    background:#F6F1DA;
-    padding:4px;
-    border:5px solid var(--olive);
-    max-width:clamp(280px, 32vw, 400px);
-    margin:0 auto;
-    aspect-ratio:3/4;
-    box-shadow:0 30px 60px -30px rgba(0,0,0,.55);
-    transform:rotate(0);
+    background:var(--olive);
+    padding:12px;
+    border:1px solid rgba(246,246,233,.18);
+    box-shadow:0 50px 90px -40px rgba(0,0,0,.8);
+    transform:rotate(1.2deg);
     transition:transform .6s cubic-bezier(.2,.8,.2,1);
   }
-  .hist-poster:hover{transform:scale(1.02)}
+  .hist-poster:hover{transform:rotate(0) scale(1.02)}
   .hist-poster img,
   .hist-poster video{
-    position:absolute;
-    inset:4px;
-    width:calc(100% - 8px);
-    height:calc(100% - 8px);
-    display:block;
-    object-fit:cover;
+    width:100%;height:auto;display:block;
+    object-fit:contain;
     object-position:center;
-    border-radius:6px;
-    background:#F6F1DA;
-    transform:scale(1.18);
-    transform-origin:center;
+    border-radius:10px;
   }
   .hist-poster .hp-tag{
     position:absolute;bottom:24px;left:24px;z-index:2;
@@ -2438,39 +2428,29 @@
   /* Poster story — problem → solution */
   .poster-story{
     display:grid;grid-template-columns:1fr auto 1fr;
-    gap:clamp(18px, 2vw, 30px);align-items:center;margin-bottom:60px;
-    max-width:clamp(640px, 70vw, 820px);margin-left:auto;margin-right:auto;
+    gap:36px;align-items:center;margin-bottom:60px;
+    max-width:1020px;margin-left:auto;margin-right:auto;
   }
   .poster-frame{
     position:relative;
-    background:#F6F1DA;
-    padding:4px;
-    border-radius:10px;
-    border:5px solid var(--olive);
-    max-width:clamp(280px, 32vw, 400px);
-    margin:0 auto;
-    aspect-ratio:3/4;
-    overflow:hidden;
-    box-shadow:0 30px 60px -30px rgba(42,40,31,.55);
+    background:var(--olive);
+    padding:10px;
+    border-radius:18px;
+    border:2px solid var(--gold);
+    box-shadow:0 40px 70px -35px rgba(42,40,31,.6), inset 0 0 0 1px rgba(246,237,209,.15);
     transition:transform .5s cubic-bezier(.2,.8,.2,1);
   }
   .poster-frame img,
   .poster-frame video{
-    position:absolute;
-    inset:4px;
-    width:calc(100% - 8px);
-    height:calc(100% - 8px);
-    display:block;
-    object-fit:cover;
+    width:100%;height:auto;display:block;
+    aspect-ratio:2/3;object-fit:cover;
     object-position:center center;
-    border-radius:6px;
-    background:#F6F1DA;
-    transform:scale(1.18);
-    transform-origin:center;
+    border-radius:12px;
+    background:var(--olive);
   }
-  .poster-frame.problem{transform:rotate(0)}
-  .poster-frame.solution{transform:rotate(0)}
-  .poster-frame:hover{transform:scale(1.02)}
+  .poster-frame.problem{transform:rotate(-2deg)}
+  .poster-frame.solution{transform:rotate(2deg)}
+  .poster-frame:hover{transform:rotate(0) scale(1.03)}
   .poster-frame .p-label{
     position:absolute;bottom:-16px;left:50%;transform:translateX(-50%);
     background:var(--cream);color:var(--olive);
