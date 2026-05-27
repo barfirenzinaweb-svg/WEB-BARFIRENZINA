@@ -294,18 +294,19 @@
   }
   .hist-inner{
     position:relative;z-index:3;
-    display:grid;grid-template-columns:1.1fr .9fr;
-    gap:60px;align-items:stretch;
+    display:grid;grid-template-columns:1.3fr 1fr;
+    gap:clamp(28px, 4vw, 56px);align-items:center;
+    max-width:880px;margin:0 auto;
   }
 
   /* Left — text card (cream panel) */
   .hist-card{
     background:var(--cream);
     color:var(--dark);
-    padding:56px 48px 52px;
+    padding:clamp(28px, 3.6vw, 46px) clamp(24px, 3vw, 40px);
     border-radius:14px;
     border:1px solid rgba(163,142,72,.28);
-    box-shadow:0 40px 80px -30px rgba(0,0,0,.55), 0 0 0 1px rgba(246,246,233,.04);
+    box-shadow:0 30px 60px -25px rgba(0,0,0,.5), 0 0 0 1px rgba(246,246,233,.04);
     position:relative;
   }
   .hist-card::before{
@@ -321,8 +322,8 @@
   .hist-eyebrow::before{content:"";width:28px;height:1px;background:var(--gold)}
   .hist-card h2{
     font-family:var(--display);font-weight:800;
-    font-size:clamp(32px, 4vw, 56px);
-    line-height:1.02;letter-spacing:.005em;
+    font-size:clamp(24px, 3vw, 42px);
+    line-height:1.05;letter-spacing:.005em;
     color:var(--olive);text-transform:uppercase;
   }
   .hist-card h2 em{
@@ -337,8 +338,8 @@
     background:var(--gold);border-radius:1px;
   }
   .hist-card p{
-    font-size:16px;line-height:1.7;
-    color:rgba(42,40,31,.82);margin-bottom:34px;
+    font-size:var(--ts-body);line-height:1.65;
+    color:rgba(42,40,31,.82);margin-bottom:clamp(22px, 2.4vw, 32px);
   }
   .hist-btn{
     display:inline-flex;align-items:center;gap:14px;
@@ -354,15 +355,17 @@
   }
   .hist-btn svg{width:16px;height:16px}
 
-  /* Right — framed poster */
+  /* Right — framed poster (mismo tamaño y estilo que .poster-frame del bloque explicaciones) */
   .hist-poster{
     position:relative;
-    border-radius:14px;
+    border-radius:16px;
     overflow:hidden;
     background:var(--olive);
-    padding:12px;
-    border:1px solid rgba(246,246,233,.18);
-    box-shadow:0 50px 90px -40px rgba(0,0,0,.8);
+    padding:8px;
+    border:2px solid var(--gold);
+    max-width:340px;
+    margin:0 auto;
+    box-shadow:0 30px 60px -30px rgba(0,0,0,.55), inset 0 0 0 1px rgba(246,237,209,.15);
     transform:rotate(1.2deg);
     transition:transform .6s cubic-bezier(.2,.8,.2,1);
   }
@@ -370,9 +373,10 @@
   .hist-poster img,
   .hist-poster video{
     width:100%;height:auto;display:block;
-    object-fit:contain;
+    aspect-ratio:2/3;object-fit:cover;
     object-position:center;
     border-radius:10px;
+    background:var(--olive);
   }
   .hist-poster .hp-tag{
     position:absolute;bottom:24px;left:24px;z-index:2;
