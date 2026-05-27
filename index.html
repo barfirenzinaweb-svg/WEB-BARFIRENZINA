@@ -2436,22 +2436,22 @@
   }
   .poster-frame{
     position:relative;
-    background:var(--olive);
-    padding:8px;
-    border-radius:14px;
-    border:2px solid var(--gold);
-    max-width:clamp(280px, 30vw, 380px);
+    background:#F6F1DA;
+    padding:4px;
+    border-radius:10px;
+    border:2.5px solid var(--olive);
+    max-width:clamp(280px, 32vw, 400px);
     margin:0 auto;
-    box-shadow:0 30px 60px -30px rgba(42,40,31,.5), inset 0 0 0 1px rgba(246,237,209,.15);
+    box-shadow:0 30px 60px -30px rgba(42,40,31,.5);
     transition:transform .5s cubic-bezier(.2,.8,.2,1);
   }
   .poster-frame img,
   .poster-frame video{
     width:100%;height:auto;display:block;
-    aspect-ratio:3/4;object-fit:contain;
+    aspect-ratio:3/4;object-fit:cover;
     object-position:center center;
-    border-radius:8px;
-    background:var(--olive);
+    border-radius:6px;
+    background:#F6F1DA;
   }
   .poster-frame.problem{transform:rotate(0)}
   .poster-frame.solution{transform:rotate(0)}
