@@ -144,12 +144,14 @@
     pointer-events:none;
   }
   .trot-cat.show{opacity:1;transform:translateY(0)}
+  /* Pausa animaciones internas cuando el gato no está visible */
+  .trot-cat:not(.show) *{animation-play-state:paused !important}
   .trot-cat svg{
     width:100%;
     filter:drop-shadow(0 8px 12px rgba(20,18,10,.35));
     overflow:visible;
   }
-  .tb-shadow{fill:rgba(20,18,10,.28);filter:blur(2px)}
+  .tb-shadow{fill:rgba(20,18,10,.22)}
 
   /* gentle body breathing */
   @keyframes catBreathe{
@@ -217,29 +219,24 @@
     background-size:32px 32px;
   }
 
-  /* Animated blobs background */
+  /* Background con gradientes radiales — sin filter:blur (mucho más rápido) */
   .hist-bg{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
-  /* Blobs estáticos (sin animación → sin lag). El blur reducido para mejor rendimiento. */
   .hist-blob{
     position:absolute;border-radius:50%;
-    filter:blur(45px);opacity:.45;
+    opacity:.5;
   }
   .hist-blob.b1{
-    width:480px;height:480px;background:var(--gold);
-    top:-160px;right:-120px;
+    width:600px;height:600px;
+    background:radial-gradient(circle, rgba(163,142,72,.55) 0%, transparent 65%);
+    top:-200px;right:-180px;
   }
   .hist-blob.b2{
-    width:420px;height:420px;background:var(--sage);
-    bottom:-180px;left:-140px;
+    width:540px;height:540px;
+    background:radial-gradient(circle, rgba(124,132,86,.5) 0%, transparent 65%);
+    bottom:-240px;left:-200px;
   }
-  .hist-blob.b3{
-    width:340px;height:340px;background:var(--khaki);
-    top:30%;left:45%;opacity:.28;
-  }
-  .hist-blob.b4{
-    width:280px;height:280px;background:#6b7540;
-    bottom:20%;right:25%;opacity:.35;
-  }
+  .hist-blob.b3{display:none}
+  .hist-blob.b4{display:none}
   @keyframes blobDrift1{
     0%,100%{transform:translate(0,0) scale(1)}
     33%{transform:translate(-40px,60px) scale(1.08)}
@@ -284,7 +281,7 @@
     font-size:10px;letter-spacing:.4em;text-transform:uppercase;
     color:var(--cream);font-weight:600;
     padding:9px 16px;border:1px solid rgba(246,246,233,.3);border-radius:999px;
-    backdrop-filter:blur(6px);background:rgba(42,40,31,.45);
+    background:rgba(42,40,31,.6);
   }
   .hist-rec span{
     width:8px;height:8px;border-radius:50%;
@@ -547,8 +544,7 @@
     gap:20px;
   }
   .benefit-card{
-    background:rgba(42,40,31,.18);
-    backdrop-filter:blur(10px);
+    background:rgba(42,40,31,.06);
     border:1px solid rgba(246,246,233,.3);
     border-radius:18px;
     padding:30px 24px;
@@ -762,8 +758,7 @@
   /* drawer backdrop */
   .cart-backdrop{
     position:fixed;inset:0;z-index:500;
-    background:rgba(20,18,10,.6);
-    backdrop-filter:blur(4px);
+    background:rgba(20,18,10,.7);
     opacity:0;visibility:hidden;
     transition:opacity .35s ease, visibility .35s;
   }
@@ -922,8 +917,7 @@
   .transfer-modal.open{display:flex}
   .transfer-backdrop{
     position:absolute;inset:0;
-    background:rgba(20,18,10,.65);
-    backdrop-filter:blur(4px);
+    background:rgba(20,18,10,.75);
   }
   .transfer-box{
     position:relative;z-index:2;
@@ -1399,7 +1393,7 @@
   }
   .hero-eyebrow-dot::before{
     content:"";position:absolute;inset:-5px;border:1px solid var(--gold);border-radius:50%;
-    animation:heroPulseDot 2.4s ease-in-out infinite;
+    /* animation removed (perf) */
   }
   @keyframes heroPulseDot{
     0%,100%{transform:scale(1);opacity:.5}
@@ -1834,8 +1828,9 @@
   /* ============================================
      PALETTE TONE — duotone cream/olive/khaki to match brand
   ============================================ */
+  /* Paleta de tono — simplificado para performance (sin mix-blend-mode) */
   .palette-tone{
-    filter:grayscale(.35) sepia(.75) saturate(.7) hue-rotate(8deg) brightness(1.02) contrast(1.08);
+    filter:sepia(.4) saturate(.8) brightness(1.02);
   }
   .palette-tone-wrap{
     position:relative;
@@ -1843,13 +1838,7 @@
   }
   .palette-tone-wrap::after{
     content:"";position:absolute;inset:0;pointer-events:none;z-index:2;
-    background:linear-gradient(145deg, rgba(124,132,86,.32), rgba(163,142,72,.22));
-    mix-blend-mode:multiply;
-  }
-  .palette-tone-wrap::before{
-    content:"";position:absolute;inset:0;pointer-events:none;z-index:3;
-    background:linear-gradient(145deg, rgba(246,246,233,.14), rgba(191,187,133,.16));
-    mix-blend-mode:overlay;
+    background:linear-gradient(145deg, rgba(124,132,86,.18), rgba(163,142,72,.12));
   }
   .info-visual .side-img{
     position:absolute;bottom:-40px;right:-30px;
@@ -1925,20 +1914,17 @@
   /* Blobs estáticos (sin animación → sin lag). El degradado da el efecto visual. */
   .products-blob{
     position:absolute;border-radius:50%;
-    filter:blur(40px);opacity:.5;
+    opacity:.6;
   }
   .products-blob.b1{
-    top:-10%;left:-8%;width:480px;height:480px;
-    background:radial-gradient(circle, rgba(163,142,72,.5), transparent 70%);
+    top:-10%;left:-8%;width:520px;height:520px;
+    background:radial-gradient(circle, rgba(163,142,72,.45), transparent 65%);
   }
   .products-blob.b2{
-    bottom:-15%;right:-12%;width:540px;height:540px;
-    background:radial-gradient(circle, rgba(124,132,86,.45), transparent 65%);
+    bottom:-15%;right:-12%;width:580px;height:580px;
+    background:radial-gradient(circle, rgba(124,132,86,.4), transparent 65%);
   }
-  .products-blob.b3{
-    top:40%;left:45%;width:300px;height:300px;
-    background:radial-gradient(circle, rgba(191,187,133,.4), transparent 70%);
-  }
+  .products-blob.b3{display:none}
   /* Linea horizontal de luz que cruza */
   .products-shine{
     position:absolute;top:50%;left:0;right:0;height:1px;z-index:1;pointer-events:none;
@@ -2125,7 +2111,7 @@
     transform:translateX(-50%);z-index:4;
     display:flex;gap:8px;
     padding:6px 10px;border-radius:999px;
-    background:rgba(50,57,21,.35);backdrop-filter:blur(6px);
+    background:rgba(50,57,21,.65);
   }
   .ph-dot{
     width:8px;height:8px;border-radius:50%;
@@ -2173,8 +2159,7 @@
   /* floating tag */
   .tag{
     position:absolute;top:16px;left:16px;z-index:3;
-    background:rgba(246,246,233,.92);
-    backdrop-filter:blur(6px);
+    background:rgba(246,246,233,.95);
     color:var(--olive);
     padding:7px 14px;border-radius:999px;
     font-size:10px;letter-spacing:.22em;text-transform:uppercase;font-weight:700;
@@ -3123,7 +3108,7 @@
   .rv-modal{
     position:fixed;inset:0;z-index:10000;display:none;
     align-items:center;justify-content:center;padding:20px;
-    background:rgba(42,40,31,.7);backdrop-filter:blur(4px);
+    background:rgba(42,40,31,.8);
   }
   .rv-modal.open{display:flex}
   .rv-box{
@@ -4829,19 +4814,29 @@ document.querySelectorAll('.stat-ticker .stat').forEach(el=>statIO.observe(el));
   });
 })();
 
-/* ===================== ACTIVE NAV LINK ===================== */
-const sections = document.querySelectorAll('section[id]');
-const navLinks = document.querySelectorAll('.nav ul a');
-window.addEventListener('scroll', ()=>{
-  let current = 'inicio';
-  sections.forEach(sec=>{
-    const top = sec.getBoundingClientRect().top;
-    if(top <= 140) current = sec.id;
-  });
-  navLinks.forEach(a=>{
-    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
-  });
-}, {passive:true});
+/* ===================== ACTIVE NAV LINK (throttled con rAF) ===================== */
+(function(){
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav ul a');
+  let ticking = false;
+  function update(){
+    let current = 'inicio';
+    sections.forEach(sec=>{
+      const top = sec.getBoundingClientRect().top;
+      if(top <= 140) current = sec.id;
+    });
+    navLinks.forEach(a=>{
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+    ticking = false;
+  }
+  window.addEventListener('scroll', ()=>{
+    if(!ticking){
+      requestAnimationFrame(update);
+      ticking = true;
+    }
+  }, {passive:true});
+})();
 
 /* ===================== FAQ ACCORDION ===================== */
 document.querySelectorAll('.faq-item').forEach(item=>{
