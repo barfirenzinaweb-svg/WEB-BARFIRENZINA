@@ -2877,12 +2877,11 @@
   .ig-head{
     text-align:center;max-width:760px;margin:0 auto 70px;position:relative;
   }
-  /* Watermark logo — siempre visible y proporcional en todos los tamaños */
+  /* Watermark logo — tamaño FIJO, emerge desde la esquina abajo-izquierda */
   .ig-watermark{
     position:absolute;
-    bottom:4%;left:3%;
-    width:clamp(110px, 18vw, 260px);
-    height:auto;
+    bottom:-80px;left:-80px;
+    width:380px;height:auto;
     opacity:.14;
     pointer-events:none;
     z-index:1;
