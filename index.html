@@ -674,13 +674,13 @@
   .logo{display:none}
   /* Logo circular con borde olive más claro (sage) — escala proporcional */
   .brand-logo{
-    width:clamp(40px, 3vw, 58px);
-    height:clamp(40px, 3vw, 58px);
+    width:clamp(50px, 3.8vw, 72px);
+    height:clamp(50px, 3.8vw, 72px);
     border-radius:50%;
     object-fit:cover;
     background:#f5efd6;
-    border:clamp(1px, .14vw, 2.5px) solid var(--sage);
-    box-shadow:0 0 0 clamp(1px, .18vw, 3px) rgba(124,132,86,.18);
+    border:clamp(1.5px, .16vw, 3px) solid var(--sage);
+    box-shadow:0 0 0 clamp(2px, .2vw, 4px) rgba(124,132,86,.2);
     flex-shrink:0;
     transition:transform .35s ease, box-shadow .35s ease;
   }
@@ -691,27 +691,32 @@
   .brand-text{display:flex;flex-direction:column;align-items:flex-start;gap:2px}
   .brand-name{
     font-family:var(--display);
-    font-size:clamp(16px, 1.4vw, 26px);
+    font-size:clamp(20px, 1.7vw, 32px);
     font-weight:800;
     color:var(--cream);
     letter-spacing:.03em;
     text-transform:uppercase;
     line-height:1;
+    white-space:nowrap;
   }
   .brand-name span{color:var(--khaki);text-transform:lowercase}
   .brand-text::after{
     content:"Alimentación natural para gatos";
     font-family:var(--subtitle);
-    font-size:clamp(7px, .58vw, 11px);letter-spacing:.22em;text-transform:uppercase;
+    font-size:clamp(8px, .65vw, 12px);letter-spacing:.22em;text-transform:uppercase;
     color:var(--khaki);opacity:.85;font-weight:600;
+    white-space:nowrap;
   }
 
-  .nav ul{list-style:none;display:flex;gap:clamp(12px, 1.5vw, 26px);align-items:center;margin-left:clamp(60px, 11vw, 200px)}
+  .nav ul{list-style:none;display:flex;gap:clamp(10px, 1.3vw, 22px);align-items:center;margin-left:clamp(20px, 4vw, 100px);flex-wrap:nowrap}
+  .nav ul li{white-space:nowrap;flex-shrink:0}
   .nav ul a{
     font-family:var(--subtitle);
     font-size:clamp(8px, .62vw, 11px);letter-spacing:.2em;text-transform:uppercase;
     font-weight:700;padding:8px 0;position:relative;
     transition:color .25s;color:var(--cream);
+    white-space:nowrap;
+    display:inline-block;
   }
   .nav ul a:hover,.nav ul a.active{color:var(--gold)}
   .nav ul a.active::after{
@@ -1491,7 +1496,7 @@
     position:relative;
     width:100%;max-width:clamp(340px, 40vw, 560px);
     aspect-ratio:4/5;
-    border-radius:clamp(180px, 22vw, 290px) clamp(180px, 22vw, 290px) clamp(22px, 2.2vw, 32px) clamp(22px, 2.2vw, 32px);
+    border-radius:clamp(14px, 1.4vw, 20px);
     overflow:hidden;
     border:2px solid var(--olive);
     box-shadow:0 40px 80px -36px rgba(50,57,21,.5), 0 0 0 8px rgba(241,236,213,.9);
@@ -1572,8 +1577,8 @@
       padding-bottom:clamp(28px, 5vw, 40px);
     }
     .hero-frame{
-      max-width:min(280px, 72vw);aspect-ratio:1/1.05;
-      border-radius:50% 50% 18px 18px;
+      max-width:min(300px, 78vw);aspect-ratio:4/5;
+      border-radius:clamp(12px, 1.4vw, 18px);
     }
     .hero-frame::before{inset:-14px;transform:translate(8px,8px)}
     .hero-sticker{
@@ -2450,7 +2455,7 @@
   .stagger.visible>*:nth-child(6){transition-delay:.6s}
 
   /* ========== RESPONSIVE ========== */
-  @media (max-width:1000px){
+  @media (max-width:1150px){
     .nav ul{display:none}
     .burger{display:block}
     .nav-cta{display:none}
@@ -2699,7 +2704,7 @@
     font-weight:700;
     color:var(--olive);
     letter-spacing:.04em;
-    margin:clamp(-44px, -3.8vw, -22px) 0 clamp(14px, 1.6vw, 24px);
+    margin:clamp(-44px, -3.8vw, -22px) 0 clamp(42px, 5vw, 72px);
   }
   .explain-signoff{
     text-align:center;margin:90px auto 0;
@@ -3772,15 +3777,11 @@
 <section class="hero" id="inicio">
   <div class="hero-main">
     <div class="hero-content fade-in">
-      <span class="hero-eyebrow">
-        <span class="hero-eyebrow-dot"></span>
-        Alimentación natural para gatos
-      </span>
       <h1 class="hero-title">
         <span class="hero-title-line hero-title-main">Instinto felino<span class="hero-title-asterisk">✻</span></span>
         <span class="hero-title-line hero-title-em">cuidado consciente.</span>
       </h1>
-      <p class="hero-sub">Recetas en versión <em>cruda</em> y <em>cocida</em>. Carne fresca apta para consumo humano, formulada por nutricionistas y elaborada como cuidaríamos a nuestros propios gatos.</p>
+      <p class="hero-sub">Recetas en versión <em>Cruda</em> y <em>Cocida</em>. Perfil nutricional completo. Inspirado en su naturaleza.</p>
       <div class="hero-actions">
         <a href="#productos" class="hero-cta-btn" aria-label="Ver catálogo de productos">
           <span data-cms="hero.boton">Ver Catálogo</span>
