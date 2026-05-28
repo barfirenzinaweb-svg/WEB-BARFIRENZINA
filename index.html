@@ -3384,7 +3384,7 @@
   .cta-banner h2{color:var(--cream)}
   .ingredients .ing-head h2 em,
   .ig-section .ig-head h2 em,
-  .cta-banner h2 em{color:var(--gold)}
+  .cta-banner h2 em{color:var(--gold);font-style:normal}
   .ingredients .ing-head p,
   .ig-section .ig-head p,
   .ig-section .ig-intro,
@@ -3392,9 +3392,46 @@
   .ingredients .ing-head .ing-eyebrow,
   .ingredients .ing-head .section-eyebrow,
   .ig-section .ig-head .ig-eyebrow{color:var(--gold)}
+  /* Eyebrow ingredientes sin lineas decorativas (ya tiene los guiones literales del texto) */
+  .ingredients .ing-head .ing-eyebrow::before,
+  .ingredients .ing-head .ing-eyebrow::after{display:none !important}
   /* Items de la lista de ingredientes: nombres en cream (igual al título), meta en cream tenue */
   .ingredients .ing-name{color:var(--cream)}
   .ingredients .ing-meta{color:rgba(246,246,233,.55)}
+
+  /* === LAYOUT 2 COLUMNAS: header izquierda + lista derecha === */
+  .ing-wrap{
+    display:grid;
+    grid-template-columns:minmax(260px, 1fr) 1.5fr;
+    gap:clamp(36px, 5vw, 80px);
+    align-items:start;
+    max-width:1180px;margin:0 auto;
+  }
+  .ingredients .ing-head{
+    text-align:left !important;
+    max-width:none !important;
+    margin:0 !important;
+  }
+  .ingredients .ing-head h2,
+  .ingredients .ing-head p{
+    text-align:left !important;
+    margin-left:0 !important;
+    margin-right:0 !important;
+    max-width:none !important;
+  }
+  .ingredients .ing-head .ing-eyebrow,
+  .ingredients .ing-head .section-eyebrow{
+    justify-content:flex-start !important;
+  }
+  .ingredients .ing-list{max-width:none;margin:0}
+  @media (max-width:780px){
+    .ing-wrap{grid-template-columns:1fr;gap:32px}
+    .ingredients .ing-head{text-align:center !important}
+    .ingredients .ing-head h2,
+    .ingredients .ing-head p{text-align:center !important}
+    .ingredients .ing-head .ing-eyebrow,
+    .ingredients .ing-head .section-eyebrow{justify-content:center !important}
+  }
 
   /* === SECCIÓN INFO — layout 2 columnas: imagen izquierda + texto derecha === */
   .info-grid{
@@ -3841,12 +3878,13 @@
 
 <!-- ============= INGREDIENTES (menu editorial) ============= -->
 <section class="ingredients" id="ingredientes">
-  <header class="ing-head fade-in">
-    <span class="ing-eyebrow" data-cms="ingredientes.eyebrow">— Ingredientes —</span>
-    <h2><span data-cms="ingredientes.titulo_1">Lo que usamos</span> <em data-cms="ingredientes.titulo_em">importa</em></h2>
-    <p data-cms="ingredientes.descripcion">Trazabilidad real, ingredientes frescos elegidos con criterio. Nutrición formulada para respetar su naturaleza.</p>
-  </header>
-  <ol class="ing-list fade-in">
+  <div class="ing-wrap">
+    <header class="ing-head fade-in">
+      <span class="ing-eyebrow" data-cms="ingredientes.eyebrow">— Ingredientes —</span>
+      <h2><span data-cms="ingredientes.titulo_1">Lo que usamos</span> <em data-cms="ingredientes.titulo_em">importa</em></h2>
+      <p data-cms="ingredientes.descripcion">Trazabilidad real, ingredientes frescos elegidos con criterio. Nutrición formulada para respetar su naturaleza.</p>
+    </header>
+    <ol class="ing-list fade-in">
       <li class="ing-item">
         <span class="ing-num">01</span>
         <span class="ing-name">Pollo Pastoril</span>
@@ -3878,6 +3916,7 @@
         <span class="ing-meta">Taurina + Omega 3 · Vitaminas E y complejo B</span>
       </li>
     </ol>
+  </div>
 </section>
 
 <!-- ============= PRODUCTOS ============= -->
