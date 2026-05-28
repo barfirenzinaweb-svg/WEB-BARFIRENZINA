@@ -1992,7 +1992,7 @@
     justify-content:center;
     gap:var(--pgrid-gap);
     position:relative;z-index:2;
-    padding-top:clamp(40px, 5vw, 70px);
+    padding-top:clamp(80px, 8vw, 130px);
   }
   .product-card-wrap{
     flex:0 0 calc((100% - (var(--pgrid-cols) - 1) * var(--pgrid-gap)) / var(--pgrid-cols));
@@ -2815,7 +2815,7 @@
   }
   /* Hover: la fila se acerca al hover */
   .ing-item:hover{
-    padding-left:14px;
+    padding-left:0;
   }
   .ing-item:hover .ing-name{
     color:var(--gold);
@@ -2860,7 +2860,7 @@
   .ig-section{
     background:var(--olive);
     color:var(--cream);
-    padding:130px 0 140px;
+    padding:90px 0 100px;
     position:relative;overflow:hidden;
   }
   .ig-section::before{
@@ -2877,11 +2877,11 @@
   .ig-head{
     text-align:center;max-width:760px;margin:0 auto 70px;position:relative;
   }
-  /* Watermark logo emergiendo de la esquina inferior izquierda */
+  /* Watermark logo — siempre visible y proporcional en todos los tamaños */
   .ig-watermark{
     position:absolute;
-    bottom:-8%;left:-3%;
-    width:clamp(180px, 28vw, 460px);
+    bottom:4%;left:3%;
+    width:clamp(110px, 18vw, 260px);
     height:auto;
     opacity:.14;
     pointer-events:none;
@@ -2890,14 +2890,6 @@
     display:block !important;
   }
   .ig-section > .container{position:relative;z-index:2}
-  @media (max-width:600px){
-    .ig-watermark{
-      bottom:auto;top:2%;left:50%;
-      transform:translateX(-50%);
-      width:clamp(120px, 40vw, 200px);
-      opacity:.11;
-    }
-  }
 
   .ig-intro{
     text-align:center;
@@ -3384,7 +3376,7 @@
   .cta-banner h2{color:var(--cream)}
   .ingredients .ing-head h2 em,
   .ig-section .ig-head h2 em,
-  .cta-banner h2 em{color:var(--gold);font-style:normal}
+  .cta-banner h2 em{color:var(--gold);font-style:normal !important;font-family:var(--display)}
   .ingredients .ing-head p,
   .ig-section .ig-head p,
   .ig-section .ig-intro,
@@ -3930,7 +3922,7 @@
   <div class="container">
     <div class="section-head fade-in">
       <span class="eye eye-plain" data-cms="recetas.eyebrow">Nuestras Recetas</span>
-      <h2>Crudo o <em>Cocido</em>.<br>Vos elegís.</h2>
+      <h2>Crudo o <em>Cocido</em><br>Vos elegís</h2>
       <p class="recetas-sub">Dos formatos con la misma fórmula nutricional,<br>adaptados a lo que tu gato prefiere y necesita.</p>
     </div>
 
@@ -3959,7 +3951,7 @@
           <button class="quick-view" aria-label="Vista rápida">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
           </button>
-          <div class="weight-badge">500 g</div>
+          <div class="weight-badge">1 kg</div>
           <div class="ph-slides">
             <img class="ph-slide active" src="assets/barf-crudo.jpg" alt="BARF Crudo para gatos" loading="lazy" decoding="async"/>
           </div>
@@ -4018,7 +4010,7 @@
           <button class="quick-view" aria-label="Vista rápida">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
           </button>
-          <div class="weight-badge">500 g</div>
+          <div class="weight-badge">1 kg</div>
           <div class="ph-slides">
             <img class="ph-slide active" src="assets/barf-cocido.jpg" alt="BARF Cocido para gatos" loading="lazy" decoding="async"/>
           </div>
