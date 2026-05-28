@@ -314,14 +314,14 @@
   }
   .hist-eyebrow{
     display:inline-flex;align-items:center;gap:12px;
-    font-size:10px;letter-spacing:.45em;text-transform:uppercase;
+    font-size:var(--ts-eyebrow);letter-spacing:.32em;text-transform:uppercase;
     color:var(--gold);font-weight:700;margin-bottom:22px;
   }
   .hist-eyebrow::before{content:"";width:28px;height:1px;background:var(--gold)}
   .hist-card h2{
     font-family:var(--display);font-weight:800;
-    font-size:clamp(24px, 3vw, 42px);
-    line-height:1.05;letter-spacing:.005em;
+    font-size:var(--ts-h2);
+    line-height:1.02;letter-spacing:.005em;
     color:var(--olive);text-transform:uppercase;
   }
   .hist-card h2 em{
@@ -1120,24 +1120,24 @@
   .calc-eyebrow{
     display:block;
     font-family:var(--display);
-    font-size:clamp(11px, 1vw, 15px);
+    font-size:var(--ts-eyebrow);
     color:var(--gold);
     letter-spacing:.32em;
     text-transform:uppercase;
     margin-bottom:14px;
-    font-weight:600;
+    font-weight:700;
   }
   .calc-head h2{
     font-family:var(--display);
-    font-size:clamp(32px, 4vw, 56px);
+    font-size:var(--ts-h2);
     color:var(--olive);
     font-weight:800;
     margin:0 0 14px;
-    line-height:1.1;
+    line-height:1.02;
   }
   .calc-head p{
     color:rgba(42,40,31,.7);
-    font-size:clamp(13px, 1.1vw, 17px);
+    font-size:var(--ts-sub);
     margin:0;
   }
 
@@ -2204,7 +2204,7 @@
   }
   .product-card h3{
     font-family:var(--display);
-    font-size:clamp(16px, 1.3vw, 21px);
+    font-size:var(--ts-card-h);
     font-weight:800;
     color:var(--olive);
     margin-bottom:6px;
@@ -2213,7 +2213,7 @@
     text-transform:uppercase;
   }
   .product-card .desc{
-    font-size:clamp(11px, .82vw, 13px);
+    font-size:var(--ts-body);
     line-height:1.5;
     color:#6a6650;
     margin-bottom:12px;
@@ -2324,7 +2324,7 @@
   }
   .review-card .stars{margin-bottom:16px}
   .review-card .text{
-    color:#3a3a28;font-size:15px;margin-bottom:24px;
+    color:#3a3a28;font-size:var(--ts-body);margin-bottom:24px;
     font-style:normal;
   }
   .review-card .person{display:flex;gap:14px;align-items:center}
