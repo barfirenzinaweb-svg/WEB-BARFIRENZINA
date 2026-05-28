@@ -3942,7 +3942,7 @@
           <path d="M58 76 Q68 72 66 62" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"/>
         </g>
       </svg>
-      <article class="product-card" data-id="1" data-name="BARF Crudo" data-price="13" data-img="assets/barf-crudo.jpg">
+      <article class="product-card" data-id="1" data-name="BARF Crudo" data-price="16500" data-img="assets/barf-crudo.jpg">
         <span class="recipe-num">01</span>
         <div class="ribbon">Bestseller</div>
         <div class="product-photo product-photo-real">
@@ -3975,8 +3975,7 @@
           <div class="divider"></div>
           <div class="product-row">
             <div class="price-wrap">
-              <span class="was">$16.00</span>
-              <span class="price"><span class="cur">$</span>13<small style="font-size:16px">.00</small></span>
+              <span class="price"><span class="cur">$</span>16.500</span>
             </div>
             <button class="add-btn">
               <span>Añadir</span>
@@ -4002,7 +4001,7 @@
           <path d="M58 76 Q68 72 66 62" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"/>
         </g>
       </svg>
-      <article class="product-card" data-id="2" data-name="BARF Cocido" data-price="13" data-img="assets/barf-cocido.jpg">
+      <article class="product-card" data-id="2" data-name="BARF Cocido" data-price="18500" data-img="assets/barf-cocido.jpg">
         <span class="recipe-num">02</span>
         <div class="product-photo product-photo-real">
           <div class="tag">Suave</div>
@@ -4034,7 +4033,7 @@
           <div class="divider"></div>
           <div class="product-row">
             <div class="price-wrap">
-              <span class="price"><span class="cur">$</span>13<small style="font-size:16px">.00</small></span>
+              <span class="price"><span class="cur">$</span>18.500</span>
             </div>
             <button class="add-btn">
               <span>Añadir</span>
@@ -4789,7 +4788,7 @@ document.querySelectorAll('.stat-ticker .stat').forEach(el=>statIO.observe(el));
     catch(_){ return []; }
   }
   function subtotal(items){ return items.reduce(function(s,i){ return s + (i.qty||1)*(i.price||0); }, 0); }
-  function fmt(v){ return '$' + Number(v||0).toFixed(2); }
+  function fmt(v){ return '$' + Math.round(Number(v||0)).toLocaleString('es-AR'); }
 
   function open(){
     var items = readCart();
@@ -4915,7 +4914,7 @@ document.querySelectorAll('.faq-item').forEach(item=>{
 
   function count(){ return cart.reduce((n,i)=>n+i.qty,0); }
   function subtotal(){ return cart.reduce((s,i)=>s+i.qty*i.price,0); }
-  function fmt(v){ return '$' + v.toFixed(2); }
+  function fmt(v){ return '$' + Math.round(v).toLocaleString('es-AR'); }
 
   function render(){
     const n = count();
@@ -5417,7 +5416,7 @@ if(heroImg){
                 '<div class="divider"></div>'+
                 '<div class="product-row">'+
                   '<div class="price-wrap">'+was+
-                  '<span class="price"><span class="cur">$</span>'+precio+'<small style="font-size:16px">.00</small></span>'+
+                  '<span class="price"><span class="cur">$</span>'+Number(precio).toLocaleString('es-AR')+'</span>'+
                   '</div>'+
                   '<button class="add-btn"><span>Añadir</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>'+
                 '</div>'+

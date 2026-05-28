@@ -48,7 +48,7 @@
     "productos": [
       {
         "tag_gold": false,
-        "precio": "13",
+        "precio": "16500",
         "posicion_foto": "bottom",
         "nombre": "BARF Crudo",
         "reviews_count": "348",
@@ -72,7 +72,7 @@
       },
       {
         "tag_gold": false,
-        "precio": "13",
+        "precio": "18500",
         "posicion_foto": "top",
         "nombre": "BARF Cocido",
         "reviews_count": "217",
