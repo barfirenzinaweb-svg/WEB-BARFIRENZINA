@@ -57,6 +57,10 @@
 <!-- Preload hero video so it starts playing instantly on page load -->
 <link rel="preload" as="video" href="assets/hero.mp4" type="video/mp4">
 
+<!-- Leaflet (mapa zonas de envío) — se carga solo cuando el bloque entra al viewport via JS -->
+<link rel="preconnect" href="https://unpkg.com">
+<link rel="preconnect" href="https://basemaps.cartocdn.com">
+
 <style>
   :root{
     --cream:#F6F6E9;
@@ -3581,6 +3585,153 @@
     .info-visual{max-width:min(320px, 78vw)}
   }
 
+  /* ===== SECCIÓN ENVÍOS / ZONAS ===== */
+  .shipping{
+    padding:clamp(70px, 8vw, 110px) 0;
+    background:var(--cream);
+    position:relative;
+  }
+  .ship-grid{
+    display:grid;
+    grid-template-columns:1.3fr 1fr;
+    gap:clamp(28px, 4vw, 56px);
+    align-items:start;
+    max-width:1180px;margin:0 auto;
+  }
+  .ship-map-wrap{display:flex;flex-direction:column;gap:12px}
+  .ship-map{
+    width:100%;
+    height:clamp(380px, 52vh, 520px);
+    border-radius:18px;
+    overflow:hidden;
+    border:2px solid var(--olive);
+    box-shadow:0 30px 60px -30px rgba(50,57,21,.4);
+    background:var(--cream-2);
+  }
+  .ship-map-tip{
+    font-family:var(--display);
+    font-size:13px;
+    color:rgba(50,57,21,.65);
+    text-align:center;
+    margin:0;
+    font-style:italic;
+  }
+  .ship-info{
+    display:flex;flex-direction:column;gap:22px;
+    align-self:start;
+  }
+  .ship-zones h3{
+    font-family:var(--display);
+    font-size:var(--ts-card-h);
+    font-weight:800;
+    text-transform:uppercase;
+    color:var(--olive);
+    margin:0 0 14px;
+    letter-spacing:-.005em;
+    display:flex;align-items:center;gap:10px;
+  }
+  .ship-zones h3::before{
+    content:"";
+    width:24px;height:1.5px;
+    background:var(--gold);
+    border-radius:2px;
+  }
+  .ship-zones ul{
+    list-style:none;padding:0;margin:0;
+    display:flex;flex-direction:column;
+  }
+  .ship-zones li{
+    padding:11px 0;
+    border-bottom:1px dashed rgba(50,57,21,.15);
+    display:flex;align-items:center;gap:12px;
+    font-family:var(--display);
+    font-size:var(--ts-body);
+    color:var(--olive);
+    font-weight:500;
+  }
+  .ship-zones li:last-child{border-bottom:none}
+  .ship-zones li::before{
+    content:"";
+    width:9px;height:9px;border-radius:50%;
+    background:var(--gold);
+    flex-shrink:0;
+  }
+  .ship-pricing{
+    background:var(--cream-2);
+    padding:18px 22px;
+    border-radius:12px;
+    border-left:3px solid var(--gold);
+  }
+  .ship-pricing p{
+    font-family:var(--display);
+    font-size:var(--ts-body);
+    color:var(--olive);
+    margin:0;
+    line-height:1.55;
+  }
+  .ship-pricing p + p{
+    margin-top:6px;
+    font-size:13px;
+    color:rgba(50,57,21,.72);
+  }
+  .ship-pricing strong{color:var(--sage);font-weight:800}
+  .ship-wa-btn{
+    display:inline-flex;align-items:center;gap:10px;
+    background:var(--olive);color:var(--cream);
+    padding:14px 22px;
+    border-radius:999px;
+    font-family:var(--display);
+    font-weight:700;
+    font-size:11px;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    text-decoration:none;
+    border:1.5px solid var(--olive);
+    transition:background .25s ease, color .25s ease, transform .25s ease, border-color .25s ease;
+    align-self:flex-start;
+  }
+  .ship-wa-btn:hover{background:var(--gold);border-color:var(--gold);transform:translateY(-2px)}
+  .ship-wa-btn svg{width:16px;height:16px;flex-shrink:0}
+
+  /* Leaflet overrides: tipografía y colores para combinar con la marca */
+  .leaflet-container{
+    background:var(--cream-2) !important;
+    font-family:var(--display) !important;
+  }
+  .leaflet-popup-content-wrapper{
+    background:var(--cream) !important;
+    color:var(--olive) !important;
+    border-radius:10px !important;
+    border:1px solid var(--gold) !important;
+    box-shadow:0 8px 24px -8px rgba(50,57,21,.3) !important;
+  }
+  .leaflet-popup-content{
+    font-family:var(--display) !important;
+    font-size:13px !important;
+    color:var(--olive) !important;
+    margin:10px 14px !important;
+  }
+  .leaflet-popup-tip{background:var(--cream) !important;border:1px solid var(--gold) !important}
+  .leaflet-control-attribution{
+    background:rgba(246,246,233,.85) !important;
+    font-family:var(--display) !important;
+    font-size:10px !important;
+  }
+  .leaflet-control-zoom a{
+    background:var(--cream) !important;
+    color:var(--olive) !important;
+    border:1px solid rgba(50,57,21,.2) !important;
+  }
+  .leaflet-control-zoom a:hover{
+    background:var(--gold) !important;
+    color:var(--cream) !important;
+  }
+
+  @media (max-width:780px){
+    .ship-grid{grid-template-columns:1fr;gap:24px}
+    .ship-map{height:340px}
+  }
+
   /* ===== SEPARADOR DORADO — HERMANO DE LAS SECCIONES, ALTURA 0 =====
      El divider está en el flujo flex del .page-sections con altura 0
      y su contenido (sd-inner) está absolute centrado en su posición → queda
@@ -4165,6 +4316,43 @@
         <a class="calc-cta calc-cta-wa" href="https://wa.me/5491154846054?text=Hola!%20Quiero%20una%20consulta%20personalizada%20para%20mi%20gato" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.198-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.611-.916-2.207-.242-.579-.487-.5-.67-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.064 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.262.489 1.694.626.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.247-.694.247-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12.04 21.785a9.85 9.85 0 0 1-5.014-1.371l-.36-.214-3.726.978.995-3.633-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.889-9.884a9.825 9.825 0 0 1 6.99 2.898 9.825 9.825 0 0 1 2.892 6.992c-.002 5.45-4.437 9.868-9.921 9.868zM20.52 3.449C18.24 1.245 15.24 0 12.045 0 5.463 0 .104 5.334.101 11.892c0 2.096.549 4.14 1.595 5.945L0 24l6.335-1.652a11.998 11.998 0 0 0 5.71 1.447h.005c6.582 0 11.94-5.335 11.943-11.893A11.821 11.821 0 0 0 20.52 3.449"/></svg>
           <span>Consulta personalizada</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============= ENVÍOS / ZONAS DE COBERTURA ============= -->
+<section class="shipping" id="envios">
+  <div class="container">
+    <div class="section-head fade-in">
+      <span class="eye">Envíos</span>
+      <h2>Llegamos a <em>tu zona</em></h2>
+      <p>Envío refrigerado en porciones listas para usar. Coordinamos día y horario por WhatsApp.</p>
+    </div>
+
+    <div class="ship-grid fade-in">
+      <div class="ship-map-wrap">
+        <div class="ship-map" id="shipMap" aria-label="Mapa de zonas de cobertura de BARFirenzina"></div>
+        <p class="ship-map-tip">📍 Las zonas resaltadas en dorado son las que cubrimos. Hacé click en cada zona para más detalles.</p>
+      </div>
+      <div class="ship-info">
+        <div class="ship-zones">
+          <h3>Zonas cubiertas</h3>
+          <ul>
+            <li>CABA (todos los barrios)</li>
+            <li>Vicente López · Olivos · Florida</li>
+            <li>San Isidro · Martínez · Acassuso</li>
+            <li>Beccar · Boulogne</li>
+          </ul>
+        </div>
+        <div class="ship-pricing">
+          <p><strong>Envío refrigerado GRATIS</strong> a partir de 5 kg.</p>
+          <p>Pedidos menores: coordinamos costo según zona por WhatsApp.</p>
+        </div>
+        <a class="ship-wa-btn" href="https://wa.me/5491154846054?text=Hola!%20Quiero%20saber%20si%20hacen%20env%C3%ADos%20a%20mi%20zona" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-1 1.2-.2.2-.4.2-.6.1-.3-.1-1.2-.4-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4 0 1.4 1 2.8 1.2 3 .1.2 2 3 4.8 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.5-.3zM12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.5 1.3 4.9L2 22l5.3-1.3c1.4.8 3 1.2 4.7 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>
+          ¿Tu zona no figura? Consultanos
         </a>
       </div>
     </div>
@@ -5124,6 +5312,123 @@ document.querySelectorAll('.faq-item').forEach(item=>{
   });
 
   render();
+})();
+
+/* ===================== MAPA DE ZONAS DE ENVÍO (Leaflet, lazy load) =====================
+   Carga Leaflet solo cuando el bloque entra al viewport (no afecta el LCP). */
+(function initShippingMap(){
+  var mapEl = document.getElementById('shipMap');
+  if(!mapEl) return;
+
+  function loadCss(href){
+    return new Promise(function(resolve){
+      var l = document.createElement('link');
+      l.rel = 'stylesheet'; l.href = href; l.onload = resolve; l.onerror = resolve;
+      document.head.appendChild(l);
+    });
+  }
+  function loadJs(src){
+    return new Promise(function(resolve){
+      var s = document.createElement('script');
+      s.src = src; s.async = true; s.onload = resolve; s.onerror = resolve;
+      document.head.appendChild(s);
+    });
+  }
+
+  function createMap(){
+    if(typeof L === 'undefined') return;
+
+    // Center: Buenos Aires (entre CABA y zona norte)
+    var map = L.map(mapEl, {
+      center: [-34.520, -58.50],
+      zoom: 11,
+      zoomControl: true,
+      scrollWheelZoom: false,
+      dragging: !L.Browser.mobile,
+      tap: false,
+    });
+
+    // Tile claro y elegante (CartoDB Positron — gratis, sin API key)
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; <a href="https://openstreetmap.org">OpenStreetMap</a> &copy; <a href="https://carto.com">CARTO</a>',
+      subdomains: 'abcd',
+      maxZoom: 19
+    }).addTo(map);
+    // Labels separados arriba para que se vean nítidos
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png', {
+      attribution: '',
+      subdomains: 'abcd',
+      maxZoom: 19,
+      pane: 'overlayPane'
+    }).addTo(map);
+
+    // Zonas cubiertas (polígonos aproximados — ajustables después)
+    var zonas = [
+      {
+        nombre: 'CABA',
+        descripcion: 'Todos los barrios',
+        coords: [
+          [-34.526, -58.527], [-34.530, -58.450], [-34.554, -58.380],
+          [-34.610, -58.345], [-34.652, -58.370], [-34.700, -58.470],
+          [-34.665, -58.530], [-34.585, -58.530]
+        ]
+      },
+      {
+        nombre: 'Vicente López',
+        descripcion: 'Vicente López · Olivos · Florida',
+        coords: [
+          [-34.512, -58.510], [-34.490, -58.490],
+          [-34.495, -58.460], [-34.527, -58.478]
+        ]
+      },
+      {
+        nombre: 'San Isidro',
+        descripcion: 'San Isidro · Martínez · Acassuso · Beccar',
+        coords: [
+          [-34.475, -58.530], [-34.450, -58.510],
+          [-34.470, -58.470], [-34.495, -58.495]
+        ]
+      },
+      {
+        nombre: 'Boulogne',
+        descripcion: 'Boulogne · zona aledaña',
+        coords: [
+          [-34.495, -58.580], [-34.475, -58.560],
+          [-34.490, -58.530], [-34.510, -58.555]
+        ]
+      }
+    ];
+
+    zonas.forEach(function(z){
+      L.polygon(z.coords, {
+        color: '#A38E48',
+        weight: 2,
+        opacity: .9,
+        fillColor: '#A38E48',
+        fillOpacity: .32,
+        smoothFactor: 1
+      })
+      .bindPopup('<strong>'+ z.nombre +'</strong><br>'+ z.descripcion +'<br><em>✓ Envío disponible</em>')
+      .addTo(map);
+    });
+
+    // Encuadrar el mapa para que se vean todas las zonas
+    var allCoords = zonas.reduce(function(arr, z){ return arr.concat(z.coords); }, []);
+    map.fitBounds(L.latLngBounds(allCoords), { padding: [20, 20] });
+  }
+
+  // Lazy load: cargar Leaflet solo cuando el bloque entra al viewport
+  var io = new IntersectionObserver(function(entries, obs){
+    entries.forEach(function(e){
+      if(!e.isIntersecting) return;
+      obs.disconnect();
+      Promise.all([
+        loadCss('https://unpkg.com/leaflet@1.9.4/dist/leaflet.css'),
+        loadJs('https://unpkg.com/leaflet@1.9.4/dist/leaflet.js')
+      ]).then(createMap);
+    });
+  }, { threshold: 0.1, rootMargin: '300px 0px' });
+  io.observe(mapEl);
 })();
 
 /* ===================== SEPARADORES DORADOS ENTRE SECCIONES =====================
