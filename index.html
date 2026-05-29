@@ -945,6 +945,53 @@
   .cart-checkout:hover{background:var(--gold);border-color:var(--gold);transform:translateY(-2px)}
   .cart-checkout svg{width:16px;height:16px}
 
+  /* Form de contacto del cart — obligatorio antes de habilitar botones de pago */
+  .cart-contact{
+    background:var(--cream-2);
+    border:1px solid rgba(163,142,72,.25);
+    border-radius:12px;
+    padding:14px 14px 12px;
+    margin-bottom:14px;
+    display:flex;flex-direction:column;gap:8px;
+  }
+  .cart-contact-title{
+    font-family:var(--subtitle);
+    font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--olive);font-weight:700;
+    margin:0 0 4px;text-align:center;
+  }
+  .cart-contact input{
+    width:100%;
+    padding:10px 12px;
+    border:1.5px solid rgba(50,57,21,.18);
+    border-radius:8px;
+    font-family:var(--display);
+    font-size:14px;
+    color:var(--olive);
+    background:#fff;
+    outline:none;
+    transition:border-color .2s ease, box-shadow .2s ease;
+  }
+  .cart-contact input::placeholder{color:rgba(50,57,21,.45);font-style:italic}
+  .cart-contact input:focus{
+    border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(163,142,72,.15);
+  }
+  .cart-contact input.is-invalid{border-color:#b5562b}
+  .cart-contact-hint{
+    font-family:var(--subtitle);
+    font-size:11px;
+    color:#b5562b;font-weight:600;
+    margin:2px 0 0;text-align:center;letter-spacing:.04em;
+    transition:color .25s ease;
+  }
+  .cart-contact-hint.is-ok{color:var(--sage)}
+
+  /* Botones de pago deshabilitados visualmente */
+  .cart-checkout:disabled{
+    opacity:.4;cursor:not-allowed;pointer-events:none;
+  }
+
   /* Opciones de pago: tarjeta + transferencia */
   .pay-options{display:flex;flex-direction:column;gap:10px}
   .pay-label{
@@ -3948,13 +3995,19 @@
       <div class="cart-line"><span>Envío refrigerado</span><span id="cartShipStatus" style="color:#6a6650;font-weight:600">A coordinar</span></div>
       <div class="cart-line total"><span>Total</span><strong id="cartTotal">$0</strong></div>
     </div>
+    <div class="cart-contact">
+      <p class="cart-contact-title">Para confirmar tu pedido</p>
+      <input type="email" id="cartEmail" placeholder="Tu email" autocomplete="email" inputmode="email"/>
+      <input type="tel" id="cartPhone" placeholder="WhatsApp (ej: +54 9 11 1234 5678)" autocomplete="tel" inputmode="tel"/>
+      <p class="cart-contact-hint" id="cartContactHint">⚠️ Completá al menos uno para continuar</p>
+    </div>
     <div class="pay-options">
       <p class="pay-label">¿Cómo querés pagar?</p>
-      <button class="cart-checkout pay-btn pay-mp" id="cartCheckout">
+      <button class="cart-checkout pay-btn pay-mp" id="cartCheckout" disabled>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="13" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
         Pagar con tarjeta
       </button>
-      <button class="cart-checkout pay-btn pay-transfer" id="cartTransfer">
+      <button class="cart-checkout pay-btn pay-transfer" id="cartTransfer" disabled>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h18M3 16h18M7 4v16M17 4v16"/></svg>
         Pagar por transferencia
       </button>
@@ -5258,6 +5311,66 @@ document.querySelectorAll('.faq-item').forEach(item=>{
     document.body.style.overflow = '';
   }
 
+  // ===== Form de contacto obligatorio (email o WhatsApp) =====
+  const emailInput = document.getElementById('cartEmail');
+  const phoneInput = document.getElementById('cartPhone');
+  const hintEl = document.getElementById('cartContactHint');
+  const transferBtnEl = document.getElementById('cartTransfer');
+
+  // Restaurar valores guardados (si el usuario los puso antes)
+  try {
+    const saved = JSON.parse(localStorage.getItem('barfContact') || '{}');
+    if(saved.email) emailInput.value = saved.email;
+    if(saved.phone) phoneInput.value = saved.phone;
+  } catch(_){}
+
+  function isValidEmail(v){
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((v||'').trim());
+  }
+  function isValidPhone(v){
+    // Acepta números con o sin +, espacios, paréntesis, guiones. Mín 8 dígitos.
+    const digits = (v||'').replace(/\D/g, '');
+    return digits.length >= 8;
+  }
+
+  function validateContact(){
+    const email = emailInput.value.trim();
+    const phone = phoneInput.value.trim();
+    const okEmail = email && isValidEmail(email);
+    const okPhone = phone && isValidPhone(phone);
+    const hasAny = okEmail || okPhone;
+
+    // Estado visual de cada input
+    emailInput.classList.toggle('is-invalid', email && !okEmail);
+    phoneInput.classList.toggle('is-invalid', phone && !okPhone);
+
+    // Mensaje
+    if(hasAny){
+      hintEl.textContent = '✓ Listo, ya podés continuar';
+      hintEl.classList.add('is-ok');
+    } else {
+      hintEl.textContent = '⚠️ Completá al menos uno para continuar';
+      hintEl.classList.remove('is-ok');
+    }
+
+    // Habilita/deshabilita botones
+    checkoutBtn.disabled = !hasAny;
+    if(transferBtnEl) transferBtnEl.disabled = !hasAny;
+
+    // Guarda en localStorage
+    try {
+      localStorage.setItem('barfContact', JSON.stringify({
+        email: okEmail ? email : '',
+        phone: okPhone ? phone : ''
+      }));
+    } catch(_){}
+  }
+  [emailInput, phoneInput].forEach(el => {
+    el.addEventListener('input', validateContact);
+    el.addEventListener('blur', validateContact);
+  });
+  validateContact(); // estado inicial
+
   cartBtn.addEventListener('click', open);
   closeBtn.addEventListener('click', close);
   backdrop.addEventListener('click', close);
@@ -5289,9 +5402,12 @@ document.querySelectorAll('.faq-item').forEach(item=>{
       if(!data.init_point) throw new Error('Respuesta inválida de Mercado Pago');
       // Guardo los datos del pedido para que /gracias arme el mensaje de WhatsApp
       try {
+        const contact = JSON.parse(localStorage.getItem('barfContact') || '{}');
         localStorage.setItem('barfLastOrder', JSON.stringify({
           items: cart.map(i => ({ name: i.name, qty: i.qty, price: i.price })),
           total: subtotal(),
+          email: contact.email || '',
+          phone: contact.phone || '',
           ts: Date.now()
         }));
       } catch(_){}
