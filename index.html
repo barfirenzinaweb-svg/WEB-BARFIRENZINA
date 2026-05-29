@@ -2521,7 +2521,7 @@
   ============================================ */
   .explain{
     position:relative;
-    padding:140px 0 160px;
+    padding:90px 0 110px;
     background:var(--cream);
     color:var(--olive);
     overflow:hidden;
@@ -3383,9 +3383,11 @@
   .ingredients .ing-head .ing-eyebrow,
   .ingredients .ing-head .section-eyebrow,
   .ig-section .ig-head .ig-eyebrow{color:var(--gold)}
-  /* Eyebrow ingredientes sin lineas decorativas (ya tiene los guiones literales del texto) */
+  /* Eyebrows sin lineas decorativas (ya tienen guiones literales en el texto) */
   .ingredients .ing-head .ing-eyebrow::before,
-  .ingredients .ing-head .ing-eyebrow::after{display:none !important}
+  .ingredients .ing-head .ing-eyebrow::after,
+  .calc-head .calc-eyebrow::before,
+  .calc-head .calc-eyebrow::after{display:none !important}
   /* Items de la lista de ingredientes: nombres en cream (igual al título), meta en cream tenue */
   .ingredients .ing-name{color:var(--cream)}
   .ingredients .ing-meta{color:rgba(246,246,233,.55)}
@@ -3481,7 +3483,7 @@
     margin:0 0 clamp(18px, 2vw, 28px);
     text-align:left;
   }
-  .info-text h2 em{color:var(--gold);font-style:italic}
+  .info-text h2 em{color:var(--gold);font-style:normal}
   .info-text p.body{
     font-family:var(--display);
     font-size:var(--ts-sub);
