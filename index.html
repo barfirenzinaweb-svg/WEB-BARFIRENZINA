@@ -3209,13 +3209,14 @@
   #historia{order:2}        /* Historia BARFirenzina */
   #ingredientes{order:3}    /* Ingredientes */
   #productos{order:4}       /* Nuestras Recetas */
-  #calculadora{order:5}     /* Calculadora */
-  #nuestro-barf{order:6}    /* Acompañamiento */
-  #instagram{order:7}       /* Comunidad */
-  #resenas{order:8}         /* Nuestros clientes felices */
-  #preguntas{order:9}       /* FAQ */
-  #beneficios{order:10}     /* Beneficios (no especificado: al final) */
-  #contacto{order:11}       /* CTA final */
+  #envios{order:5}          /* Envíos / Zonas de cobertura */
+  #calculadora{order:6}     /* Calculadora */
+  #nuestro-barf{order:7}    /* Acompañamiento */
+  #instagram{order:8}       /* Comunidad */
+  #resenas{order:9}         /* Nuestros clientes felices */
+  #preguntas{order:10}      /* FAQ */
+  #beneficios{order:11}     /* Beneficios */
+  #contacto{order:12}       /* CTA final */
 
   /* ============================================================
      ALINEACIÓN GLOBAL — todas las secciones comparten el mismo
@@ -3591,6 +3592,7 @@
     background:var(--cream);
     position:relative;
   }
+  .shipping .section-head h2 em{font-style:normal}
   .ship-grid{
     display:grid;
     grid-template-columns:1.3fr 1fr;
@@ -4327,7 +4329,7 @@
   <div class="container">
     <div class="section-head fade-in">
       <span class="eye">Envíos</span>
-      <h2>Llegamos a <em>tu zona</em></h2>
+      <h2 class="ship-h2">Llegamos a <em>tu zona</em></h2>
       <p>Envío refrigerado en porciones listas para usar. Coordinamos día y horario por WhatsApp.</p>
     </div>
 
@@ -5019,7 +5021,7 @@ document.querySelectorAll('.stat-ticker .stat').forEach(el=>statIO.observe(el));
   if(!modal || !openBtn) return;
 
   function readCart(){
-    try { return JSON.parse(localStorage.getItem('barfCart') || '[]'); }
+    try { return JSON.parse(localStorage.getItem('barf_cart_v2') || '[]'); }
     catch(_){ return []; }
   }
   function subtotal(items){ return items.reduce(function(s,i){ return s + (i.qty||1)*(i.price||0); }, 0); }

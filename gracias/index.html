@@ -162,7 +162,7 @@
 
       // Vaciar el carrito al confirmar el pago. El lastOrder se mantiene
       // por si el usuario refresca la página o vuelve a entrar.
-      try { localStorage.removeItem('barfCart'); } catch(_){}
+      try { localStorage.removeItem('barf_cart_v2'); } catch(_){}
 
       function escapeHtml(s){
         return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
