@@ -637,6 +637,7 @@
     padding:clamp(8px, .9vw, 18px) var(--hero-edge);
     max-width:none;margin:0;
     gap:clamp(20px, 3vw, 48px);
+    position:relative;
   }
   .nav-right{margin-left:auto;display:flex;align-items:center;gap:clamp(8px, .9vw, 14px)}
 
@@ -1102,15 +1103,17 @@
   .burger:hover{color:var(--gold);transform:rotate(-10deg) scale(1.06)}
   .burger.is-open{color:var(--gold);transform:rotate(35deg) scale(1.08)}
 
-  /* Menú emergente — popup con tema BARF */
+  /* Menú emergente — popup con tema BARF, alineado con el logo del header */
   .nav ul.is-open{
     display:flex !important;
     position:absolute;
     top:100%;left:0;right:0;
+    width:100%;
     flex-direction:column;
-    align-items:flex-start;
+    align-items:stretch;
     background:var(--olive);
-    padding:28px 14vw 32px 14vw;
+    /* Padding lateral igual al .nav para que el contenido arranque donde está el logo */
+    padding:28px var(--hero-edge) 32px;
     gap:18px;
     border-top:1px solid rgba(163,142,72,.35);
     border-bottom:3px solid var(--gold);
@@ -1121,26 +1124,41 @@
   .nav ul.is-open li{
     list-style:none;
     position:relative;
-    padding-left:34px;
+    padding-left:0;
     width:100%;
+    display:flex;align-items:center;gap:14px;
   }
-  .nav ul.is-open li + li::before{display:none}
-  .nav ul.is-open li::after{
-    content:"";position:absolute;left:0;top:50%;transform:translateY(-50%);
-    width:22px;height:22px;
-    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='%23A38E48'><ellipse cx='25' cy='24' rx='5.5' ry='8'/><ellipse cx='39' cy='24' rx='5.5' ry='8'/><ellipse cx='14' cy='32' rx='5' ry='7'/><ellipse cx='50' cy='32' rx='5' ry='7'/><path d='M32 32c-9 0-15 7-15 14 0 4 3 7 7 7 3.5 0 5.5-2 8-2s4.5 2 8 2c4 0 7-3 7-7 0-7-6-14-15-14z'/></svg>");
-    background-size:contain;background-repeat:no-repeat;
-    opacity:.8;
-    transition:transform .3s ease, opacity .3s ease;
+  /* Desactiva el ::after viejo del dropdown */
+  .nav ul.is-open li::after{display:none !important}
+  /* Huellita decorativa ANTES del texto — sobrescribe el dot del menu PC con !important */
+  .nav ul.is-open li::before,
+  .nav ul.is-open li + li::before{
+    content:"" !important;
+    position:static !important;
+    display:block !important;
+    width:clamp(26px, 2.4vw, 34px) !important;
+    height:clamp(26px, 2.4vw, 34px) !important;
+    background:none !important;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='%23A38E48'><ellipse cx='25' cy='24' rx='5.5' ry='8'/><ellipse cx='39' cy='24' rx='5.5' ry='8'/><ellipse cx='14' cy='32' rx='5' ry='7'/><ellipse cx='50' cy='32' rx='5' ry='7'/><path d='M32 32c-9 0-15 7-15 14 0 4 3 7 7 7 3.5 0 5.5-2 8-2s4.5 2 8 2c4 0 7-3 7-7 0-7-6-14-15-14z'/></svg>") !important;
+    background-size:contain !important;
+    background-repeat:no-repeat !important;
+    background-color:transparent !important;
+    border-radius:0 !important;
+    transform:none !important;
+    opacity:.8 !important;
+    flex-shrink:0 !important;
+    left:auto !important;top:auto !important;
+    transition:transform .3s ease, opacity .3s ease !important;
   }
-  .nav ul.is-open li:hover::after{
-    transform:translateY(-50%) rotate(-12deg) scale(1.15);
-    opacity:1;
+  .nav ul.is-open li:hover::before{
+    transform:rotate(-12deg) scale(1.15) !important;
+    opacity:1 !important;
   }
   .nav ul.is-open a{
     font-size:14px !important;letter-spacing:.28em !important;
     padding:6px 0 !important;
     display:inline-block;
+    flex:1;
   }
   @keyframes pawMenuDrop{
     from{opacity:0;transform:translateY(-14px)}
