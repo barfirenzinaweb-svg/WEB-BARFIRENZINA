@@ -5098,11 +5098,35 @@ document.querySelectorAll('.stat-ticker .stat').forEach(el=>statIO.observe(el));
   function subtotal(items){ return items.reduce(function(s,i){ return s + (i.qty||1)*(i.price||0); }, 0); }
   function fmt(v){ return '$' + Math.round(Number(v||0)).toLocaleString('es-AR'); }
 
+  var SHEET_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzUmbYphhd0CyV-_VADF6PclXikro8mN3P0-w6Yof4YfHv6Kitf45rCvf-fsIrM_E2W/exec';
+
+  function sendOrderToSheet(items, total){
+    try {
+      var contact = JSON.parse(localStorage.getItem('barfContact') || '{}');
+      var payload = {
+        email: contact.email || '',
+        phone: contact.phone || '',
+        items: items.map(function(i){ return { name: i.name, qty: i.qty, price: i.price }; }),
+        total: total,
+        metodo: 'Transferencia'
+      };
+      fetch(SHEET_ENDPOINT, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+      }).catch(function(){});
+    } catch(_){}
+  }
+
   function open(){
     var items = readCart();
     if(!items.length) return;
     var total = subtotal(items);
     totalEl.textContent = fmt(total);
+
+    // Registrar el pedido en el Sheet + emails (fire and forget)
+    sendOrderToSheet(items, total);
 
     // Armar mensaje de WhatsApp con el pedido
     var lines = [];
@@ -5377,8 +5401,32 @@ document.querySelectorAll('.faq-item').forEach(item=>{
   document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') close(); });
   goShop.addEventListener('click', (e)=>{ e.preventDefault(); close(); const p = document.getElementById('productos'); if(p) p.scrollIntoView({behavior:'smooth'}); });
 
+  // URL del Apps Script (Google Sheets + email automático)
+  const SHEET_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzUmbYphhd0CyV-_VADF6PclXikro8mN3P0-w6Yof4YfHv6Kitf45rCvf-fsIrM_E2W/exec';
+
+  function sendOrderToSheet(metodo){
+    try {
+      const contact = JSON.parse(localStorage.getItem('barfContact') || '{}');
+      const payload = {
+        email: contact.email || '',
+        phone: contact.phone || '',
+        items: cart.map(i => ({ name: i.name, qty: i.qty, price: i.price })),
+        total: subtotal(),
+        metodo: metodo
+      };
+      // Fire and forget — el cliente sigue al checkout aunque tarde
+      fetch(SHEET_ENDPOINT, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+      }).catch(()=>{});
+    } catch(_){}
+  }
+
   checkoutBtn.addEventListener('click', async ()=>{
     if(cart.length===0) return;
+    sendOrderToSheet('Tarjeta (Mercado Pago)');
     const original = checkoutBtn.innerHTML;
     checkoutBtn.disabled = true;
     checkoutBtn.innerHTML = 'Redirigiendo a Mercado Pago…';
