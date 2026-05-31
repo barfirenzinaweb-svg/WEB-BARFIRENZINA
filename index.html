@@ -3988,7 +3988,7 @@
   <div class="cart-footer" id="cartFooter" style="display:none">
     <div class="cart-totals">
       <div class="ship-progress" id="shipProgress">
-        <div class="ship-progress-text" id="shipProgressText">Te faltan 5 kg para envío gratis</div>
+        <div class="ship-progress-text" id="shipProgressText">Te faltan 4 kg para envío gratis</div>
         <div class="ship-progress-bar"><div class="ship-progress-fill" id="shipProgressFill" style="width:0%"></div></div>
       </div>
       <div class="cart-line"><span>Subtotal</span><span id="cartSubtotal">$0</span></div>
@@ -4420,7 +4420,7 @@
           </ul>
         </div>
         <div class="ship-pricing">
-          <p><strong>Envío refrigerado GRATIS</strong> a partir de 5 kg.</p>
+          <p><strong>Envío refrigerado GRATIS</strong> a partir de 4 kg.</p>
           <p>Pedidos menores: coordinamos costo según zona por WhatsApp.</p>
         </div>
         <a class="ship-wa-btn" href="https://wa.me/5491154846054?text=Hola!%20Quiero%20saber%20si%20hacen%20env%C3%ADos%20a%20mi%20zona" target="_blank" rel="noopener">
@@ -5301,8 +5301,8 @@ document.querySelectorAll('.faq-item').forEach(item=>{
     subtotalEl.textContent = fmt(sub);
     totalEl.textContent = fmt(sub);
 
-    // Barra de progreso de envío gratis (a partir de 5 kg)
-    const FREE_KG = 5;
+    // Barra de progreso de envío gratis (a partir de 4 kg)
+    const FREE_KG = 4;
     const kg = cart.reduce((n,i)=>n+(i.qty||1), 0); // 1 unidad = 1 kg
     const progressEl = document.getElementById('shipProgress');
     const progressText = document.getElementById('shipProgressText');
