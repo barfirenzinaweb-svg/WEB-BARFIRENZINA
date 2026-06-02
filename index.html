@@ -1003,15 +1003,36 @@
     opacity:.4;cursor:not-allowed;pointer-events:none;
   }
 
-  /* Opciones de pago: tarjeta + transferencia */
-  .pay-options{display:flex;flex-direction:column;gap:10px}
-  .pay-label{
-    font-family:var(--subtitle);
-    font-size:11px;letter-spacing:.2em;text-transform:uppercase;
-    color:#6a6650;font-weight:600;text-align:center;
-    margin:0 0 4px;
+  /* Línea de descuento por transferencia (5% off) */
+  .cart-transfer-discount{
+    display:flex;justify-content:space-between;align-items:center;
+    gap:8px;
+    padding:6px 0 0;
+    margin-top:2px;
+    border-top:1px dashed rgba(124,132,86,.4);
   }
-  .pay-btn{font-size:12px;padding:14px 16px}
+  .ctd-label{
+    font-family:var(--subtitle);
+    font-size:11px;letter-spacing:.04em;
+    color:var(--sage);font-weight:600;font-style:italic;
+  }
+  .ctd-label small{font-size:10px;opacity:.85}
+  .ctd-value{
+    font-family:"Times New Roman", Times, serif;
+    font-size:17px;font-weight:700;
+    color:var(--sage);
+  }
+
+  /* Opciones de pago: tarjeta + transferencia (botones más chicos) */
+  .pay-options{display:flex;flex-direction:column;gap:8px}
+  .pay-btn{
+    font-size:10px !important;
+    padding:10px 14px !important;
+    letter-spacing:.16em !important;
+    border-radius:10px;
+    gap:8px;
+  }
+  .pay-btn svg{width:14px;height:14px}
   .pay-btn.pay-transfer{
     background:transparent;color:var(--olive);
     border:1.5px solid var(--olive);
@@ -4005,6 +4026,10 @@
       <div class="cart-line"><span>Subtotal</span><span id="cartSubtotal">$0</span></div>
       <div class="cart-line"><span>Envío refrigerado</span><span id="cartShipStatus" style="color:#6a6650;font-weight:600">A coordinar</span></div>
       <div class="cart-line total"><span>Total</span><strong id="cartTotal">$0</strong></div>
+      <div class="cart-transfer-discount">
+        <span class="ctd-label">Con transferencia <small>(5% off)</small></span>
+        <strong class="ctd-value" id="cartTransferTotal">$0</strong>
+      </div>
     </div>
     <div class="cart-contact">
       <p class="cart-contact-title">Datos para la entrega</p>
@@ -4022,13 +4047,11 @@
       <p class="cart-contact-hint" id="cartContactHint">⚠️ Completá los campos obligatorios para continuar</p>
     </div>
     <div class="pay-options">
-      <p class="pay-label">¿Cómo querés pagar?</p>
       <button class="cart-checkout pay-btn pay-mp" id="cartCheckout" disabled>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="13" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
         Pagar con tarjeta
       </button>
       <button class="cart-checkout pay-btn pay-transfer" id="cartTransfer" disabled>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h18M3 16h18M7 4v16M17 4v16"/></svg>
         Pagar por transferencia
       </button>
     </div>
@@ -5144,10 +5167,11 @@ document.querySelectorAll('.stat-ticker .stat').forEach(el=>statIO.observe(el));
   function open(){
     var items = readCart();
     if(!items.length) return;
-    var total = subtotal(items);
+    var subTotal = subtotal(items);
+    var total = Math.round(subTotal * 0.95); // 5% descuento por transferencia
     totalEl.textContent = fmt(total);
 
-    // Registrar el pedido en el Sheet + emails (fire and forget)
+    // Registrar el pedido en el Sheet + emails (fire and forget) con total CON descuento
     sendOrderToSheet(items, total);
 
     // Armar mensaje de WhatsApp con el pedido
@@ -5158,7 +5182,9 @@ document.querySelectorAll('.stat-ticker .stat').forEach(el=>statIO.observe(el));
       lines.push('• '+ i.name +' × '+ i.qty +' — '+ fmt(i.qty * i.price));
     });
     lines.push('');
-    lines.push('Total: '+ fmt(total));
+    lines.push('Subtotal: '+ fmt(subTotal));
+    lines.push('Descuento 5% transferencia: -'+ fmt(subTotal - total));
+    lines.push('Total a transferir: '+ fmt(total));
     lines.push('');
     lines.push('Hago la transferencia y les paso el comprobante por acá. ¡Gracias!');
     waBtn.href = 'https://wa.me/'+ WA_PHONE +'?text='+ encodeURIComponent(lines.join('\n'));
@@ -5322,6 +5348,9 @@ document.querySelectorAll('.faq-item').forEach(item=>{
     const sub = subtotal();
     subtotalEl.textContent = fmt(sub);
     totalEl.textContent = fmt(sub);
+    // Descuento 5% por transferencia
+    const transferTotalEl = document.getElementById('cartTransferTotal');
+    if(transferTotalEl) transferTotalEl.textContent = fmt(sub * 0.95);
 
     // Barra de progreso de envío gratis (a partir de 4 kg)
     const FREE_KG = 4;
