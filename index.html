@@ -973,9 +973,15 @@
     transition:border-color .2s ease, box-shadow .2s ease;
   }
   .cart-contact input::placeholder{color:rgba(50,57,21,.45);font-style:italic}
-  .cart-contact-row{
+  .cart-contact-row,
+  .cart-contact-row-2{
     display:grid;
-    grid-template-columns:1.7fr 1fr;
+    grid-template-columns:1.6fr 1fr;
+    gap:8px;
+  }
+  .cart-contact-row-3{
+    display:grid;
+    grid-template-columns:1fr 1fr 1.3fr;
     gap:8px;
   }
   .cart-contact input:focus{
@@ -4004,11 +4010,16 @@
       <p class="cart-contact-title">Datos para la entrega</p>
       <input type="email" id="cartEmail" placeholder="Tu email" autocomplete="email" inputmode="email" required/>
       <input type="tel" id="cartPhone" placeholder="WhatsApp (ej: +54 9 11 1234 5678)" autocomplete="tel" inputmode="tel" required/>
-      <div class="cart-contact-row">
-        <input type="text" id="cartAddress" placeholder="Dirección (calle, número, piso)" autocomplete="street-address" required/>
+      <div class="cart-contact-row-2">
+        <input type="text" id="cartCalle" placeholder="Calle" autocomplete="street-address" required/>
+        <input type="text" id="cartAltura" placeholder="Altura" autocomplete="off" inputmode="numeric" required/>
+      </div>
+      <div class="cart-contact-row-3">
+        <input type="text" id="cartPiso" placeholder="Piso (opcional)" autocomplete="off"/>
+        <input type="text" id="cartDepto" placeholder="Depto (opcional)" autocomplete="off"/>
         <input type="text" id="cartCP" placeholder="Código postal" autocomplete="postal-code" inputmode="numeric" required/>
       </div>
-      <p class="cart-contact-hint" id="cartContactHint">⚠️ Completá todos los campos para continuar</p>
+      <p class="cart-contact-hint" id="cartContactHint">⚠️ Completá los campos obligatorios para continuar</p>
     </div>
     <div class="pay-options">
       <p class="pay-label">¿Cómo querés pagar?</p>
@@ -5346,10 +5357,13 @@ document.querySelectorAll('.faq-item').forEach(item=>{
     document.body.style.overflow = '';
   }
 
-  // ===== Form de contacto OBLIGATORIO (los 4 campos) =====
+  // ===== Form de contacto OBLIGATORIO =====
   const emailInput = document.getElementById('cartEmail');
   const phoneInput = document.getElementById('cartPhone');
-  const addressInput = document.getElementById('cartAddress');
+  const calleInput = document.getElementById('cartCalle');
+  const alturaInput = document.getElementById('cartAltura');
+  const pisoInput = document.getElementById('cartPiso');
+  const deptoInput = document.getElementById('cartDepto');
   const cpInput = document.getElementById('cartCP');
   const hintEl = document.getElementById('cartContactHint');
   const transferBtnEl = document.getElementById('cartTransfer');
@@ -5359,54 +5373,73 @@ document.querySelectorAll('.faq-item').forEach(item=>{
     const saved = JSON.parse(localStorage.getItem('barfContact') || '{}');
     if(saved.email) emailInput.value = saved.email;
     if(saved.phone) phoneInput.value = saved.phone;
-    if(saved.address) addressInput.value = saved.address;
+    if(saved.calle) calleInput.value = saved.calle;
+    if(saved.altura) alturaInput.value = saved.altura;
+    if(saved.piso) pisoInput.value = saved.piso;
+    if(saved.depto) deptoInput.value = saved.depto;
     if(saved.cp) cpInput.value = saved.cp;
   } catch(_){}
 
   function isValidEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((v||'').trim()); }
   function isValidPhone(v){ return (v||'').replace(/\D/g, '').length >= 8; }
-  function isValidAddress(v){ return (v||'').trim().length >= 5; }
+  function isValidCalle(v){ return (v||'').trim().length >= 3; }
+  function isValidAltura(v){ return (v||'').trim().length >= 1; }
   function isValidCP(v){ return (v||'').trim().length >= 3; }
 
   function validateContact(){
     const email = emailInput.value.trim();
     const phone = phoneInput.value.trim();
-    const address = addressInput.value.trim();
+    const calle = calleInput.value.trim();
+    const altura = alturaInput.value.trim();
+    const piso = pisoInput.value.trim();
+    const depto = deptoInput.value.trim();
     const cp = cpInput.value.trim();
 
     const okEmail = isValidEmail(email);
     const okPhone = isValidPhone(phone);
-    const okAddress = isValidAddress(address);
+    const okCalle = isValidCalle(calle);
+    const okAltura = isValidAltura(altura);
     const okCp = isValidCP(cp);
-    const allOk = okEmail && okPhone && okAddress && okCp;
+    const allOk = okEmail && okPhone && okCalle && okAltura && okCp;
 
-    // Estado visual de cada input (rojo solo si tiene algo Y es inválido)
     emailInput.classList.toggle('is-invalid', email.length > 0 && !okEmail);
     phoneInput.classList.toggle('is-invalid', phone.length > 0 && !okPhone);
-    addressInput.classList.toggle('is-invalid', address.length > 0 && !okAddress);
+    calleInput.classList.toggle('is-invalid', calle.length > 0 && !okCalle);
+    alturaInput.classList.toggle('is-invalid', altura.length > 0 && !okAltura);
     cpInput.classList.toggle('is-invalid', cp.length > 0 && !okCp);
 
     if(allOk){
       hintEl.textContent = '✓ Listo, ya podés continuar';
       hintEl.classList.add('is-ok');
     } else {
-      hintEl.textContent = '⚠️ Completá todos los campos para continuar';
+      hintEl.textContent = '⚠️ Completá los campos obligatorios para continuar';
       hintEl.classList.remove('is-ok');
     }
 
     checkoutBtn.disabled = !allOk;
     if(transferBtnEl) transferBtnEl.disabled = !allOk;
 
+    // Consolidar dirección en un solo string para el backend
+    const direccionCompleta = okCalle && okAltura
+      ? calle + ' ' + altura +
+        (piso ? ', Piso ' + piso : '') +
+        (depto ? ', Depto ' + depto : '')
+      : '';
+
     try {
       localStorage.setItem('barfContact', JSON.stringify({
         email: okEmail ? email : '',
         phone: okPhone ? phone : '',
-        address: okAddress ? address : '',
+        calle: okCalle ? calle : '',
+        altura: okAltura ? altura : '',
+        piso: piso,
+        depto: depto,
+        address: direccionCompleta,
         cp: okCp ? cp : ''
       }));
     } catch(_){}
   }
-  [emailInput, phoneInput, addressInput, cpInput].forEach(el => {
+  [emailInput, phoneInput, calleInput, alturaInput, pisoInput, deptoInput, cpInput].forEach(el => {
     el.addEventListener('input', validateContact);
     el.addEventListener('blur', validateContact);
   });
