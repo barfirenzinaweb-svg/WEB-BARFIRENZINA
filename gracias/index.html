@@ -160,6 +160,32 @@
 
       waBtn.href = 'https://wa.me/'+ WA_PHONE +'?text='+ encodeURIComponent(msg);
 
+      // Registrar el pedido en el Google Sheet + emails (recién ahora que MP confirmó el pago)
+      // Usa un flag en localStorage para evitar duplicar si el cliente refresca la página
+      if (order && order.items && order.items.length) {
+        var orderKey = 'barfOrderSent_' + (order.ts || Date.now());
+        if (!localStorage.getItem(orderKey)) {
+          try {
+            var SHEET_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzUmbYphhd0CyV-_VADF6PclXikro8mN3P0-w6Yof4YfHv6Kitf45rCvf-fsIrM_E2W/exec';
+            fetch(SHEET_ENDPOINT, {
+              method: 'POST',
+              mode: 'no-cors',
+              headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+              body: JSON.stringify({
+                email: order.email || '',
+                phone: order.phone || '',
+                address: order.address || '',
+                cp: order.cp || '',
+                items: order.items,
+                total: order.total,
+                metodo: order.metodo || 'Tarjeta (Mercado Pago)'
+              })
+            }).catch(function(){});
+            localStorage.setItem(orderKey, '1');
+          } catch(_){}
+        }
+      }
+
       // Vaciar el carrito al confirmar el pago. El lastOrder se mantiene
       // por si el usuario refresca la página o vuelve a entrar.
       try { localStorage.removeItem('barf_cart_v2'); } catch(_){}

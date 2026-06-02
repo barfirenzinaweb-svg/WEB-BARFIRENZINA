@@ -5164,6 +5164,10 @@ document.querySelectorAll('.stat-ticker .stat').forEach(el=>statIO.observe(el));
     } catch(_){}
   }
 
+  // Variables compartidas para que el click del waBtn use los datos correctos
+  var currentItems = [];
+  var currentTotal = 0;
+
   function open(){
     var items = readCart();
     if(!items.length) return;
@@ -5171,8 +5175,10 @@ document.querySelectorAll('.stat-ticker .stat').forEach(el=>statIO.observe(el));
     var total = Math.round(subTotal * 0.95); // 5% descuento por transferencia
     totalEl.textContent = fmt(total);
 
-    // Registrar el pedido en el Sheet + emails (fire and forget) con total CON descuento
-    sendOrderToSheet(items, total);
+    // Guardar para el click del waBtn (recién ahí se registra en el Sheet)
+    currentItems = items;
+    currentTotal = total;
+    waBtn.dataset.sent = '';
 
     // Armar mensaje de WhatsApp con el pedido
     var lines = [];
@@ -5200,6 +5206,15 @@ document.querySelectorAll('.stat-ticker .stat').forEach(el=>statIO.observe(el));
   }
 
   openBtn.addEventListener('click', open);
+
+  // Solo al apretar "Enviar comprobante por WhatsApp" se registra el pedido en el Sheet
+  waBtn.addEventListener('click', function(){
+    if(waBtn.dataset.sent === 'true') return; // evitar duplicados
+    if(!currentItems.length) return;
+    waBtn.dataset.sent = 'true';
+    sendOrderToSheet(currentItems, currentTotal);
+  });
+
   modal.querySelectorAll('[data-close]').forEach(function(el){
     el.addEventListener('click', close);
   });
@@ -5507,7 +5522,7 @@ document.querySelectorAll('.faq-item').forEach(item=>{
 
   checkoutBtn.addEventListener('click', async ()=>{
     if(cart.length===0) return;
-    sendOrderToSheet('Tarjeta (Mercado Pago)');
+    // NO se registra aún en el Sheet — se registra en /gracias cuando MP confirma el pago
     const original = checkoutBtn.innerHTML;
     checkoutBtn.disabled = true;
     checkoutBtn.innerHTML = 'Redirigiendo a Mercado Pago…';
@@ -5537,6 +5552,9 @@ document.querySelectorAll('.faq-item').forEach(item=>{
           total: subtotal(),
           email: contact.email || '',
           phone: contact.phone || '',
+          address: contact.address || '',
+          cp: contact.cp || '',
+          metodo: 'Tarjeta (Mercado Pago)',
           ts: Date.now()
         }));
       } catch(_){}
