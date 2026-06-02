@@ -973,6 +973,11 @@
     transition:border-color .2s ease, box-shadow .2s ease;
   }
   .cart-contact input::placeholder{color:rgba(50,57,21,.45);font-style:italic}
+  .cart-contact-row{
+    display:grid;
+    grid-template-columns:1.7fr 1fr;
+    gap:8px;
+  }
   .cart-contact input:focus{
     border-color:var(--gold);
     box-shadow:0 0 0 3px rgba(163,142,72,.15);
@@ -3996,10 +4001,14 @@
       <div class="cart-line total"><span>Total</span><strong id="cartTotal">$0</strong></div>
     </div>
     <div class="cart-contact">
-      <p class="cart-contact-title">Para confirmar tu pedido</p>
-      <input type="email" id="cartEmail" placeholder="Tu email" autocomplete="email" inputmode="email"/>
-      <input type="tel" id="cartPhone" placeholder="WhatsApp (ej: +54 9 11 1234 5678)" autocomplete="tel" inputmode="tel"/>
-      <p class="cart-contact-hint" id="cartContactHint">⚠️ Completá al menos uno para continuar</p>
+      <p class="cart-contact-title">Datos para la entrega</p>
+      <input type="email" id="cartEmail" placeholder="Tu email" autocomplete="email" inputmode="email" required/>
+      <input type="tel" id="cartPhone" placeholder="WhatsApp (ej: +54 9 11 1234 5678)" autocomplete="tel" inputmode="tel" required/>
+      <div class="cart-contact-row">
+        <input type="text" id="cartAddress" placeholder="Dirección (calle, número, piso)" autocomplete="street-address" required/>
+        <input type="text" id="cartCP" placeholder="Código postal" autocomplete="postal-code" inputmode="numeric" required/>
+      </div>
+      <p class="cart-contact-hint" id="cartContactHint">⚠️ Completá todos los campos para continuar</p>
     </div>
     <div class="pay-options">
       <p class="pay-label">¿Cómo querés pagar?</p>
@@ -5106,6 +5115,8 @@ document.querySelectorAll('.stat-ticker .stat').forEach(el=>statIO.observe(el));
       var payload = {
         email: contact.email || '',
         phone: contact.phone || '',
+        address: contact.address || '',
+        cp: contact.cp || '',
         items: items.map(function(i){ return { name: i.name, qty: i.qty, price: i.price }; }),
         total: total,
         metodo: 'Transferencia'
@@ -5335,65 +5346,71 @@ document.querySelectorAll('.faq-item').forEach(item=>{
     document.body.style.overflow = '';
   }
 
-  // ===== Form de contacto obligatorio (email o WhatsApp) =====
+  // ===== Form de contacto OBLIGATORIO (los 4 campos) =====
   const emailInput = document.getElementById('cartEmail');
   const phoneInput = document.getElementById('cartPhone');
+  const addressInput = document.getElementById('cartAddress');
+  const cpInput = document.getElementById('cartCP');
   const hintEl = document.getElementById('cartContactHint');
   const transferBtnEl = document.getElementById('cartTransfer');
 
-  // Restaurar valores guardados (si el usuario los puso antes)
+  // Restaurar valores guardados
   try {
     const saved = JSON.parse(localStorage.getItem('barfContact') || '{}');
     if(saved.email) emailInput.value = saved.email;
     if(saved.phone) phoneInput.value = saved.phone;
+    if(saved.address) addressInput.value = saved.address;
+    if(saved.cp) cpInput.value = saved.cp;
   } catch(_){}
 
-  function isValidEmail(v){
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((v||'').trim());
-  }
-  function isValidPhone(v){
-    // Acepta números con o sin +, espacios, paréntesis, guiones. Mín 8 dígitos.
-    const digits = (v||'').replace(/\D/g, '');
-    return digits.length >= 8;
-  }
+  function isValidEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((v||'').trim()); }
+  function isValidPhone(v){ return (v||'').replace(/\D/g, '').length >= 8; }
+  function isValidAddress(v){ return (v||'').trim().length >= 5; }
+  function isValidCP(v){ return (v||'').trim().length >= 3; }
 
   function validateContact(){
     const email = emailInput.value.trim();
     const phone = phoneInput.value.trim();
-    const okEmail = email && isValidEmail(email);
-    const okPhone = phone && isValidPhone(phone);
-    const hasAny = okEmail || okPhone;
+    const address = addressInput.value.trim();
+    const cp = cpInput.value.trim();
 
-    // Estado visual de cada input
-    emailInput.classList.toggle('is-invalid', email && !okEmail);
-    phoneInput.classList.toggle('is-invalid', phone && !okPhone);
+    const okEmail = isValidEmail(email);
+    const okPhone = isValidPhone(phone);
+    const okAddress = isValidAddress(address);
+    const okCp = isValidCP(cp);
+    const allOk = okEmail && okPhone && okAddress && okCp;
 
-    // Mensaje
-    if(hasAny){
+    // Estado visual de cada input (rojo solo si tiene algo Y es inválido)
+    emailInput.classList.toggle('is-invalid', email.length > 0 && !okEmail);
+    phoneInput.classList.toggle('is-invalid', phone.length > 0 && !okPhone);
+    addressInput.classList.toggle('is-invalid', address.length > 0 && !okAddress);
+    cpInput.classList.toggle('is-invalid', cp.length > 0 && !okCp);
+
+    if(allOk){
       hintEl.textContent = '✓ Listo, ya podés continuar';
       hintEl.classList.add('is-ok');
     } else {
-      hintEl.textContent = '⚠️ Completá al menos uno para continuar';
+      hintEl.textContent = '⚠️ Completá todos los campos para continuar';
       hintEl.classList.remove('is-ok');
     }
 
-    // Habilita/deshabilita botones
-    checkoutBtn.disabled = !hasAny;
-    if(transferBtnEl) transferBtnEl.disabled = !hasAny;
+    checkoutBtn.disabled = !allOk;
+    if(transferBtnEl) transferBtnEl.disabled = !allOk;
 
-    // Guarda en localStorage
     try {
       localStorage.setItem('barfContact', JSON.stringify({
         email: okEmail ? email : '',
-        phone: okPhone ? phone : ''
+        phone: okPhone ? phone : '',
+        address: okAddress ? address : '',
+        cp: okCp ? cp : ''
       }));
     } catch(_){}
   }
-  [emailInput, phoneInput].forEach(el => {
+  [emailInput, phoneInput, addressInput, cpInput].forEach(el => {
     el.addEventListener('input', validateContact);
     el.addEventListener('blur', validateContact);
   });
-  validateContact(); // estado inicial
+  validateContact();
 
   cartBtn.addEventListener('click', open);
   closeBtn.addEventListener('click', close);
@@ -5410,6 +5427,8 @@ document.querySelectorAll('.faq-item').forEach(item=>{
       const payload = {
         email: contact.email || '',
         phone: contact.phone || '',
+        address: contact.address || '',
+        cp: contact.cp || '',
         items: cart.map(i => ({ name: i.name, qty: i.qty, price: i.price })),
         total: subtotal(),
         metodo: metodo
