@@ -1070,15 +1070,28 @@
   }
   .pm-close:hover{background:var(--gold);color:var(--cream)}
   .pm-close svg{width:18px;height:18px}
-  .pm-photo{
+  .pm-photo-zone{
     width:100%;aspect-ratio:1/1;
     background:linear-gradient(180deg, var(--cream) 0%, var(--cream-2) 100%);
     overflow:hidden;
+    position:relative;
   }
-  .pm-photo img{
+  /* El carrusel clonado adentro del modal */
+  .pm-photo-zone .product-photo,
+  .pm-photo-zone .product-photo-real{
     width:100%;height:100%;
-    object-fit:cover;display:block;
+    aspect-ratio:auto;
+    border-radius:0;
+    position:relative;
   }
+  .pm-photo-zone .ph-slides{position:absolute;inset:0}
+  .pm-photo-zone .ph-slide{
+    position:absolute;inset:0;width:100%;height:100%;
+    object-fit:cover;
+  }
+  /* Dots del carrusel: más visibles en el modal */
+  .pm-photo-zone .ph-dots{bottom:14px}
+  .pm-photo-zone .ph-nav{opacity:.95}
   .pm-info{padding:20px 22px 22px}
   .pm-category{
     font-size:10px;letter-spacing:.26em;text-transform:uppercase;
@@ -2729,45 +2742,48 @@
     .container{padding-left:20px;padding-right:20px}
   }
   @media (max-width:620px){
-    /* Product grid: 2 columnas en mobile */
-    .product-grid{--pgrid-cols:2;--pgrid-gap:10px}
+    /* Product grid: 2 cols mas anchas — reduzco padding lateral de la seccion */
+    .products{padding-left:14px !important;padding-right:14px !important}
+    .product-grid{--pgrid-cols:2;--pgrid-gap:10px;padding-top:60px}
     .product-card-wrap{max-width:none;cursor:pointer}
-    /* Gato decorativo muy chico para no superponerse */
+    /* Gato decorativo del card chico para no superponerse */
     .kitten-decor{
-      width:46px !important;height:46px !important;
-      top:-28px !important;left:6px !important;
+      width:54px !important;height:54px !important;
+      top:-36px !important;left:8px !important;
     }
-    .product-card{border-radius:14px}
+    .product-card{border-radius:16px}
     .product-photo-real{aspect-ratio:1/1}
-    .card-body{padding:12px 12px 14px}
-    /* Mobile: solo titulo + precio + boton (resto se muestra en modal al tocar) */
+    .card-body{padding:14px 12px 16px}
+    /* Mobile: solo titulo + precio + boton (resto en modal al tocar) */
     .card-body .category{display:none}
-    .product-card h3{font-size:14px;margin-bottom:6px;line-height:1.1;text-align:center}
+    .product-card h3{font-size:16px;margin-bottom:8px;line-height:1.1;text-align:center;letter-spacing:-.01em}
     .product-card .desc{display:none}
     .product-highlights{display:none}
     .divider{display:none}
-    .product-row{flex-direction:column;align-items:center;gap:8px}
+    .product-row{flex-direction:column;align-items:center;gap:10px}
     .price-wrap{align-items:center}
-    .price{font-size:19px}
-    .price .cur{font-size:10px}
-    .price-wrap .was{font-size:10px}
+    .price{font-size:22px}
+    .price .cur{font-size:12px}
+    .price-wrap .was{font-size:11px}
     .add-btn{
-      padding:8px 12px;font-size:10px;gap:6px;
+      padding:10px 14px;font-size:11px;gap:6px;
       width:100%;justify-content:center;letter-spacing:.18em;
     }
-    .add-btn svg{width:12px;height:12px}
-    .weight-badge{font-size:9px;padding:3px 8px;top:8px;left:8px}
-    .ribbon{font-size:8px;padding:3px 32px;top:10px;right:-34px}
+    .add-btn svg{width:13px;height:13px}
+    .weight-badge{font-size:10px;padding:4px 9px;top:8px;left:8px}
+    .ribbon{font-size:9px;padding:4px 36px;top:12px;right:-38px}
+    .product-card::before{inset:6px;border-radius:10px}
     /* Indicador sutil de "tocar para ver más" */
     .product-card-wrap::after{
-      content:"Tocá para ver más";
+      content:"Tocá para ver detalle";
       display:block;
       text-align:center;
-      font-size:9px;
+      font-size:10px;
       letter-spacing:.16em;text-transform:uppercase;
-      color:rgba(50,57,21,.4);
-      margin-top:6px;
+      color:rgba(50,57,21,.45);
+      margin-top:8px;
       font-weight:600;
+      font-style:italic;
     }
     .icon-row{grid-template-columns:1fr;gap:14px}
     .footer-grid{grid-template-columns:1fr}
@@ -4223,7 +4239,7 @@
     <button class="pm-close" data-pm-close aria-label="Cerrar">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
     </button>
-    <div class="pm-photo"><img id="pmImg" src="" alt=""/></div>
+    <div class="pm-photo-zone" id="pmPhotoZone"></div>
     <div class="pm-info">
       <div class="pm-category" id="pmCategory"></div>
       <h3 class="pm-name" id="pmName"></h3>
@@ -5307,7 +5323,7 @@ document.querySelectorAll('.stat-ticker .stat').forEach(el=>statIO.observe(el));
 (function(){
   var modal = document.getElementById('productModal');
   if(!modal) return;
-  var pmImg = document.getElementById('pmImg');
+  var pmPhotoZone = document.getElementById('pmPhotoZone');
   var pmName = document.getElementById('pmName');
   var pmCategory = document.getElementById('pmCategory');
   var pmDesc = document.getElementById('pmDesc');
@@ -5320,8 +5336,23 @@ document.querySelectorAll('.stat-ticker .stat').forEach(el=>statIO.observe(el));
   function openModal(card){
     if(!card) return;
     currentCardId = card.dataset.id || '';
-    pmImg.src = card.dataset.img || '';
-    pmImg.alt = card.dataset.name || '';
+
+    // Clonar el carrusel completo de la card (con todas las fotos + dots + flechas)
+    var originalPhoto = card.querySelector('.product-photo-real') || card.querySelector('.product-photo');
+    if(originalPhoto){
+      var clone = originalPhoto.cloneNode(true);
+      // Limpiar elementos que no deben aparecer en el modal
+      clone.querySelectorAll('.tag, .ribbon, .weight-badge, .quick-view').forEach(function(el){ el.remove(); });
+      // Reset del estado del carrusel (volver a slide 0)
+      var slides = clone.querySelectorAll('.ph-slide');
+      var dots = clone.querySelectorAll('.ph-dot');
+      slides.forEach(function(s, i){ s.classList.toggle('active', i === 0); });
+      dots.forEach(function(d, i){ d.classList.toggle('active', i === 0); });
+      clone.removeAttribute('data-idx');
+      pmPhotoZone.innerHTML = '';
+      pmPhotoZone.appendChild(clone);
+    }
+
     pmName.textContent = card.dataset.name || '';
     var cat = card.querySelector('.category');
     pmCategory.textContent = cat ? cat.textContent.trim() : '';
