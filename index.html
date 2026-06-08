@@ -3325,6 +3325,7 @@
   .ingredients,
   .products,
   .calc-section,
+  .shipping,
   .historia,
   .explain,
   .ig-section,
@@ -3334,6 +3335,22 @@
   .cta-banner{
     padding-left:var(--hero-edge);
     padding-right:var(--hero-edge);
+  }
+  /* Padding vertical (top/bottom) unificado — mismo aire en todos los bloques */
+  .info,
+  .ingredients,
+  .products,
+  .calc-section,
+  .shipping,
+  .historia,
+  .explain,
+  .ig-section,
+  .benefits,
+  .reviews,
+  .faq,
+  .cta-banner{
+    padding-top:clamp(70px, 8vw, 110px) !important;
+    padding-bottom:clamp(70px, 8vw, 110px) !important;
   }
 
   /* Containers internos: ya no necesitan padding lateral propio
@@ -4458,8 +4475,8 @@
           <ul>
             <li>CABA (todos los barrios)</li>
             <li>Vicente López · Olivos · Florida</li>
-            <li>San Isidro · Martínez · Acassuso</li>
-            <li>Beccar · Boulogne</li>
+            <li>San Isidro · Martínez · Acassuso · Beccar</li>
+            <li>San Fernando (hasta Río Luján)</li>
           </ul>
         </div>
         <div class="ship-pricing">
@@ -5645,59 +5662,55 @@ document.querySelectorAll('.faq-item').forEach(item=>{
       pane: 'overlayPane'
     }).addTo(map);
 
-    // Zonas cubiertas (polígonos aproximados — ajustables después)
-    var zonas = [
-      {
-        nombre: 'CABA',
-        descripcion: 'Todos los barrios',
-        coords: [
-          [-34.526, -58.527], [-34.530, -58.450], [-34.554, -58.380],
-          [-34.610, -58.345], [-34.652, -58.370], [-34.700, -58.470],
-          [-34.665, -58.530], [-34.585, -58.530]
-        ]
-      },
-      {
-        nombre: 'Vicente López',
-        descripcion: 'Vicente López · Olivos · Florida',
-        coords: [
-          [-34.512, -58.510], [-34.490, -58.490],
-          [-34.495, -58.460], [-34.527, -58.478]
-        ]
-      },
-      {
-        nombre: 'San Isidro',
-        descripcion: 'San Isidro · Martínez · Acassuso · Beccar',
-        coords: [
-          [-34.475, -58.530], [-34.450, -58.510],
-          [-34.470, -58.470], [-34.495, -58.495]
-        ]
-      },
-      {
-        nombre: 'Boulogne',
-        descripcion: 'Boulogne · zona aledaña',
-        coords: [
-          [-34.495, -58.580], [-34.475, -58.560],
-          [-34.490, -58.530], [-34.510, -58.555]
-        ]
-      }
+    // Zona única de cobertura: CABA + Vicente López + San Isidro + San Fernando
+    // Polígono siguiendo: Gral Paz al oeste, costa del Río de la Plata/Luján al este,
+    // Riachuelo al sur, Río Luján al norte.
+    var zonaCobertura = [
+      // NORTE (San Fernando — intersección Ruta 197 con Ramal Tigre)
+      [-34.420, -58.555],
+      // OESTE — bajando por Ramal Tigre / Av Avelino Rolón / Brigadier Rosas
+      [-34.470, -58.575],
+      [-34.510, -58.560],
+      [-34.530, -58.540],
+      // OESTE CABA — Av General Paz (todo el límite oeste)
+      [-34.540, -58.530],
+      [-34.580, -58.530],
+      [-34.628, -58.528],
+      // SUR — Autopista Dellepiane / Av Perito Moreno
+      [-34.660, -58.510],
+      [-34.660, -58.480],
+      // SUR — Av Sáenz / Amancio Alcorta / Vélez Sarsfield (costeando Riachuelo)
+      [-34.652, -58.430],
+      [-34.645, -58.405],
+      // SUR-ESTE — Av Iriarte / Regimiento Patricios / Suárez (La Boca)
+      [-34.645, -58.378],
+      [-34.628, -58.370],
+      [-34.620, -58.362],
+      // ESTE — Au Dr Ricardo Balbín y luego costa del Río de la Plata
+      [-34.605, -58.355],
+      [-34.590, -58.358],
+      [-34.560, -58.380],
+      [-34.520, -58.395],
+      [-34.490, -58.415],
+      [-34.460, -58.435],
+      // VUELTA POR EL NORTE — Río Luján
+      [-34.430, -58.470],
+      [-34.420, -58.510]
     ];
 
-    zonas.forEach(function(z){
-      L.polygon(z.coords, {
-        color: '#A38E48',
-        weight: 2,
-        opacity: .9,
-        fillColor: '#A38E48',
-        fillOpacity: .32,
-        smoothFactor: 1
-      })
-      .bindPopup('<strong>'+ z.nombre +'</strong><br>'+ z.descripcion +'<br><em>✓ Envío disponible</em>')
-      .addTo(map);
-    });
+    L.polygon(zonaCobertura, {
+      color: '#A38E48',
+      weight: 2.5,
+      opacity: .95,
+      fillColor: '#A38E48',
+      fillOpacity: .28,
+      smoothFactor: 1
+    })
+    .bindPopup('<strong>Zona de cobertura</strong><br>CABA · Vicente López · San Isidro · San Fernando<br><em>✓ Envío disponible</em>')
+    .addTo(map);
 
-    // Encuadrar el mapa para que se vean todas las zonas
-    var allCoords = zonas.reduce(function(arr, z){ return arr.concat(z.coords); }, []);
-    map.fitBounds(L.latLngBounds(allCoords), { padding: [20, 20] });
+    // Encuadrar el mapa
+    map.fitBounds(L.latLngBounds(zonaCobertura), { padding: [20, 20] });
   }
 
   // Lazy load: cargar Leaflet solo cuando el bloque entra al viewport
