@@ -2770,11 +2770,8 @@
       width:100%;justify-content:center;letter-spacing:.18em;
     }
     .add-btn svg{width:13px;height:13px}
-    .weight-badge{
-      font-size:10px;padding:4px 9px;
-      top:8px;right:8px;left:auto;
-      white-space:nowrap;
-    }
+    /* En mobile: NO mostrar weight-badge ni ribbon en la card (el peso aparece en el modal de detalle) */
+    .weight-badge{display:none}
     .ribbon{display:none}
     .product-card::before{inset:6px;border-radius:10px}
     /* Indicador sutil de "tocar para ver más" */
