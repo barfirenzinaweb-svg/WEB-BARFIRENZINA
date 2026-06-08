@@ -2628,25 +2628,35 @@
     .container{padding-left:20px;padding-right:20px}
   }
   @media (max-width:620px){
-    .product-grid{--pgrid-cols:1}
-    /* Product cards más chicas en mobile */
-    .product-card-wrap{max-width:260px}
+    /* Product grid: 2 columnas en mobile (no 1) */
+    .product-grid{--pgrid-cols:2;--pgrid-gap:12px}
+    .product-card-wrap{max-width:none}
+    /* Gato decorativo del card mucho más chico para no superponerse */
+    .kitten-decor{
+      width:50px !important;height:50px !important;
+      top:-32px !important;left:8px !important;
+    }
+    /* Product cards minimalistas en mobile (solo lo esencial) */
     .product-photo-real{aspect-ratio:1/1}
-    .card-body{padding:14px 14px 16px}
-    .product-card h3{font-size:15px;margin-bottom:4px}
-    .card-body .category{font-size:8px;margin-bottom:4px}
-    .product-card .desc{font-size:11px;margin-bottom:8px;line-height:1.4}
-    .product-highlights{margin-bottom:8px;gap:3px}
-    .product-highlights li{font-size:10px;gap:5px}
-    .product-highlights li::before{width:12px;height:12px;background-size:8px}
-    .price{font-size:18px}
-    .price .cur{font-size:10px}
+    .card-body{padding:10px 10px 12px}
+    .card-body .category{font-size:8px;margin-bottom:3px;letter-spacing:.2em}
+    .card-body .category::before{width:10px}
+    .product-card h3{font-size:13px;margin-bottom:4px;line-height:1.05}
+    .product-card .desc{display:none}
+    .product-highlights{display:none}
+    .divider{display:none}
+    .product-row{flex-direction:column;align-items:stretch;gap:8px}
+    .price-wrap{align-items:flex-start}
+    .price{font-size:17px}
+    .price .cur{font-size:9px}
     .price-wrap .was{font-size:10px}
-    .add-btn{padding:7px 12px;font-size:9px;gap:5px}
-    .add-btn svg{width:11px;height:11px}
-    .weight-badge{font-size:9px;padding:4px 9px}
-    .ribbon{font-size:9px;padding:4px 40px;top:14px;right:-42px}
-    .divider{margin:10px 0 8px}
+    .add-btn{
+      padding:7px 10px;font-size:8px;gap:5px;
+      width:100%;justify-content:center;
+    }
+    .add-btn svg{width:10px;height:10px}
+    .weight-badge{font-size:8px;padding:3px 7px;top:8px;left:8px}
+    .ribbon{font-size:8px;padding:3px 32px;top:10px;right:-34px}
     .icon-row{grid-template-columns:1fr;gap:14px}
     .footer-grid{grid-template-columns:1fr}
     .container{padding-left:20px;padding-right:20px}
