@@ -2773,6 +2773,36 @@
     /* En mobile: NO mostrar weight-badge ni ribbon en la card (el peso aparece en el modal de detalle) */
     .weight-badge{display:none}
     .ribbon{display:none}
+
+    /* ===== Cart drawer en mobile: SCROLL ÚNICO de todo el contenido ===== */
+    .cart-drawer{
+      display:block;
+      overflow-y:auto;
+      -webkit-overflow-scrolling:touch;
+    }
+    .cart-header{
+      position:sticky;top:0;z-index:10;
+      background:var(--cream);
+      border-bottom:1px solid rgba(50,57,21,.12);
+    }
+    .cart-items{
+      flex:none;overflow:visible;
+      padding:14px 22px;
+    }
+    .cart-footer{
+      padding:16px 22px 24px;
+    }
+    /* Form más compacto */
+    .cart-contact{padding:12px 12px 10px;margin-bottom:10px}
+    .cart-contact-title{font-size:10px;margin-bottom:4px}
+    .cart-contact input{padding:8px 10px;font-size:13px}
+    .cart-contact-hint{font-size:10px;margin-top:4px}
+    /* Items del cart más compactos */
+    .cart-item{padding:10px 0;gap:10px}
+    .cart-item .ci-photo{width:54px;height:54px}
+    .cart-item .ci-name{font-size:14px}
+    /* Botones de pago más juntos */
+    .pay-options{gap:6px}
     .product-card::before{inset:6px;border-radius:10px}
     /* Indicador sutil de "tocar para ver más" */
     .product-card-wrap::after{
